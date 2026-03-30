@@ -33,7 +33,7 @@ public class Settings {
     public static final double DRONE_COMBUSTIVEL_MAX = 200;
     public static final double DRONE_CONSUMO_MOV = 1;
     public static final double DRONE_CONSUMO_CORRENTE = 2;
-    public static final double DRONE_INTEGRIDADE_MAX = 100;
+    public static final int DRONE_INTEGRIDADE_MAX = 100;
 
     //mini jogo
     public static final int PUZZLE_MAX_MOVIMENTOS = 50;
