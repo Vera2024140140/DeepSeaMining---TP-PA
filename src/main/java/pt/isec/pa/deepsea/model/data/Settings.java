@@ -21,6 +21,7 @@ public class Settings {
     public static final int MINERIO_ZONA_MIN = 1;
     public static final int MINERIO_ZONA_MAX = 1;
     public static final int OBSTACULOS_FOSSO_MAX = 10;
+    public static final int MONSTROS_FUNDO_MIN = 1;
     public static final int MONSTROS_FUNDO_MAX = 7;
 
     //combustivel e integridade casco
