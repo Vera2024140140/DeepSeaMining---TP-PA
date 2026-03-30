@@ -80,6 +80,13 @@ public class FundoMarinho {
         }
     }
 
+    public boolean colocarMinerio(int linha, int coluna, int qtd) {
+        if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()){
+            grelha[linha][coluna].setComponente(new Minerio(linha, coluna, qtd));
+            return true;
+        }
+        return false;
+    }
 
     public boolean colocarArtefacto(int linha, int coluna) {
         if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()) {
@@ -97,3 +104,4 @@ public class FundoMarinho {
     }
 
 }
+
