@@ -2,8 +2,13 @@ package pt.isec.pa.deepsea.model.data.grelhas;
 
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.Utilidades;
+import pt.isec.pa.deepsea.model.data.elementos.AnimalMarinho;
 import pt.isec.pa.deepsea.model.data.elementos.Componente;
+import pt.isec.pa.deepsea.model.data.elementos.Corrente;
 import pt.isec.pa.deepsea.model.data.elementos.Rocha;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FossoMarinho {
 
@@ -76,11 +81,47 @@ public class FossoMarinho {
             }
         }
     }
+    public void gerarObstaculos() {
+        if (Settings.MODO_DEFESA){
+            int centrolinha = Settings.LINHAS_FOSSO / 2;
+            int centrocoluna = Settings.COLUNAS_FOSSO / 2;
 
+            grelha[centrolinha][centrocoluna].setComponente (new Corrente(centrolinha,centrocoluna));
+            grelha[centrolinha + 1][centrocoluna].setComponente(new AnimalMarinho(centrolinha + 1, centrocoluna));
+
+        } else {
+            int qtdObstaculos = Utilidades.aleatorio(Settings.OBSTACULOS_FOSSO_MIN,Settings.OBSTACULOS_FOSSO_MAX);
+            for (int i = 0 ; i < qtdObstaculos; i++){
+                int [] pos = posicaoFossoLivre();
+                if (pos != null){
+                    if (Utilidades.probAleatoria() < 0.5){
+                        grelha[pos[0]][pos[1]].setComponente(new AnimalMarinho(pos[0],pos[1]));
+                    } else {
+                        grelha[pos[0]][pos[1]].setComponente(new Corrente(pos[0],pos[1]));
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
     private int variarEspessura(int valor, int min, int max) {
         return Math.max(min, Math.min(max, valor + Utilidades.aleatorio(-1, 1)));
     }
-
+    private int[] posicaoFossoLivre() {
+        List<int[]> livres =  new ArrayList<>();
+        for (int i  = 0; i < linhas; i++ ){
+            for (int j = 0; j < colunas; j++){
+                if (grelha[i][j].isEmpty()){
+                    livres.add(new int [] {i,j});
+                }
+            }
+        }
+        if(livres.isEmpty()){
+            return null;
+        }
+        return livres.get(Utilidades.aleatorio(0, livres.size() - 1));
+    }
     public int getLinhas() {
         return linhas;
     }
