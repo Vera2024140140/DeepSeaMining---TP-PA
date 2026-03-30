@@ -1,4 +1,18 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 
-public class Componente {
+public abstract class Componente {
+    private int linha;
+    private int coluna;
+
+    public Componente (int linha, int coluna){
+        this.linha = linha;
+        this.coluna = coluna;
+    }
+
+    public int getLinha() {
+        return linha;
+    }
+    public int getColuna(){
+        return coluna;
+    }
 }
