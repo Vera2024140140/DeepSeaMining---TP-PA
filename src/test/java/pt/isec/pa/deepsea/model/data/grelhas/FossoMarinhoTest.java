@@ -41,5 +41,29 @@ class FossoMarinhoTest {
             assertTrue(rochas <= max, "Linha " + l + ": tem " + rochas + " rochas, maximo e " + max);
         }
     }
+    @Test
+    void testaGerarObstaculos(){
+        fosso.gerarObstaculos();
+        int contadorAnimais = 0;
+        int contadorCorrente = 0;
+        for (int i = 0; i < fosso.getLinhas();i++){
+            for (int j = 0; j < fosso.getColunas(); j++){
+                Object componenente = fosso.getComponente(i,j);
+                if(componenente instanceof AnimalMarinho){
+                    contadorAnimais++;
+                }else if (componenente instanceof Corrente){
+                    contadorCorrente++;
+                }
+            }
+        }
+        if (Settings.MODO_DEFESA){
+            assertEquals(2,contadorAnimais + contadorCorrente);
+            assertEquals(1,contadorAnimais);
+            assertEquals(1,contadorCorrente);
+        }else{
+            assertTrue(contadorAnimais + contadorCorrente > 0);
+            assertTrue(contadorAnimais + contadorCorrente <= Settings.OBSTACULOS_FOSSO_MAX);
+        }
+    }
 
 }

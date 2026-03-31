@@ -50,4 +50,43 @@ class FundoMarinhoTest {
             }
         }
     }
+    @Test
+    void testaGerarMonstrosPosicoes(){
+        if(!Settings.MODO_DEFESA){
+            for(int c = 0; c < fundo.getColunas(); c++){
+                fundo.setRevelada(0,c);
+            }
+            fundo.gerarMonstros();
+            int monstros = 0;
+            for (int i = 0; i < fundo.getLinhas(); i++){
+                for (int j = 0; j < fundo.getColunas(); j++){
+                    if (fundo.getComponente(i,j) instanceof Monstro){
+                        monstros++;
+                        assertFalse(fundo.isRevelada(i,j));
+                    }
+                }
+            }
+            assertTrue(monstros > 0);
+        }
+    }
+
+    @Test
+    void testaGerarMonstros(){
+        fundo.gerarMonstros();
+        int monstros = 0;
+        for (int i = 0; i < fundo.getLinhas(); i++){
+            for (int j = 0; j < fundo.getColunas(); j++){
+                if (fundo.getComponente(i,j) instanceof Monstro){
+                    monstros++;
+                }
+            }
+        }
+        if(Settings.MODO_DEFESA){
+            assertEquals(Settings.DEFESA_MONSTROS,monstros);
+        }else{
+            assertTrue(monstros >= Settings.MONSTROS_FUNDO_MIN);
+            assertTrue(monstros <= Settings.MONSTROS_FUNDO_MAX);
+        }
+
+    }
 }
