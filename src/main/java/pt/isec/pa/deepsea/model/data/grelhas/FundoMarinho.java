@@ -6,6 +6,7 @@ import pt.isec.pa.deepsea.model.data.Utilidades;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.elementos.Componente;
 import pt.isec.pa.deepsea.model.data.elementos.Minerio;
+import pt.isec.pa.deepsea.model.data.elementos.Monstro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,43 @@ public class FundoMarinho {
             }
         }
     }
+    public void gerarMonstros() {
+        int qtdMonstros;
+        List<int[]> livres = getCelulasLivres();
+        List<int[]> posPossiveis = new ArrayList<>();
+        int indice;
+        int [] pos;
+        if (Settings.MODO_DEFESA){
+            qtdMonstros = Settings.DEFESA_MONSTROS;
+            for (int i = 0; i < qtdMonstros; i++){
+                if(livres.isEmpty()){
+                    break;
+                }
+                indice = Utilidades.aleatorio(0,livres.size() - 1);
+                pos =livres.get(indice);
+                grelha[pos[0]][pos[1]].setComponente(new Monstro(pos[0],pos[1]));
+                livres.remove(indice);
+            }
+        }else {
+            qtdMonstros = Utilidades.aleatorio(Settings.MONSTROS_FUNDO_MIN,Settings.MONSTROS_FUNDO_MAX);
+            for (int [] p : livres ){
+                if(!grelha[p[0]][p[1]].isRevelada()){
+                    posPossiveis.add(p);
+                }
+            }
 
+            for (int i = 0; i < qtdMonstros; i++){
+                if(posPossiveis.isEmpty()){
+                    break;
+                }
+                indice = Utilidades.aleatorio(0,posPossiveis.size() - 1);
+                pos = posPossiveis.get(indice);
+                grelha[pos[0]][pos[1]].setComponente(new Monstro(pos[0],pos[1]));
+                posPossiveis.remove(indice);
+            }
+        }
+
+    }
     public List<int[]> getCelulasLivres() {
         List<int[]> lista = new ArrayList<>();
         for (int l = 0; l < linhas; l++){
@@ -106,6 +143,8 @@ public class FundoMarinho {
     public boolean isRevelada(int l, int c) {
         return grelha[l][c].isRevelada();
     }
-
+    public void setRevelada(int l, int c){
+        grelha[l][c].revelar();
+    }
 }
 

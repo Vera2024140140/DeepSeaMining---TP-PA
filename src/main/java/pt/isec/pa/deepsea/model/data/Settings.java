@@ -54,7 +54,6 @@ public class Settings {
     //modo defesa
     public static final int DEFESA_NUM_ARTEFACTOS_LADO = NUM_ARTEFACTOS/2;
     public static final int DEFESA_NUM_ROCHAS_LADO = 1;
-    public static final int DEFESA_OBSTACULOS = 2;
     public static final int DEFESA_MONSTROS = 1;
     public static final int DEFESA_MINERIOS = 2;
     public static final int DEFESA_MINERIO_QTD_MAX = 10;
