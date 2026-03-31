@@ -103,5 +103,9 @@ public class FundoMarinho {
         return null;
     }
 
+    public boolean isRevelada(int l, int c) {
+        return grelha[l][c].isRevelada();
+    }
+
 }
 
