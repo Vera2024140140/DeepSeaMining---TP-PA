@@ -4,7 +4,6 @@ import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Navio {
     private double combustivel;
@@ -81,13 +80,11 @@ public class Navio {
     //metodos de pesquisa por criterios especificos
     public List<Drone> getDronesOrdenadosCombustivel() {
         return drones.stream()
-                .sorted(Comparator.comparingDouble(Drone::getCombustivel))
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparingDouble(Drone::getCombustivel)).toList();
     }
 
     public List<Drone> getDronesOrdenadosIntegridade() {
         return drones.stream()
-                .sorted(Comparator.comparingInt(Drone::getIntegridadeCasco))
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparingInt(Drone::getIntegridadeCasco)).toList();
     }
 }
