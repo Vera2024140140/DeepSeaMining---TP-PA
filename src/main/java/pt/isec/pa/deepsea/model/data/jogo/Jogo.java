@@ -3,8 +3,8 @@ package pt.isec.pa.deepsea.model.data.jogo;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 
 public class Jogo {
-    private Navio navio;
-    private GrelhaSuperficie grelhaSuperficie;
+    private final Navio navio;
+    private final GrelhaSuperficie grelhaSuperficie;
 
     public Jogo() {
         this.grelhaSuperficie = new GrelhaSuperficie();
