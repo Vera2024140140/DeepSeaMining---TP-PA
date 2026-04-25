@@ -27,7 +27,9 @@ public class Navio {
 
         //drones default
         for(int i = 0; i < Settings.NUM_DRONES_INICIAIS; i++) {
-            drones.add(new Drone());
+            Drone d = new Drone();
+            drones.add(d);
+            if (i == 0) this.droneAtivoId = d.getId();  // 1º drone fica ativo
         }
     }
 

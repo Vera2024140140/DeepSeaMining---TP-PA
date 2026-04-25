@@ -3,6 +3,7 @@ package pt.isec.pa.deepsea.model.data.jogo;
 import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import java.util.*;
 
@@ -90,6 +91,23 @@ public class Jogo {
 
     public boolean derrota() {
         return navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
+    }
+
+    // simulação para testes de fim de jogo (PUBLIC APENAS PARA TESTES)
+    public void simularVitoria() {
+        while (navio.getIdsArtefactosNavio().size() < Settings.NUM_ARTEFACTOS) {
+            navio.addArtefacto(new Artefacto(-1, -1));
+        }
+    }
+
+    public void simularNavioSemCombustivel() {
+        navio.setCombustivel(0);
+    }
+
+    public void simularNavioSemDrones() {
+        for (int id : new HashSet<>(navio.getIdsDronesNavio())) {
+            navio.rmDrones(id);
+        }
     }
 
     // mapa completo do fundo (matriz de tipos) para futura UI gráfica
