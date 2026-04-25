@@ -82,7 +82,7 @@ public class Drone {
     // -- CASCO
     public int getIntegridadeCasco() { return integridadeCasco; }
 
-    public void setIntegridadeCasco(int integridadeCasco) {
+    void setIntegridadeCasco(int integridadeCasco) {
         if (integridadeCasco < 0)  {
             this.integridadeCasco = 0;
         } else if (integridadeCasco > this.integridadeMax) {
@@ -91,7 +91,16 @@ public class Drone {
             this.integridadeCasco = integridadeCasco;
         }
     }
-
+    boolean addIntegridade(int integridade){
+        if(integridade <= 0)
+            return false;
+        int integridadeFalta = this.integridadeMax - this.integridadeCasco;
+        if (integridade <= integridadeFalta) {
+            this.integridadeCasco += integridade;
+            return true;
+        }
+        return false;
+    }
     public int getIntegridadeMax() { return integridadeMax; }
 
     public void setIntegridadeMax(int integridadeMax) {
