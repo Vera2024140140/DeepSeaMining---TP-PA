@@ -13,7 +13,7 @@ public abstract class Celula {
         return componente;
     }
 
-    public void setComponente(Componente componente) {
+    void setComponente(Componente componente) {
         this.componente = componente;
     }
 

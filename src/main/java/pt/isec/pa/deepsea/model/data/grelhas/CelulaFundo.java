@@ -17,7 +17,7 @@ public class CelulaFundo extends Celula{
         this.revelada = true;
     }
 
-    public void reset(){
+    void reset(){
         setComponente(null);
         this.revelada = false;
     }
