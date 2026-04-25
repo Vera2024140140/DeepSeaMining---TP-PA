@@ -13,6 +13,7 @@ public interface Settings {
 
     //quantidades e limintes
     int ID_OBSTACULO_INICIAL = 1001;
+    int ID_MONSTRO_INICIAL = 2001;
     int ID_ARTEFACTOS_INICIAL = 1;
     int NUM_DRONES_INICIAIS = 3;
     int NUM_ARTEFACTOS = 16;

@@ -1,7 +1,13 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 
+import pt.isec.pa.deepsea.model.data.TipoComponente;
+
 public class Corrente extends Obstaculo{
     public Corrente (int linha, int coluna){
         super(linha,coluna);
+    }
+    @Override
+    public TipoComponente getTipo(){
+        return TipoComponente.CORRENTE;
     }
 }

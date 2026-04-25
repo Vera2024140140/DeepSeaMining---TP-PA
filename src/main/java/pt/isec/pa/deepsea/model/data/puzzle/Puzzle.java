@@ -25,7 +25,7 @@ public class Puzzle {
         }
     }
 
-    public int [][] getGrelha() {
+    int [][] getGrelha() {
         return grelha;
     }
     public int getMovimentosRestantes() {

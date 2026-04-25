@@ -1,5 +1,7 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 
+import pt.isec.pa.deepsea.model.data.TipoComponente;
+
 public class Minerio extends Componente{
     private int qtd;
 
@@ -9,5 +11,9 @@ public class Minerio extends Componente{
     }
     public int getQtd(){
         return qtd;
+    }
+    @Override
+    public TipoComponente getTipo(){
+        return TipoComponente.MINERIO;
     }
 }

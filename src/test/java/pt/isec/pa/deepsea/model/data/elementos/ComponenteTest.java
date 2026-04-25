@@ -20,8 +20,8 @@ public class ComponenteTest {
         Corrente c1 = new Corrente(1,2);
         AnimalMarinho a3 = new AnimalMarinho(1,3);
 
-        assertEquals(1001,m1.getId());
-        assertEquals(1002,c1.getId());
-        assertEquals(1003,a3.getId());
+        assertEquals(2001,m1.getId());
+        assertEquals(1001,c1.getId());
+        assertEquals(1002,a3.getId());
     }
 }
