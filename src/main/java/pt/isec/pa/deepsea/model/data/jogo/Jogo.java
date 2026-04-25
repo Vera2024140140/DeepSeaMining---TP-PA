@@ -146,6 +146,76 @@ public class Jogo {
         }
     }
 
+    // ===================================================================
+    // --- OFICINA ---
+    // ===================================================================
+    public boolean abastecerDroneAtivo(double litros) {
+        if(litros <= 0)
+            return false;
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null)
+            return false;
+        if(navio.removerCombustivel(litros)){
+            double valor = drone.addCombustivel(litros);
+            if(valor == 0 )
+                return true;
+            else if (valor < litros){
+                navio.addCombustivel(valor);
+                return true;
+            }else{
+                //drone ja estava cheio
+                navio.addCombustivel(valor);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean repararIntegridadeDroneAtivo(int integridade){
+        if(integridade <= 0)
+            return false;
+        Drone drone = navio.getDroneAtivo();
+        if(drone == null || drone.getIntegridadeCasco() >= drone.getIntegridadeMax())
+            return false;
+        if(navio.removerCombustivel(Settings.COMBUSTIVEL_REPARACAO*integridade)){
+            if(drone.addIntegridade(integridade))
+                return true;
+            else{
+                navio.addCombustivel(Settings.COMBUSTIVEL_REPARACAO*integridade);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean melhorarTanqueDroneAtivo(){
+        Drone drone = navio.getDroneAtivo();
+        if(drone == null)
+            return false;
+        if(navio.removerMinerios(Settings.CUSTO_MINERIOS_MELHORAR_TANQUE)){
+            drone.setCombustivelMax(drone.getCombustivelMax() + Settings.INCREMENTO_COMBUSTIVEL_MAX);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean melhorarIntegridadeDroneAtivo(){
+        Drone drone = navio.getDroneAtivo();
+        if(drone == null )
+            return false;
+        if(navio.removerMinerios(Settings.CUSTO_MINERIOS_MELHORAR_INTEGRIDADE)){
+            drone.setIntegridadeMax(drone.getIntegridadeMax() + Settings.INCREMENTO_INTEGRIDADE_MAXIMA);
+            drone.addIntegridade(Settings.INCREMENTO_INTEGRIDADE_MAXIMA);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
     // mapa completo do fundo (matriz de tipos) para futura UI gráfica
     public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
         int nl = grelhaSuperficie.getLinhasFundo(lSup, cSup);

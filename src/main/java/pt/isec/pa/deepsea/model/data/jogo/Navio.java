@@ -63,12 +63,29 @@ public class Navio {
 
     public int getMineriosNavio() { return minerios; }
 
+    boolean removerCombustivel(double combustivel){
+        if(combustivel <= 0)
+            return false;
+        if(this.combustivel >= combustivel){
+            this.combustivel -= combustivel;
+            return true;
+        }
+        return false;
+    }
     public void addMinerios(int qtd) {
         if (qtd > 0) {
             this.minerios += qtd;
         }
     }
-
+    boolean removerMinerios(int qtd){
+        if(qtd <= 0)
+            return false;
+        if(minerios >= qtd){
+            minerios -= qtd;
+            return true;
+        }
+        return false;
+    }
     public List<Integer> getIdsArtefactosNavio() {
         List<Integer> listaIdsArtefactos = new ArrayList<>();
         for(Artefacto artefacto : this.artefactos) {
