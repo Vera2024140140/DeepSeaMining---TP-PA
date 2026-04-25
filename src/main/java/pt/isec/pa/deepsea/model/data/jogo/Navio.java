@@ -15,6 +15,8 @@ public class Navio {
     private int linha;
     private int coluna;
 
+    private int droneAtivoId = 1;
+
     public Navio() {
         this.combustivel = Settings.NAVIO_COMBUSTIVEL_INICIAL;
         this.minerios = 0;
@@ -93,6 +95,30 @@ public class Navio {
     public void rmDrones(int idDrone) {
         //remove caso o id seja ==
         drones.removeIf(d -> d.getId() == idDrone);
+        if (this.droneAtivoId == idDrone) {
+            this.droneAtivoId = -1;
+        }
+    }
+
+    public boolean setDroneAtivo(int idDrone) {
+        for (Drone d : drones) {
+            if (d.getId() == idDrone) {
+                this.droneAtivoId = idDrone;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getDroneAtivoId() {
+        return droneAtivoId;
+    }
+
+    Drone getDroneAtivo() {
+        for (Drone d : drones) {
+            if (d.getId() == droneAtivoId) return d;
+        }
+        return null;
     }
 
     void setCombustivelDrone(int idDrone, double valor) {
