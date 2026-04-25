@@ -177,6 +177,18 @@ public class FundoMarinho {
         grelha[l][c].revelar();
     }
 
+    int contarArtefactos() {
+        int count = 0;
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                if (getTipoComponente(l, c) == TipoComponente.ARTEFACTO) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     boolean removerComponente(int l, int c) {
         if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
             grelha[l][c].setComponente(null);

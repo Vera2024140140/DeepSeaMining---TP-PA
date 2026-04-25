@@ -198,4 +198,18 @@ public class GrelhaSuperficie {
     public void fundoLargarItens(int lSup, int cSup, List<Artefacto> artefactos, int minerios) {
         grelha[lSup][cSup].getFundo().largarItens(artefactos, minerios);
     }
+
+    public int fundoContarArtefactos(int lSup, int cSup) {
+        return grelha[lSup][cSup].getFundo().contarArtefactos();
+    }
+
+    public int[][] getMapaPistasArtefactos() {
+        int[][] pistas = new int[linhas][colunas];
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                pistas[l][c] = grelha[l][c].getFundo().contarArtefactos();
+            }
+        }
+        return pistas;
+    }
 }

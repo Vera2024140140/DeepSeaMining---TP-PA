@@ -227,6 +227,13 @@ public class Jogo {
         return false;
     }
 
+    public int[][] getMapaPistasArtefactos() {
+        return grelhaSuperficie.getMapaPistasArtefactos();
+    }
+
+    public int getNumArtefactosNoFundo() {
+        return grelhaSuperficie.fundoContarArtefactos(navio.getLinha(), navio.getColuna());
+    }
 
     // mapa completo do fundo (matriz de tipos) para futura UI gráfica
     public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
