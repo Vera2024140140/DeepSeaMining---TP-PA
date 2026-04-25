@@ -85,6 +85,34 @@ public class Jogo {
         return false;
     }
 
+    public double getCombustivelDroneAtivo() {
+        if (navio.getDroneAtivo() != null)
+            return navio.getCombustivelDroneAtivo();
+        return 0;
+    }
+
+
+    public int getIntegridadeDroneAtivo() {
+        if (navio.getDroneAtivo() != null)
+            return navio.getIntegridadeDroneAtivo();
+        return 0;
+    }
+
+    //get's de grelhas
+    public String getMapaSuperficie() {
+        return grelhaSuperficie.toString();
+    }
+
+    public TipoComponente[][] getMapaFundo() {
+        //return grelhaFundo.toString();
+        return null;
+    }
+
+    public TipoComponente[][] getMapaFosso() {
+        //return grelhafosso.toString();
+        return  null;
+    }
+
     public boolean vitoria() {
         return navio.getIdsArtefactosNavio().size() >= Settings.NUM_ARTEFACTOS;
     }

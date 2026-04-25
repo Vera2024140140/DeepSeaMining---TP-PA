@@ -165,4 +165,12 @@ public class Navio {
         }
         return listIdsDrones;
     }
+
+    public double getCombustivelDroneAtivo() {
+        return getDroneAtivo().getCombustivel();
+    }
+
+    public int getIntegridadeDroneAtivo() {
+        return getDroneAtivo().getIntegridadeCasco();
+    }
 }

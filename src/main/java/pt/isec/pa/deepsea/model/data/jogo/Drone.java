@@ -129,4 +129,32 @@ public class Drone {
         if (a != null)
             artefactos.add(a);
     }
+
+    public boolean consumirCombustivelDrone(double qtd) {
+        if (qtd <= 0) return false; // nao gasta nada
+
+        if (this.combustivel >= qtd) {
+            this.combustivel -= qtd;
+            return true;
+        } else {
+            this.combustivel = 0; //ficou sem combustivdel
+            return false; // false para o jgo saber que terminou o combustivel
+        }
+    }
+
+    //limpa a qtd de minerios da 'mochila' e retorna-os
+    public int descarregarMinerios() {
+        int mineriosRecolhidos = this.minerios;
+        this.minerios = 0;
+        return mineriosRecolhidos;
+    }
+
+    // devolve a lista de artefctos atual e limpa (a lista)
+    public List<Artefacto> descarregarArtefactos() {
+        //referencia para a lista atual
+        List<Artefacto> artefactosRecolhidos = new ArrayList<>();
+
+        this.artefactos.clear();
+        return  artefactosRecolhidos;
+    }
 }
