@@ -89,6 +89,29 @@ public class Jogo {
         return false;
     }
 
+    public boolean removerDroneAtivo() {
+        int id = navio.getDroneAtivoId();
+        if (id == -1) return false;
+        navio.rmDrones(id);
+        return true;
+    }
+
+    // retira itens do drone ativo e larga-os no fundo (posições aleatórias, cobertas pela escuridão)
+    public void largarItensDroneNoFundo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return;
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        List<Artefacto> artefactos = d.descarregarArtefactos();
+        int minerios = d.descarregarMinerios();
+
+        if (!artefactos.isEmpty() || minerios > 0) {
+            grelhaSuperficie.fundoLargarItens(lSup, cSup, artefactos, minerios);
+        }
+    }
+
     public double getCombustivelDroneAtivo() {
         if (navio.getDroneAtivo() != null)
             return navio.getCombustivelDroneAtivo();
@@ -103,9 +126,6 @@ public class Jogo {
     }
 
     //get's de grelhas
-    public String getMapaSuperficie() {
-        return grelhaSuperficie.toString();
-    }
 
     public TipoComponente[][] getMapaFundo() {
         //return grelhaFundo.toString();

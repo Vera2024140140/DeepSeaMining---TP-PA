@@ -17,4 +17,13 @@ public class FundoState extends DeepSeaStateAdapter {
         jogo.iniciarPuzzle();
         return DeepSeaState.FUNDO_STATE;
     }
+
+    @Override
+    public boolean perderDrone() {
+        if (jogo.removerDroneAtivo()){
+            changeState(DeepSeaState.SUPERFICIE_STATE);
+            return true;
+        }
+        return false;
+    }
 }

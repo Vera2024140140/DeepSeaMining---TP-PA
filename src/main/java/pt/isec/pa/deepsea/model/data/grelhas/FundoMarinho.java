@@ -205,5 +205,36 @@ public class FundoMarinho {
         }
         return null;
     }
+
+    void largarItens(List<Artefacto> artefactos, int minerios) {
+        // esconder a grelha toda
+        esconderTudo();
+
+        for (Artefacto art : artefactos) {
+            List<int[]> livres = getCelulasLivres();
+            if (livres.isEmpty()) break;
+            int i = Utilidades.aleatorio(0, livres.size() - 1);
+            int[] pos = livres.get(i);
+            grelha[pos[0]][pos[1]].setComponente(art);
+        }
+
+        while (minerios > 0) {
+            List<int[]> livres = getCelulasLivres();
+            if (livres.isEmpty()) break;
+            int idx = Utilidades.aleatorio(0, livres.size() - 1);
+            int[] pos = livres.get(idx);
+            int qtd = Math.min(minerios, Utilidades.aleatorio(Settings.MINERIO_QTD_MIN, Settings.MINERIO_QTD_MAX));
+            grelha[pos[0]][pos[1]].setComponente(new Minerio(pos[0], pos[1], qtd));
+            minerios -= qtd;
+        }
+    }
+
+    private void esconderTudo() {
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                grelha[l][c].esconder();
+            }
+        }
+    }
 }
 

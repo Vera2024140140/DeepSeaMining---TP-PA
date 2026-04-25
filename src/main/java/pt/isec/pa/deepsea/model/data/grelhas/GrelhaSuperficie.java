@@ -195,4 +195,7 @@ public class GrelhaSuperficie {
         grelha[lSup][cSup].getFundo().gerarMonstros();
     }
 
+    public void fundoLargarItens(int lSup, int cSup, List<Artefacto> artefactos, int minerios) {
+        grelha[lSup][cSup].getFundo().largarItens(artefactos, minerios);
+    }
 }

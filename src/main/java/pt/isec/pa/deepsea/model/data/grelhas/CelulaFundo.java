@@ -16,4 +16,13 @@ public class CelulaFundo extends Celula{
     void revelar(){
         this.revelada = true;
     }
+
+    void reset(){
+        setComponente(null);
+        this.revelada = false;
+    }
+
+    void esconder(){
+        this.revelada = false;
+    }
 }
