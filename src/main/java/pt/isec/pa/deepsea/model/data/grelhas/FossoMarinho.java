@@ -138,4 +138,20 @@ public class FossoMarinho {
         return null;
     }
 
+    //metodos de colisao
+    public boolean celulaTemRocha(int l, int c) {
+        if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
+
+        return getTipoComponente(l, c) == TipoComponente.ROCHA;
+    }
+
+    public boolean celulaTemAnimal(int l, int c) {
+        if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
+        return  getTipoComponente(l, c) == TipoComponente.ANIMALMARINHO;
+    }
+
+    public boolean celulaTemCorrente(int l, int c) {
+        if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
+        return getTipoComponente(l, c) == TipoComponente.CORRENTE;
+    }
 }

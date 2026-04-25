@@ -4,12 +4,16 @@ import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
+import pt.isec.pa.deepsea.model.data.grelhas.FossoMarinho;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
+import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;
+
 import java.util.*;
 
 public class Jogo {
     private final Navio navio;
     private final GrelhaSuperficie grelhaSuperficie;
+    private Puzzle puzzleAtual = null;
 
     public Jogo() {
         this.grelhaSuperficie = new GrelhaSuperficie();
@@ -69,6 +73,10 @@ public class Jogo {
 
     public int getDroneAtivoId() {
         return navio.getDroneAtivoId();
+    }
+
+    private Drone getDroneAtivo() {
+        return navio.getDroneAtivo();
     }
 
     public boolean podeIniciarDescida() {
@@ -198,5 +206,128 @@ public class Jogo {
             case ARTEFACTO     -> '*';
         };
     }
+
+    public boolean droneChegouFundo() {
+        Drone d =  getDroneAtivo();
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        if (d == null )
+            return false;
+
+        return d.getLinha() >= grelhaSuperficie.getLinhasFosso(lSup, cSup) - 1;
+    }
+
+    //movimentos
+    public boolean moverDroneFosso(Direcao dir) {
+        Drone drone = getDroneAtivo();
+        if (drone == null) return false;
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        //calc pos destino
+        int destinoLinha = drone.getLinha();
+        int destinoColuna = drone.getColuna();
+
+        switch (dir) {
+            case CIMA -> destinoLinha--;
+            case BAIXO -> destinoLinha++;
+            case DIREITA -> destinoColuna++;
+            case ESQUERDA -> destinoColuna--;
+        }
+
+        //ver paredes grelha
+        if (destinoLinha < 0 || destinoLinha >= grelhaSuperficie.getLinhasFosso(lSup, cSup) ||
+                destinoColuna < 0 || destinoColuna >= grelhaSuperficie.getColunasFosso(lSup, cSup)) {
+            return false; //fora do mapa
+        }
+
+        drone.consumirCombustivelDrone(Settings.DRONE_CONSUMO_MOV);
+
+        if (grelhaSuperficie.fossoTemRocha(lSup, cSup, destinoLinha, destinoColuna)) {
+            drone.sofrerImpacto();
+            return true;
+        }
+
+        if (grelhaSuperficie.fossoTemAnimal(lSup, cSup, destinoLinha, destinoColuna)) {
+            drone.sofrerImpacto();
+        }
+
+        if (grelhaSuperficie.fossoTemCorrente(lSup, cSup, destinoLinha, destinoColuna)) {
+            drone.consumirCombustivelDrone(Settings.DRONE_CONSUMO_CORRENTE);
+        }
+        drone.setLocalizacao(destinoLinha, destinoColuna);
+        return true;
+    }
+
+    public boolean droneChegouSuperficie() {
+        Drone d =  getDroneAtivo();
+        if (d == null)
+            return false;
+
+        return  d.getLinha() <= 0;
+    }
+
+    public boolean descarregarDroneNavio() {
+        Drone d =  getDroneAtivo();
+        if (d == null) return false;
+
+        int mineriosRecolhidos = getDroneAtivo().descarregarMinerios();
+        navio.addMinerios(mineriosRecolhidos);
+
+        var artefatosRecolhidos = d.descarregarArtefactos();
+        for (var art : artefatosRecolhidos) {
+            navio.addArtefacto(art);
+        }
+        return true;
+    }
+
+    // ===================================================================
+    // --- PUZZLE ---
+    // ===================================================================
+    public void iniciarPuzzle() {
+        this.puzzleAtual = new Puzzle();
+    }
+
+    public void limparPuzzle() {
+        this.puzzleAtual = null;
+    }
+
+    public boolean moverPecaPuzzle(Direcao dir) {
+        if (puzzleAtual != null) {
+            return puzzleAtual.mover(dir);
+        }
+        return false;
+    }
+
+    public boolean isPuzzleResolvido() {
+        return puzzleAtual != null && puzzleAtual.estaResolvido();
+    }
+
+    public boolean isPuzzleSemMovimentos() {
+        return puzzleAtual != null && puzzleAtual.getMovimentosRestantes() <= 0;
+    }
+
+    public void rescolherArtefactoPuzzle() {
+        Drone d = getDroneAtivo();
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+        if (d != null) {
+            int l = d.getLinha();
+            int c = d.getColuna();
+
+            if (grelhaSuperficie.fundoGetTipo(lSup, cSup, l, c) == TipoComponente.ARTEFACTO) {
+                Artefacto art = grelhaSuperficie.fundoRecolherArtefacto(lSup, cSup, l, c);
+                if (art != null) {
+                    d.addArtefacto(art);
+                }
+            }
+        }
+        limparPuzzle();
+    }
+
 
 }

@@ -164,5 +164,24 @@ public class FundoMarinho {
     public void setRevelada(int l, int c){
         grelha[l][c].revelar();
     }
+
+    public boolean removerComponente(int l, int c) {
+        if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
+            grelha[l][c].setComponente(null);
+            return true;
+        }
+        return false;
+    }
+
+    public Artefacto getArtefacto(int l, int c) {
+        if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
+            Componente comp = grelha[l][c].getComponente();
+
+            if (comp != null && comp.getTipo() == TipoComponente.ARTEFACTO) {
+                return (Artefacto) comp;
+            }
+        }
+        return null; //fora dos limites / vazio / minerio
+    }
 }
 

@@ -167,10 +167,12 @@ public class Navio {
     }
 
     public double getCombustivelDroneAtivo() {
-        return getDroneAtivo().getCombustivel();
+        Drone d  = getDroneAtivo();
+        return d != null ? d.getCombustivel() : 0.0;
     }
 
     public int getIntegridadeDroneAtivo() {
-        return getDroneAtivo().getIntegridadeCasco();
+        Drone d = getDroneAtivo();
+        return d != null ? d.getIntegridadeCasco() : 0;
     }
 }

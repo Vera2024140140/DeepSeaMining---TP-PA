@@ -41,6 +41,7 @@ public interface Settings {
     //mini jogo
     int PUZZLE_MAX_MOVIMENTOS = 50;
     int PUZZLE_GRELHA = 4;
+    int PUZZLE_BARALHAR_GRELHA = 100;
 
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;

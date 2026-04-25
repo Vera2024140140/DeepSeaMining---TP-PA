@@ -6,9 +6,24 @@ import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 
-public class SubidaState extends DeepSeaStateAdapter {
+public class SubidaState extends FossoState {
     public SubidaState(DeepSeaContext context, Jogo jogo) {
         super(context, jogo);
+    }
+
+    @Override
+    protected void verificarFimViagem() {
+        if (jogo.droneChegouSuperficie()) {
+            subirSuperficie();
+        }
+    }
+
+    @Override
+    public boolean subirSuperficie() {
+        jogo.descarregarDroneNavio();
+
+        changeState(DeepSeaState.SUPERFICIE_STATE);
+        return true;
     }
 
     @Override

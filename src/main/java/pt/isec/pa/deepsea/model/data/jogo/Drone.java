@@ -152,7 +152,7 @@ public class Drone {
     // devolve a lista de artefctos atual e limpa (a lista)
     public List<Artefacto> descarregarArtefactos() {
         //referencia para a lista atual
-        List<Artefacto> artefactosRecolhidos = new ArrayList<>();
+        List<Artefacto> artefactosRecolhidos = new ArrayList<>(this.artefactos);
 
         this.artefactos.clear();
         return  artefactosRecolhidos;
