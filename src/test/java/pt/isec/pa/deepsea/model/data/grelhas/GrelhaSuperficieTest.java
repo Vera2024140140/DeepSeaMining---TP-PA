@@ -3,11 +3,9 @@ package pt.isec.pa.deepsea.model.data.grelhas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.Utilidades;
-import pt.isec.pa.deepsea.model.data.elementos.*;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class GrelhaSuperficieTest {
 
@@ -15,7 +13,6 @@ class GrelhaSuperficieTest {
 
     @BeforeEach
     void setUp() {
-        Utilidades.reiniciarContadores();
         grelha = new GrelhaSuperficie();
     }
 
@@ -30,76 +27,44 @@ class GrelhaSuperficieTest {
     }
 
     @Test
-    void getFosso() {
-        FossoMarinho fosso = grelha.getFosso(0,0);
-        assertEquals(Settings.LINHAS_FOSSO, fosso.getLinhas());
-        assertEquals(Settings.COLUNAS_FOSSO, fosso.getColunas());
-
-        for(int l = 0; l < Settings.LINHAS_SUPERFICIE; l++) {
-            for(int c = 0; c < Settings.COLUNAS_SUPERFICIE; c++) {
-                assertNotNull(grelha.getFosso(l, c));
-            }
-        }
+    void dimensoesFosso() {
+        assertEquals(Settings.LINHAS_FOSSO, grelha.getLinhasFosso(0,0));
+        assertEquals(Settings.COLUNAS_FOSSO, grelha.getColunasFosso(0,0));
     }
 
     @Test
-    void getFundo() {
-        FundoMarinho fundo = grelha.getFundo(0,0);
-        assertEquals(Settings.LINHAS_FUNDO, fundo.getLinhas());
-        assertEquals(Settings.COLUNAS_FUNDO, fundo.getColunas());
-
-        for(int l = 0; l < Settings.LINHAS_SUPERFICIE; l++) {
-            for(int c = 0; c < Settings.COLUNAS_SUPERFICIE; c++) {
-                assertNotNull(grelha.getFundo(l, c));
-            }
-        }
+    void dimensoesFundo() {
+        assertEquals(Settings.LINHAS_FUNDO, grelha.getLinhasFundo(0,0));
+        assertEquals(Settings.COLUNAS_FUNDO, grelha.getColunasFundo(0,0));
     }
 
     @Test
-    void geracaoMinerios(){
+    void geracaoMinerios() {
         int nminerios = 0;
+        for (int l = 0; l < grelha.getLinhas(); l++)
+            for (int c = 0; c < grelha.getColunas(); c++)
+                for (int lf = 0; lf < grelha.getLinhasFundo(l, c); lf++)
+                    for (int cf = 0; cf < grelha.getColunasFundo(l, c); cf++)
+                        if (grelha.getTipoNoFundo(l, c, lf, cf) == TipoComponente.MINERIO) nminerios++;
 
-        for (int l = 0; l < grelha.getLinhas(); l++) {
-            for (int c = 0; c < grelha.getColunas(); c++) {
-                FundoMarinho fundo = grelha.getFundo(l, c);
-                for (int lf = 0; lf < fundo.getLinhas(); lf++) {
-                    for (int cf = 0; cf < fundo.getColunas(); cf++) {
-                        if (fundo.getComponente(lf, cf) instanceof Minerio){
-                            nminerios++;
-                        }
-                    }
-                }
-
-            }
-        }
-
-        if (Settings.MODO_DEFESA){
+        if (Settings.MODO_DEFESA)
             assertEquals(Settings.DEFESA_MINERIOS * Settings.LINHAS_SUPERFICIE * Settings.COLUNAS_SUPERFICIE, nminerios);
-        } else {
+        else
             assertTrue(Settings.MINERIO_ZONA_MIN * Settings.LINHAS_SUPERFICIE * Settings.COLUNAS_SUPERFICIE <= nminerios);
-        }
-
     }
 
     @Test
-    void geracaoArtefactos(){
+    void geracaoArtefactos() {
         int nartefactos = 0;
-        for (int l = 0; l < grelha.getLinhas(); l++) {
-            for (int c = 0; c < grelha.getColunas(); c++) {
-                FundoMarinho fundo = grelha.getFundo(l, c);
-                for (int lf = 0; lf < fundo.getLinhas(); lf++) {
-                    for (int cf = 0; cf < fundo.getColunas(); cf++) {
-                        if (fundo.getComponente(lf, cf) instanceof Artefacto){
-                            nartefactos++;
-                        }
-                    }
-                }
-            }
-        }
-        if (Settings.MODO_DEFESA){
+        for (int l = 0; l < grelha.getLinhas(); l++)
+            for (int c = 0; c < grelha.getColunas(); c++)
+                for (int lf = 0; lf < grelha.getLinhasFundo(l, c); lf++)
+                    for (int cf = 0; cf < grelha.getColunasFundo(l, c); cf++)
+                        if (grelha.getTipoNoFundo(l, c, lf, cf) == TipoComponente.ARTEFACTO) nartefactos++;
+
+        if (Settings.MODO_DEFESA)
             assertTrue(Settings.DEFESA_NUM_ARTEFACTOS_LADO * 2 <= nartefactos);
-        } else {
+        else
             assertEquals(Settings.NUM_ARTEFACTOS, nartefactos);
-        }
     }
 }

@@ -10,15 +10,4 @@ public class CelulaFosso extends Celula{
         super();
     }
 
-    public boolean temRocha(){
-        return getComponente() instanceof Rocha;
-    }
-
-    public boolean temCorrente(){
-        return getComponente() instanceof Corrente;
-    }
-
-    public boolean temAnimalMarinho(){
-        return getComponente() instanceof AnimalMarinho;
-    }
 }

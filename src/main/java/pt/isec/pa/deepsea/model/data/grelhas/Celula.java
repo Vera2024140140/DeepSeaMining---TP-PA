@@ -9,7 +9,7 @@ public abstract class Celula {
         this.componente = null;
     }
 
-    public Componente getComponente() {
+    Componente getComponente() {
         return componente;
     }
 

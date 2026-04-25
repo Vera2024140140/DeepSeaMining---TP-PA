@@ -1,6 +1,7 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class GrelhaSuperficie {
             gerarMundoModoDefesa();
         } else {
             gerarArtefactos();
-            gerarMinerios();
         }
     }
 
@@ -38,6 +38,14 @@ public class GrelhaSuperficie {
 
     public int getColunas() {
         return colunas;
+    }
+
+    public TipoComponente getTipoNoFundo(int lSup, int cSup, int lFundo, int cFundo) {
+        return getFundo(lSup, cSup).getTipoComponente(lFundo, cFundo);
+    }
+
+    public TipoComponente getTipoNoFosso(int lSup, int cSup, int lFosso, int cFosso) {
+        return getFosso(lSup, cSup).getTipoComponente(lFosso, cFosso);
     }
 
     private void gerarMundoModoDefesa() {
@@ -84,30 +92,11 @@ public class GrelhaSuperficie {
         }
     }
 
-    private void gerarMinerios() {
-        for (int l = 0; l < linhas; l++){
-            for (int c = 0; c < colunas; c++){
-                FundoMarinho fundo = getFundo(l, c);
-                int numMinerios = Utilidades.aleatorio(Settings.MINERIO_ZONA_MIN, Settings.MINERIO_ZONA_MAX);
-                for (int i = 0; i < numMinerios; i++){
-                    int[] pos = posicaoFundoLivre(fundo);
-                    if(pos == null){
-                        break;
-                    }
-                    int qtd = Utilidades.aleatorio(Settings.MINERIO_QTD_MIN, Settings.MINERIO_QTD_MAX);
-                    if (!fundo.colocarMinerio(pos[0], pos[1], qtd)){
-                        i--;
-                    }
-                }
-            }
-        }
-    }
-
-    public FossoMarinho getFosso(int l, int c) {
+    FossoMarinho getFosso(int l, int c) {
         return grelha[l][c].getFosso();
     }
 
-    public FundoMarinho getFundo(int l, int c) {
+    FundoMarinho getFundo(int l, int c) {
         return grelha[l][c].getFundo();
     }
 
@@ -132,5 +121,21 @@ public class GrelhaSuperficie {
             return null;
         }
         return livres.get(Utilidades.aleatorio(0, livres.size() - 1));
+    }
+
+    public int getLinhasFundo(int l, int c) {
+        return getFundo(l, c).getLinhas();
+    }
+
+    public int getColunasFundo(int l, int c) {
+        return getFundo(l, c).getColunas();
+    }
+
+    public int getLinhasFosso(int l, int c) {
+        return getFosso(l, c).getLinhas();
+    }
+
+    public int getColunasFosso(int l, int c) {
+        return getFosso(l, c).getColunas();
     }
 }

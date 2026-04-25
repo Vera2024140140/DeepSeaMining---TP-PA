@@ -25,6 +25,7 @@ public interface Settings {
     int OBSTACULOS_FOSSO_MIN = 1;
     int MONSTROS_FUNDO_MIN = 1;
     int MONSTROS_FUNDO_MAX = 7;
+    int MINIMO_ROCHAS_LADO = 1;
 
     //combustivel e integridade casco
     double NAVIO_COMBUSTIVEL_INICIAL = 1000;

@@ -1,6 +1,7 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 import pt.isec.pa.deepsea.model.data.elementos.AnimalMarinho;
 import pt.isec.pa.deepsea.model.data.elementos.Componente;
@@ -42,40 +43,24 @@ public class FossoMarinho {
         } else {
 
             // maximo de colunas com rocha por lado (menos de metade - 1)
-            int maxPorLado = Math.max(1, (int)(colunas * Settings.ROCHAS_PERCENTAGEM_MAX / 2) - 1);
+            int maxPorLado = Math.max(Settings.MINIMO_ROCHAS_LADO, (int)(colunas * Settings.ROCHAS_PERCENTAGEM_MAX / 2) - 1);
 
-            int esq = Utilidades.aleatorio(1, maxPorLado);
-            int dir = Utilidades.aleatorio(1, maxPorLado);
+            int esq = Utilidades.aleatorio(Settings.MINIMO_ROCHAS_LADO, maxPorLado);
 
             for (int l=0; l < linhas; l++){
-                esq = variarEspessura(esq, 1, maxPorLado);
-                dir = variarEspessura(dir, 1, maxPorLado);
-
-                // a soma dos dois lados não pode ser maior que 50% para o centro ser navegavel
-                while(esq + dir > (int)(colunas * Settings.ROCHAS_PERCENTAGEM_MAX)){
-                    // igualar os lados
-                    if (esq > dir){
-                        esq--;
-                    } else {
-                        dir--;
-                    }
-
-                    // tem de ter pelo menos 1 coluna
-                    if (esq == 0){
-                        esq = 1;
-                    }
-                    if (dir == 0){
-                        dir = 1;
-                    }
+                if(l > 0){
+                    // variar a espessura das rochas de linha para linha
+                    esq = variarEspessura(esq, maxPorLado);
                 }
 
-                //meter componentes até ao valor gerado de cada lado
-                for (int c = 0; c < dir; c++){
+                // colocar rochas no lado esquerdo
+                for (int c = 0; c < esq; c++) {
                     grelha[l][c].setComponente(new Rocha(l, c));
                 }
-                //dir -> esq
-                for (int c = 0; c < dir; c++){
-                    int col = colunas - c - 1;
+
+                // espelhar simetricamente para o lado direito
+                for (int c = 0; c < esq; c++) {
+                    int col = colunas - 1 - c;
                     grelha[l][col].setComponente(new Rocha(l, col));
                 }
             }
@@ -105,9 +90,18 @@ public class FossoMarinho {
             }
         }
     }
-    private int variarEspessura(int valor, int min, int max) {
-        return Math.max(min, Math.min(max, valor + Utilidades.aleatorio(-1, 1)));
+
+    private int variarEspessura(int valor, int max_lado) {
+        int espessura;
+        // Nao passar maximo
+        // Minimo entre nova espessura e o maximo do lado
+        espessura = Math.min(max_lado, valor + Utilidades.aleatorio(-1, 1));
+
+        // Nao passar minimo
+        // Maximo entre nova espessura e o minimo do lado
+        return Math.max(Settings.MINIMO_ROCHAS_LADO, espessura);
     }
+
     private int[] posicaoFossoLivre() {
         List<int[]> livres =  new ArrayList<>();
         for (int i  = 0; i < linhas; i++ ){
@@ -134,9 +128,12 @@ public class FossoMarinho {
         return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
     }
 
-    public Componente getComponente(int linha, int coluna) {
-        if (dentroLimites(linha, coluna)) {
-            return grelha[linha][coluna].getComponente();
+    TipoComponente getTipoComponente(int lFosso, int cFosso) {
+        if (dentroLimites(lFosso, cFosso)) {
+            Componente comp = grelha[lFosso][cFosso].getComponente();
+            if (comp != null) {
+                return comp.getTipo();
+            }
         }
         return null;
     }

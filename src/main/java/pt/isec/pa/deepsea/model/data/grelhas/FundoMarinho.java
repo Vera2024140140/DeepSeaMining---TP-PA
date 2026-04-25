@@ -2,6 +2,7 @@ package pt.isec.pa.deepsea.model.data.grelhas;
 
 
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.elementos.Componente;
@@ -32,6 +33,8 @@ public class FundoMarinho {
         if (Settings.MODO_DEFESA){
             revelarTudo();
             colocarMineriosModoDefesa();
+        } else {
+            gerarMinerios();
         }
     }
 
@@ -117,6 +120,18 @@ public class FundoMarinho {
         }
     }
 
+    private void gerarMinerios() {
+        int numMinerios = Utilidades.aleatorio(Settings.MINERIO_ZONA_MIN, Settings.MINERIO_ZONA_MAX);
+        for (int i = 0; i < numMinerios; i++) {
+            List<int[]> livres = getCelulasLivres();
+            if (livres.isEmpty()) break;
+            int index = Utilidades.aleatorio(0, livres.size() - 1);
+            int[] pos = livres.get(index);
+            int qtd = Utilidades.aleatorio(Settings.MINERIO_QTD_MIN, Settings.MINERIO_QTD_MAX);
+            grelha[pos[0]][pos[1]].setComponente(new Minerio(pos[0], pos[1], qtd));
+        }
+    }
+
     public boolean colocarMinerio(int linha, int coluna, int qtd) {
         if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()){
             grelha[linha][coluna].setComponente(new Minerio(linha, coluna, qtd));
@@ -133,9 +148,12 @@ public class FundoMarinho {
         return false;
     }
 
-    public Componente getComponente(int linha, int coluna) {
-        if (dentroLimites(linha, coluna)) {
-            return grelha[linha][coluna].getComponente();
+    public TipoComponente getTipoComponente(int lFundo, int cFundo) {
+        if (dentroLimites(lFundo, cFundo)) {
+            Componente comp = grelha[lFundo][cFundo].getComponente();
+            if (comp != null) {
+                return comp.getTipo();
+            }
         }
         return null;
     }
