@@ -1,6 +1,7 @@
 package pt.isec.pa.deepsea.model.state;
 
 import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import java.util.List;
 import java.util.Set;
@@ -138,5 +139,18 @@ public class DeepSeaContext {
     public int getIntegridadeDroneAtivo() {
         return jogo.getIntegridadeDroneAtivo();
     }
+
+    // ===================================================================
+    // ---  Grelhas Fosso/Fundo
+    // ===================================================================
+
+    public TipoComponente[][] getMapaFosso(int lSup, int cSup) {
+        return jogo.getMapaFosso(lSup, cSup);
+    }
+
+    public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
+        return jogo.getMapaFundo(lSup, cSup);
+    }
+
 
 }

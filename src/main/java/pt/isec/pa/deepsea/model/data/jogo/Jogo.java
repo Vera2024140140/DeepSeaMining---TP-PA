@@ -2,6 +2,7 @@ package pt.isec.pa.deepsea.model.data.jogo;
 
 import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import java.util.*;
 
@@ -91,5 +92,65 @@ public class Jogo {
         return navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
     }
 
+    // mapa completo do fundo (matriz de tipos) para futura UI gráfica
+    public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
+        int nl = grelhaSuperficie.getLinhasFundo(lSup, cSup);
+        int nc = grelhaSuperficie.getColunasFundo(lSup, cSup);
+        TipoComponente[][] mapa = new TipoComponente[nl][nc];
+        for (int l = 0; l < nl; l++) {
+            for (int c = 0; c < nc; c++) {
+                mapa[l][c] = grelhaSuperficie.getTipoNoFundo(lSup, cSup, l, c);
+            }
+        }
+        return mapa;
+    }
+
+    // mapa completo do fosso (matriz de tipos) para futura UI gráfica
+    public TipoComponente[][] getMapaFosso(int lSup, int cSup) {
+        int nl = grelhaSuperficie.getLinhasFosso(lSup, cSup);
+        int nc = grelhaSuperficie.getColunasFosso(lSup, cSup);
+        TipoComponente[][] mapa = new TipoComponente[nl][nc];
+        for (int l = 0; l < nl; l++) {
+            for (int c = 0; c < nc; c++) {
+                mapa[l][c] = grelhaSuperficie.getTipoNoFosso(lSup, cSup, l, c);
+            }
+        }
+        return mapa;
+    }
+
+    // mapa do fundo da célula onde o navio está
+    public TipoComponente[][] getMapaFundoNavio() {
+        return getMapaFundo(navio.getLinha(), navio.getColuna());
+    }
+
+    // mapa do fosso da célula onde o navio está
+    public TipoComponente[][] getMapaFossoNavio() {
+        return getMapaFosso(navio.getLinha(), navio.getColuna());
+    }
+
+
+    private String mapaParaString(TipoComponente[][] mapa) {
+        StringBuilder sb = new StringBuilder();
+        for (TipoComponente[] linha : mapa) {
+            for (TipoComponente tipo : linha) {
+                sb.append(simbolo(tipo));
+            }
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+
+    // mapeia cada tipo de componente ao char usado na UI de texto
+    private char simbolo(TipoComponente tipo) {
+        if (tipo == null) return '_';
+        return switch (tipo) {
+            case ROCHA         -> 'R';
+            case MINERIO       -> 'M';
+            case CORRENTE      -> 'C';
+            case ANIMALMARINHO -> 'A';
+            case MONSTRO       -> '#';
+            case ARTEFACTO     -> '*';
+        };
+    }
 
 }
