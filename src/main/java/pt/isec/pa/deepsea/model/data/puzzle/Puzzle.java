@@ -5,7 +5,7 @@ import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 
 public class Puzzle {
-    private int grelha [][];
+    private int [][] grelha ;
     private int movimentosRestantes;
 
     public Puzzle() {
@@ -19,7 +19,7 @@ public class Puzzle {
         int numeros = 1;
         for(int i = 0; i < Settings.PUZZLE_GRELHA; i++){
             for (int j = 0; j < Settings.PUZZLE_GRELHA; j++){
-                //celula do canto inferior direito
+                //célula do canto inferior direito
                 if (i == Settings.PUZZLE_GRELHA - 1 && j == Settings.PUZZLE_GRELHA - 1){
                     this.grelha[i][j] = 0;
                 }else{
@@ -37,13 +37,13 @@ public class Puzzle {
         return movimentosRestantes;
     }
 
-    public void decrementarMovimentos() {
+    void decrementarMovimentos() {
         if (movimentosRestantes > 0) {
             movimentosRestantes--;
         }
     }
 
-    public void resetMovimentos() {
+    void resetMovimentos() {
         this.movimentosRestantes = Settings.PUZZLE_MAX_MOVIMENTOS;
     }
 
@@ -97,7 +97,7 @@ public class Puzzle {
     }
 
 
-    //verificar se o puzzle já está por ordem
+    //verificar se o ‘puzzle’ já está por ordem
     public  boolean estaResolvido() {
         int esperado = 1;
         for(int l = 0; l < Settings.PUZZLE_GRELHA; l++){

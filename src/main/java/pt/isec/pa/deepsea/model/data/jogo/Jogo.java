@@ -71,10 +71,6 @@ public class Jogo {
         return navio.setDroneAtivo(idDrone);
     }
 
-    public int getDroneAtivoId() {
-        return navio.getDroneAtivoId();
-    }
-
     private Drone getDroneAtivo() {
         return navio.getDroneAtivo();
     }
@@ -87,7 +83,7 @@ public class Jogo {
     public boolean meteDroneNoFosso() {
         Drone d = navio.getDroneAtivo();
         if (d != null) {
-            d.setLocalizacao(0, navio.getColuna());
+            d.setLocalizacao(0, grelhaSuperficie.getColunasFosso(navio.getLinha(),navio.getColuna()) / 2);
             return true;
         }
         return false;
@@ -210,10 +206,6 @@ public class Jogo {
         }
         return false;
     }
-
-
-
-
 
 
     // mapa completo do fundo (matriz de tipos) para futura UI gráfica
@@ -354,6 +346,13 @@ public class Jogo {
         return true;
     }
 
+    public void gerarMonstros() {
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        grelhaSuperficie.gerarMonstros(lSup, cSup);
+    }
+
     // ===================================================================
     // --- PUZZLE ---
     // ===================================================================
@@ -380,11 +379,12 @@ public class Jogo {
         return puzzleAtual != null && puzzleAtual.getMovimentosRestantes() <= 0;
     }
 
-    public void rescolherArtefactoPuzzle() {
+    public void recolherArtefactoPuzzle() {
         Drone d = getDroneAtivo();
 
         int lSup = navio.getLinha();
         int cSup = navio.getColuna();
+
         if (d != null) {
             int l = d.getLinha();
             int c = d.getColuna();
@@ -398,6 +398,5 @@ public class Jogo {
         }
         limparPuzzle();
     }
-
 
 }

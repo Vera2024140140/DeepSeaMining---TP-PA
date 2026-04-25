@@ -9,16 +9,11 @@ public class CelulaFundo extends Celula{
         this.revelada = false;
     }
 
-    public boolean isRevelada(){
+    boolean isRevelada(){
         return revelada;
     }
 
-    public void revelar(){
+    void revelar(){
         this.revelada = true;
-    }
-
-    void reset(){
-        setComponente(null);
-        this.revelada = false;
     }
 }

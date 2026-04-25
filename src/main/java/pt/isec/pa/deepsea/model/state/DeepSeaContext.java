@@ -148,10 +148,6 @@ public class DeepSeaContext {
         return jogo.getMapaFosso(lSup, cSup);
     }
 
-    public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
-        return jogo.getMapaFundo(lSup, cSup);
-    }
-
     // ===================================================================
     // ---  Grelhas Superficie/Fosso/Fundo
     // ===================================================================
@@ -159,9 +155,6 @@ public class DeepSeaContext {
         return jogo.getMapaSuperficie();
     }
 
-    public TipoComponente[][] getMapaFosso(int lSup, int cSup) {
-        return jogo.getMapaFosso(lSup, cSup);
-    }
 
     public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
         return jogo.getMapaFundo(lSup, cSup);

@@ -14,6 +14,7 @@ public class FundoState extends DeepSeaStateAdapter {
 
     @Override
     public DeepSeaState getState() {
+        jogo.iniciarPuzzle();
         return DeepSeaState.FUNDO_STATE;
     }
 }

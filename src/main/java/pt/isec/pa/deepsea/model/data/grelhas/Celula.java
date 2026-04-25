@@ -17,7 +17,7 @@ public abstract class Celula {
         this.componente = componente;
     }
 
-    public boolean isEmpty(){
+    boolean isEmpty(){
         return componente == null;
     }
 

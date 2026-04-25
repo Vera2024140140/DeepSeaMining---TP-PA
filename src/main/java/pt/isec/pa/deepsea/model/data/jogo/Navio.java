@@ -34,25 +34,25 @@ public class Navio {
     }
 
     // -- LOCALIZAÇAO
-    public int getLinha() { return linha; }
+    int getLinha() { return linha; }
 
-    public int getColuna() { return coluna; }
+    int getColuna() { return coluna; }
 
-    public void setLocalizacao(int linha, int coluna) {
+    void setLocalizacao(int linha, int coluna) {
         this.linha = linha;
         this.coluna = coluna;
     }
 
-    public double getCombustivelNavio() { return combustivel; }
+    double getCombustivelNavio() { return combustivel; }
 
     //setter puro
-    public void setCombustivel(double combustivel) {
+    void setCombustivel(double combustivel) {
         if (combustivel >= 0 && combustivel <= Settings.NAVIO_COMBUSTIVEL_MAX ) {
             this.combustivel = combustivel;
         }
     }
 
-    public void addCombustivel(double combustivel) {
+    void addCombustivel(double combustivel) {
         if (combustivel > 0 ) {
             this.combustivel += combustivel;
             if (this.combustivel > Settings.NAVIO_COMBUSTIVEL_MAX) {
@@ -61,7 +61,7 @@ public class Navio {
         }
     }
 
-    public int getMineriosNavio() { return minerios; }
+    int getMineriosNavio() { return minerios; }
 
     boolean removerCombustivel(double combustivel){
         if(combustivel <= 0)
@@ -72,11 +72,13 @@ public class Navio {
         }
         return false;
     }
-    public void addMinerios(int qtd) {
+
+    void addMinerios(int qtd) {
         if (qtd > 0) {
             this.minerios += qtd;
         }
     }
+
     boolean removerMinerios(int qtd){
         if(qtd <= 0)
             return false;
@@ -86,7 +88,8 @@ public class Navio {
         }
         return false;
     }
-    public List<Integer> getIdsArtefactosNavio() {
+
+    List<Integer> getIdsArtefactosNavio() {
         List<Integer> listaIdsArtefactos = new ArrayList<>();
         for(Artefacto artefacto : this.artefactos) {
             listaIdsArtefactos.add(artefacto.getId());
@@ -94,13 +97,13 @@ public class Navio {
         return listaIdsArtefactos;
     }
 
-    public void addArtefacto(Artefacto a) {
+    void addArtefacto(Artefacto a) {
         if (a != null)
             artefactos.add(a);
     }
 
     // -- DRONES
-    public Set<Integer> getIdsDronesNavio() {
+    Set<Integer> getIdsDronesNavio() {
         //copia da lista
         Set<Integer> set_drones = new HashSet<>();
 
@@ -111,7 +114,7 @@ public class Navio {
     }
 
     //quando os mesmos são perdids pq ficaram sem combustivel por ex
-    public void rmDrones(int idDrone) {
+    void rmDrones(int idDrone) {
         //remove caso o id seja ==
         drones.removeIf(d -> d.getId() == idDrone);
         if (this.droneAtivoId == idDrone) {
@@ -119,7 +122,7 @@ public class Navio {
         }
     }
 
-    public boolean setDroneAtivo(int idDrone) {
+    boolean setDroneAtivo(int idDrone) {
         for (Drone d : drones) {
             if (d.getId() == idDrone) {
                 this.droneAtivoId = idDrone;
@@ -129,7 +132,7 @@ public class Navio {
         return false;
     }
 
-    public int getDroneAtivoId() {
+     int getDroneAtivoId() {
         return droneAtivoId;
     }
 
@@ -159,7 +162,7 @@ public class Navio {
     }
 
     //metodos de pesquisa por criterios especificos
-    public List<Integer> getDronesOrdenadosCombustivel() {
+    List<Integer> getDronesOrdenadosCombustivel() {
         List<Drone> dronesOrdenados = new ArrayList<>(this.drones);
 
         dronesOrdenados.sort(Comparator.comparingDouble(Drone::getCombustivel));
@@ -171,7 +174,7 @@ public class Navio {
         return listIdsDrones;
     }
 
-    public List<Integer> getDronesOrdenadosIntegridade() {
+    List<Integer> getDronesOrdenadosIntegridade() {
         List<Drone> dronesOrdenados = new ArrayList<>(this.drones);
 
         dronesOrdenados.sort(Comparator.comparingInt(Drone::getIntegridadeCasco));
@@ -183,12 +186,12 @@ public class Navio {
         return listIdsDrones;
     }
 
-    public double getCombustivelDroneAtivo() {
+    double getCombustivelDroneAtivo() {
         Drone d  = getDroneAtivo();
         return d != null ? d.getCombustivel() : 0.0;
     }
 
-    public int getIntegridadeDroneAtivo() {
+    int getIntegridadeDroneAtivo() {
         Drone d = getDroneAtivo();
         return d != null ? d.getIntegridadeCasco() : 0;
     }

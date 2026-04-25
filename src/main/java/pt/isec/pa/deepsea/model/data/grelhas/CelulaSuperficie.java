@@ -10,11 +10,11 @@ public class CelulaSuperficie {
         this.fundo = new FundoMarinho();
     }
 
-    public FossoMarinho getFosso(){
+    FossoMarinho getFosso(){
         return fosso;
     }
 
-    public FundoMarinho getFundo(){
+    FundoMarinho getFundo(){
         return fundo;
     }
 }

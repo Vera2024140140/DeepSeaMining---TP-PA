@@ -29,7 +29,7 @@ public class PuzzleState extends DeepSeaStateAdapter {
     //transicao de saida
     @Override
     public boolean fimPuzzle() {
-        jogo.rescolherArtefactoPuzzle(); //recolher o artefacto e limpa o puzzle da memoria
+        jogo.recolherArtefactoPuzzle(); //recolher o artefacto e limpa o puzzle da memoria
 
         changeState(DeepSeaState.FUNDO_STATE);
         return true;
@@ -37,7 +37,7 @@ public class PuzzleState extends DeepSeaStateAdapter {
 
     @Override
     public boolean iniciarSubida() {
-        jogo.limparPuzzle(); //quando perde limpa o puzzle da memoria
+        jogo.limparPuzzle(); //quando perde limpa o puzzle da memória
         changeState(DeepSeaState.SUBIDA_STATE);
         return true;
     }

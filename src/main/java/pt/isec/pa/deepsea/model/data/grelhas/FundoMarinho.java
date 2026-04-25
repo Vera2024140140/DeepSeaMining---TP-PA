@@ -38,11 +38,11 @@ public class FundoMarinho {
         }
     }
 
-    public int getLinhas() {
+    int getLinhas() {
         return linhas;
     }
 
-    public int getColunas() {
+    int getColunas() {
         return colunas;
     }
 
@@ -59,6 +59,16 @@ public class FundoMarinho {
         List<int[]> posPossiveis = new ArrayList<>();
         int indice;
         int [] pos;
+
+        //limpar mosntros antigos
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                if (getTipoComponente(l, c) == TipoComponente.MONSTRO) {
+                    grelha[l][c].setComponente(null);
+                }
+            }
+        }
+
         if (Settings.MODO_DEFESA){
             qtdMonstros = Settings.DEFESA_MONSTROS;
             for (int i = 0; i < qtdMonstros; i++){
@@ -70,7 +80,7 @@ public class FundoMarinho {
                 grelha[pos[0]][pos[1]].setComponente(new Monstro(pos[0],pos[1]));
                 livres.remove(indice);
             }
-        }else {
+        } else {
             qtdMonstros = Utilidades.aleatorio(Settings.MONSTROS_FUNDO_MIN,Settings.MONSTROS_FUNDO_MAX);
             for (int [] p : livres ){
                 if(!grelha[p[0]][p[1]].isRevelada()){
@@ -90,7 +100,8 @@ public class FundoMarinho {
         }
 
     }
-    public List<int[]> getCelulasLivres() {
+
+    List<int[]> getCelulasLivres() {
         List<int[]> lista = new ArrayList<>();
         for (int l = 0; l < linhas; l++){
             for (int c = 0; c < colunas; c++){
@@ -132,7 +143,7 @@ public class FundoMarinho {
         }
     }
 
-    public boolean colocarMinerio(int linha, int coluna, int qtd) {
+    boolean colocarMinerio(int linha, int coluna, int qtd) {
         if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()){
             grelha[linha][coluna].setComponente(new Minerio(linha, coluna, qtd));
             return true;
@@ -140,7 +151,7 @@ public class FundoMarinho {
         return false;
     }
 
-    public boolean colocarArtefacto(int linha, int coluna) {
+    boolean colocarArtefacto(int linha, int coluna) {
         if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()) {
             grelha[linha][coluna].setComponente(new Artefacto(linha, coluna));
             return true;
@@ -148,7 +159,7 @@ public class FundoMarinho {
         return false;
     }
 
-    public TipoComponente getTipoComponente(int lFundo, int cFundo) {
+    TipoComponente getTipoComponente(int lFundo, int cFundo) {
         if (dentroLimites(lFundo, cFundo)) {
             Componente comp = grelha[lFundo][cFundo].getComponente();
             if (comp != null) {
@@ -158,14 +169,15 @@ public class FundoMarinho {
         return null;
     }
 
-    public boolean isRevelada(int l, int c) {
+    boolean isRevelada(int l, int c) {
         return grelha[l][c].isRevelada();
     }
-    public void setRevelada(int l, int c){
+
+    void setRevelada(int l, int c){
         grelha[l][c].revelar();
     }
 
-    public boolean removerComponente(int l, int c) {
+    boolean removerComponente(int l, int c) {
         if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
             grelha[l][c].setComponente(null);
             return true;
@@ -173,7 +185,7 @@ public class FundoMarinho {
         return false;
     }
 
-    public Artefacto getArtefacto(int l, int c) {
+    Artefacto getArtefacto(int l, int c) {
         if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
             Componente comp = grelha[l][c].getComponente();
 
@@ -182,6 +194,16 @@ public class FundoMarinho {
             }
         }
         return null; //fora dos limites / vazio / minerio
+    }
+
+    Minerio getMinerio(int l, int c) {
+        if (l >= 0 && l < linhas && c >= 0 && c < colunas) {
+            Componente comp = grelha[l][c].getComponente();
+            if (comp != null && comp.getTipo() == TipoComponente.MINERIO) {
+                return (Minerio) comp;
+            }
+        }
+        return null;
     }
 }
 

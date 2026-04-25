@@ -3,8 +3,8 @@ package pt.isec.pa.deepsea.model.data.elementos;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
 
 public abstract class Componente {
-    private int linha;
-    private int coluna;
+    private final int linha;
+    private final int coluna;
 
     public Componente (int linha, int coluna){
         this.linha = linha;

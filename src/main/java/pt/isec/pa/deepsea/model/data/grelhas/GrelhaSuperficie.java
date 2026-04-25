@@ -3,6 +3,8 @@ package pt.isec.pa.deepsea.model.data.grelhas;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
+import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
+import pt.isec.pa.deepsea.model.data.elementos.Minerio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,4 +140,59 @@ public class GrelhaSuperficie {
     public int getColunasFosso(int l, int c) {
         return getFosso(l, c).getColunas();
     }
+
+    //===================================================================
+    // --- metodos facade (fosso) ---
+    //===================================================================
+
+    public boolean fossoTemRocha(int lSup, int cSup, int lF, int cF) {
+        return grelha[lSup][cSup].getFosso().celulaTemRocha(lF, cF);
+    }
+    public boolean fossoTemAnimal(int lSup, int cSup, int lF, int cF) {
+        return grelha[lSup][cSup].getFosso().celulaTemAnimal(lF, cF);
+    }
+    public boolean fossoTemCorrente(int lSup, int cSup, int lF, int cF) {
+        return grelha[lSup][cSup].getFosso().celulaTemCorrente(lF, cF);
+    }
+
+    //===================================================================
+    // --- metodos facade (fundo) ---
+    //===================================================================
+    // --- FACHADA FUNDO (adicionar à GrelhaSuperficie) ---
+
+    public boolean fundoIsRevelada(int lSup, int cSup, int lF, int cF) {
+        return grelha[lSup][cSup].getFundo().isRevelada(lF, cF);
+    }
+
+    public void fundoRevelar(int lSup, int cSup, int lF, int cF) {
+        grelha[lSup][cSup].getFundo().setRevelada(lF, cF);
+    }
+
+    public TipoComponente fundoGetTipo(int lSup, int cSup, int lF, int cF) {
+        return grelha[lSup][cSup].getFundo().getTipoComponente(lF, cF);
+    }
+
+    public Artefacto fundoRecolherArtefacto(int lSup, int cSup, int lF, int cF) {
+        FundoMarinho fundo = grelha[lSup][cSup].getFundo();
+        Artefacto art = fundo.getArtefacto(lF, cF);
+        if (art != null) {
+            fundo.removerComponente(lF, cF);
+        }
+        return art;
+    }
+
+    public int fundoRecolherMinerio(int lSup, int cSup, int lF, int cF) {
+        FundoMarinho fundo = grelha[lSup][cSup].getFundo();
+        Minerio min = fundo.getMinerio(lF, cF);
+        if (min != null) {
+            fundo.removerComponente(lF, cF);
+            return min.getQtd();
+        }
+        return 0;
+    }
+
+    public void gerarMonstros(int lSup, int cSup) {
+        grelha[lSup][cSup].getFundo().gerarMonstros();
+    }
+
 }

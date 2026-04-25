@@ -66,7 +66,8 @@ public class FossoMarinho {
             }
         }
     }
-    public void gerarObstaculos() {
+
+    void gerarObstaculos() {
         if (Settings.MODO_DEFESA){
             int centrolinha = Settings.LINHAS_FOSSO / 2;
             int centrocoluna = Settings.COLUNAS_FOSSO / 2;
@@ -116,11 +117,12 @@ public class FossoMarinho {
         }
         return livres.get(Utilidades.aleatorio(0, livres.size() - 1));
     }
-    public int getLinhas() {
+
+    int getLinhas() {
         return linhas;
     }
 
-    public int getColunas() {
+    int getColunas() {
         return colunas;
     }
 
@@ -138,19 +140,19 @@ public class FossoMarinho {
         return null;
     }
 
-    //metodos de colisao
-    public boolean celulaTemRocha(int l, int c) {
+    //métodos de colisão
+    boolean celulaTemRocha(int l, int c) {
         if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
 
         return getTipoComponente(l, c) == TipoComponente.ROCHA;
     }
 
-    public boolean celulaTemAnimal(int l, int c) {
+    boolean celulaTemAnimal(int l, int c) {
         if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
         return  getTipoComponente(l, c) == TipoComponente.ANIMALMARINHO;
     }
 
-    public boolean celulaTemCorrente(int l, int c) {
+    boolean celulaTemCorrente(int l, int c) {
         if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
         return getTipoComponente(l, c) == TipoComponente.CORRENTE;
     }

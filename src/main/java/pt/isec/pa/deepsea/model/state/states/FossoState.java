@@ -21,7 +21,7 @@ public abstract class FossoState extends DeepSeaStateAdapter {
         if (!moveu) return false;
 
         //verifica se o drone morreu
-        if ((jogo.getCombustivelDroneAtivo() <= 0) && (jogo.getIntegridadeDroneAtivo() < 0)) {
+        if ((jogo.getCombustivelDroneAtivo() <= 0) && (jogo.getIntegridadeDroneAtivo() <= 0)) {
             //remover drone do hash set
             perderDrone();
             return true;
@@ -31,8 +31,12 @@ public abstract class FossoState extends DeepSeaStateAdapter {
 
     @Override
     public boolean perderDrone() {
-        changeState(DeepSeaState.SUPERFICIE_STATE);
-        return true;
+        jogo.largarItensDroneNoFundo();
+        if (jogo.removerDroneAtivo()){
+            changeState(DeepSeaState.SUPERFICIE_STATE);
+            return true;
+        }
+        return false;
     }
 
     //metodo implementado por Subida/Descida (classes filhas)

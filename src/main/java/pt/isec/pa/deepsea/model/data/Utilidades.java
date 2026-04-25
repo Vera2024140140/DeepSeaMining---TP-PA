@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Utilidades {
 
-    private Utilidades(){};
+    private Utilidades(){}
 
     private static final Random random = new Random();
 
@@ -14,9 +14,6 @@ public class Utilidades {
         return min + random.nextInt(max - min + 1);
     }
 
-    public static Random getRandom() {
-        return random;
-    }
     public static double probAleatoria () {
         return  random.nextDouble();
     }

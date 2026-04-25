@@ -37,20 +37,20 @@ public class Drone {
         this.id = contadorIds++;
     }
 
-    public int getId() {
+    int getId() {
         return this.id;
     }
 
     // -- COMBUSTIVEL
     public double getCombustivel() { return combustivel; }
 
-    public void setCombustivel(double combustivel) {
+    void setCombustivel(double combustivel) {
         if (combustivel >= 0 && combustivel <= this.combustivelMax) {
             this.combustivel = combustivel;
         }
     }
 
-    public double addCombustivel(double combustivel) {
+    double addCombustivel(double combustivel) {
         if (combustivel <= 0)
             return combustivel;
 
@@ -91,6 +91,7 @@ public class Drone {
             this.integridadeCasco = integridadeCasco;
         }
     }
+
     boolean addIntegridade(int integridade){
         if(integridade <= 0)
             return false;
@@ -101,9 +102,10 @@ public class Drone {
         }
         return false;
     }
+
     public int getIntegridadeMax() { return integridadeMax; }
 
-    public void setIntegridadeMax(int integridadeMax) {
+    void setIntegridadeMax(int integridadeMax) {
         this.integridadeMax = integridadeMax;
     }
 
@@ -113,7 +115,7 @@ public class Drone {
 
     public int getColuna() { return coluna; }
 
-    public void setLocalizacao(int linha, int coluna) {
+    void setLocalizacao(int linha, int coluna) {
         this.linha = linha;
         this.coluna = coluna;
     }
@@ -121,7 +123,7 @@ public class Drone {
     // -- MINERIOS
     public int getMinerios() { return minerios; }
 
-    public void addMinerios() {
+    void addMinerios() {
         this.minerios++;
     }
 
@@ -134,12 +136,12 @@ public class Drone {
         return listaIdsArtefcactos;
     }
 
-    public void addArtefacto(Artefacto a) {
+    void addArtefacto(Artefacto a) {
         if (a != null)
             artefactos.add(a);
     }
 
-    public boolean consumirCombustivelDrone(double qtd) {
+    boolean consumirCombustivelDrone(double qtd) {
         if (qtd <= 0) return false; // nao gasta nada
 
         if (this.combustivel >= qtd) {
@@ -152,14 +154,14 @@ public class Drone {
     }
 
     //limpa a qtd de minerios da 'mochila' e retorna-os
-    public int descarregarMinerios() {
+    int descarregarMinerios() {
         int mineriosRecolhidos = this.minerios;
         this.minerios = 0;
         return mineriosRecolhidos;
     }
 
     // devolve a lista de artefctos atual e limpa (a lista)
-    public List<Artefacto> descarregarArtefactos() {
+    List<Artefacto> descarregarArtefactos() {
         //referencia para a lista atual
         List<Artefacto> artefactosRecolhidos = new ArrayList<>(this.artefactos);
 
