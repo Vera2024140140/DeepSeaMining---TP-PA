@@ -272,30 +272,10 @@ public class Jogo {
     }
 
 
-    private String mapaParaString(TipoComponente[][] mapa) {
-        StringBuilder sb = new StringBuilder();
-        for (TipoComponente[] linha : mapa) {
-            for (TipoComponente tipo : linha) {
-                sb.append(simbolo(tipo));
-            }
-            sb.append('\n');
-        }
-        return sb.toString();
-    }
 
-    // mapeia cada tipo de componente ao char usado na UI de texto
-    private char simbolo(TipoComponente tipo) {
-        if (tipo == null) return '_';
-        return switch (tipo) {
-            case ROCHA         -> 'R';
-            case MINERIO       -> 'M';
-            case CORRENTE      -> 'C';
-            case ANIMALMARINHO -> 'A';
-            case MONSTRO       -> '#';
-            case ARTEFACTO     -> '*';
-        };
-    }
-
+    // ===================================================================
+    // --- MOVIMENTO ---
+    // ===================================================================
     public boolean droneChegouFundo() {
         Drone d =  getDroneAtivo();
 
@@ -308,7 +288,6 @@ public class Jogo {
         return d.getLinha() >= grelhaSuperficie.getLinhasFosso(lSup, cSup) - 1;
     }
 
-    //movimentos
     public boolean moverDroneFosso(Direcao dir) {
         Drone drone = getDroneAtivo();
         if (drone == null) return false;
@@ -350,15 +329,56 @@ public class Jogo {
         drone.setLocalizacao(destinoLinha, destinoColuna);
         return true;
     }
+    public boolean moverDroneFundo(Direcao dir) {
+        if(dir == null) return false;
+        Drone drone = navio.getDroneAtivo();
 
-    public boolean droneChegouSuperficie() {
-        Drone d =  getDroneAtivo();
-        if (d == null)
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        if (drone == null) return false;
+
+        int novaLinha = drone.getLinha();
+        int novaColuna = drone.getColuna();
+
+        switch (dir) {
+            case CIMA -> novaLinha--;
+            case BAIXO -> novaLinha++;
+            case DIREITA -> novaColuna++;
+            case ESQUERDA -> novaColuna--;
+        }
+        if (novaLinha < 0 || novaLinha >= Settings.LINHAS_FUNDO || novaColuna < 0 || novaColuna >= Settings.COLUNAS_FUNDO) {
             return false;
+        }
+        if (drone.getCombustivel() < Settings.DRONE_CONSUMO_MOV) {
+            return false; // Sem combustivel suficiente para andar
+        }
+        drone.consumirCombustivelDrone(Settings.DRONE_CONSUMO_MOV);
+        drone.setLocalizacao(novaLinha, novaColuna);
+        if (!grelhaSuperficie.fundoIsRevelada(lSup, cSup, novaLinha, novaColuna))
+            grelhaSuperficie.fundoRevelar(lSup, cSup, novaLinha, novaColuna);
+        TipoComponente tipo = grelhaSuperficie.fundoGetTipo(lSup, cSup, novaLinha, novaColuna);
 
-        return  d.getLinha() <= 0;
+        if(tipo == TipoComponente.MONSTRO){
+            drone.sofrerImpacto();
+        }
+        return true;
     }
-
+    public boolean meteDroneNoFundo() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone != null) {
+            drone.setLocalizacao( 0, grelhaSuperficie.getColunasFundo(navio.getLinha(), navio.getColuna()) / 2);
+            return true;
+        }
+        return false;
+    }
+    public boolean droneNoTopo(){
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) {
+            return false;
+        }
+        return drone.getLinha() == 0;
+    }
     public boolean descarregarDroneNavio() {
         Drone d =  getDroneAtivo();
         if (d == null) return false;
@@ -373,6 +393,48 @@ public class Jogo {
         return true;
     }
 
+    public boolean recolherMinerio() {
+        Drone drone = navio.getDroneAtivo();
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        if (drone == null) return false;
+
+        int linha = drone.getLinha();
+        int coluna = drone.getColuna();
+
+        TipoComponente tipo = grelhaSuperficie.getTipoNoFundo(lSup, cSup, linha, coluna);
+        if (tipo == TipoComponente.MINERIO) {
+            //  Calcular o custo (1% do combistivel maximo)
+            double custoExtra = Settings.DRONE_COMBUSTIVEL_MAX * Settings.CONSUMO_EXTRA_MINERIO;
+            if (drone.getCombustivel() >= custoExtra) {
+                drone.consumirCombustivelDrone(custoExtra);
+                //remover minerios
+                int qtd_minerios = grelhaSuperficie.fundoRecolherMinerio(lSup, cSup, linha, coluna);
+                if (qtd_minerios > 0) {
+                    if (drone.addMinerios(qtd_minerios)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false; //Nao recolheu minerio
+    }
+
+    public boolean verificarArtefacto() {
+        Drone drone = navio.getDroneAtivo();
+
+        if (drone == null) return false;
+
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+
+        int linha = drone.getLinha();
+        int coluna = drone.getColuna();
+
+        return grelhaSuperficie.fundoGetTipo(lSup, cSup, linha, coluna) == TipoComponente.ARTEFACTO;
+    }
     public void gerarMonstros() {
         int lSup = navio.getLinha();
         int cSup = navio.getColuna();

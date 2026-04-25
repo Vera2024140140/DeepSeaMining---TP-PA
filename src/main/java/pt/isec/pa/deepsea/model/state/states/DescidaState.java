@@ -20,6 +20,8 @@ public class DescidaState extends FossoState {
 
     @Override
     public boolean chegarFundo() {
+        if(!jogo.meteDroneNoFundo())
+            return false;
         jogo.gerarMonstros();
         changeState(DeepSeaState.FUNDO_STATE);
         return true;

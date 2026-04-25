@@ -13,7 +13,7 @@ public class SubidaState extends FossoState {
 
     @Override
     protected void verificarFimViagem() {
-        if (jogo.droneChegouSuperficie()) {
+        if (jogo.droneNoTopo()) {
             subirSuperficie();
         }
     }

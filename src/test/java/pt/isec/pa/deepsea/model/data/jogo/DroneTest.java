@@ -92,8 +92,8 @@ class DroneTest {
 
     @Test
     void setMinerios() {
-        d.addMinerios();
-        assertEquals(10, d.getMinerios());
+        d.addMinerios(1);
+        assertEquals(1, d.getMinerios());
     }
 
     @Test

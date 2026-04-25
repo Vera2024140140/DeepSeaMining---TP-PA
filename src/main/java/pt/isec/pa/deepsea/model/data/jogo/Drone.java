@@ -123,9 +123,6 @@ public class Drone {
     // -- MINERIOS
     public int getMinerios() { return minerios; }
 
-    void addMinerios() {
-        this.minerios++;
-    }
 
     public List<Integer> getArtefactos() {
         List<Integer> listaIdsArtefcactos = new ArrayList<>();
@@ -159,7 +156,12 @@ public class Drone {
         this.minerios = 0;
         return mineriosRecolhidos;
     }
-
+    public boolean addMinerios(int qtd) {
+        if(qtd <= 0)
+            return false;
+        this.minerios += qtd;
+        return true;
+    }
     // devolve a lista de artefctos atual e limpa (a lista)
     List<Artefacto> descarregarArtefactos() {
         //referencia para a lista atual
