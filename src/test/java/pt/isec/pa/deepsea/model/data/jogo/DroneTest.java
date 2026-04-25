@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DroneTest {
@@ -90,16 +92,17 @@ class DroneTest {
 
     @Test
     void setMinerios() {
-        d.setMinerios(10);
+        d.addMinerios();
         assertEquals(10, d.getMinerios());
     }
 
     @Test
     void addArtefactos() {
-        Artefacto a1 = null;
+        Artefacto a1 = new Artefacto(1,1);
         d.addArtefacto(a1);
+        List<Integer> idsNoNome = d.getArtefactos();
 
-        assertEquals(1, d.getArtefactos().size(), "A lista devia de ter 1 artefacto");
-        assertTrue(d.getArtefactos().contains(a1), "Deve conter a");
+        assertEquals(1, idsNoNome.size(), "A lista devia de ter 1 artefacto");
+        assertTrue(idsNoNome.contains(a1.getId()), "Deve conter a");
     }
 }

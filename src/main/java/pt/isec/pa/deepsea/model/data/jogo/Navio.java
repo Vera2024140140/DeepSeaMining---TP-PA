@@ -59,34 +59,82 @@ public class Navio {
 
     public int getMinerios() { return minerios; }
 
-    public void setMinerios(int minerios) {
-        this.minerios = minerios;
+    public void addMinerios(int qtd) {
+        if (qtd > 0) {
+            this.minerios += qtd;
+        }
     }
 
-    public List<Artefacto> getArtefactos() { return artefactos; }
+    public List<Integer> getArtefactos() {
+        List<Integer> listaIdsArtefactos = new ArrayList<>();
+        for(Artefacto artefacto : this.artefactos) {
+            listaIdsArtefactos.add(artefacto.getId());
+        }
+        return listaIdsArtefactos;
+    }
 
     public void addArtefacto(Artefacto a) {
-        artefactos.add(a);
+        if (a != null)
+            artefactos.add(a);
     }
 
     // -- DRONES
-    public Set<Drone> getDrones() { return drones; }
+    public Set<Integer> getDrones() {
+        //copia da lista
+        Set<Integer> set_drones = new HashSet<>();
+
+        for (Drone d : this.drones) {
+            set_drones.add(d.getId());
+        }
+        return set_drones;
+    }
 
     //quando os mesmos são perdids pq ficaram sem combustivel por ex
-    public void rmDrones(Drone d) {
-        drones.remove(d);
+    public void rmDrones(int idDrone) {
+        //remove caso o id seja ==
+        drones.removeIf(d -> d.getId() == idDrone);
+    }
+
+    void setCombustivelDrone(int idDrone, double valor) {
+        for (Drone d : this.drones) {
+            if (d.getId() == idDrone) {
+                d.setCombustivel(valor);
+                return;
+            }
+        }
+    }
+
+    void setIntegridadeDrone(int idDrone, int valor) {
+        for (Drone d : drones) {
+            if (d.getId() == idDrone) {
+                d.setIntegridadeCasco(valor);
+                break;
+            }
+        }
     }
 
     //metodos de pesquisa por criterios especificos
-    public List<Drone> getDronesOrdenadosCombustivel() {
-        List<Drone> drones = new ArrayList<>(this.drones);
-        drones.sort(Comparator.comparingDouble(Drone::getCombustivel));
-        return drones;
+    public List<Integer> getDronesOrdenadosCombustivel() {
+        List<Drone> dronesOrdenados = new ArrayList<>(this.drones);
+
+        dronesOrdenados.sort(Comparator.comparingDouble(Drone::getCombustivel));
+
+        List<Integer> listIdsDrones = new ArrayList<>();
+        for (Drone d : dronesOrdenados) {
+            listIdsDrones.add(d.getId());
+        }
+        return listIdsDrones;
     }
 
-    public List<Drone> getDronesOrdenadosIntegridade() {
-        List<Drone> drones = new ArrayList<>(this.drones);
-        drones.sort(Comparator.comparingInt(Drone::getIntegridadeCasco));
-        return drones;
+    public List<Integer> getDronesOrdenadosIntegridade() {
+        List<Drone> dronesOrdenados = new ArrayList<>(this.drones);
+
+        dronesOrdenados.sort(Comparator.comparingInt(Drone::getIntegridadeCasco));
+
+        List<Integer> listIdsDrones = new ArrayList<>();
+        for (Drone d : dronesOrdenados) {
+            listIdsDrones.add(d.getId());
+        }
+        return listIdsDrones;
     }
 }

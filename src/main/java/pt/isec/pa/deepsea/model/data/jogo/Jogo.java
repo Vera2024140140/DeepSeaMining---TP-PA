@@ -12,11 +12,11 @@ public class Jogo {
     }
 
     // -- Getter's
-    public Navio getNavio() {
+    Navio getNavio() {
         return navio;
     }
 
-    public GrelhaSuperficie getGrelhaSuperficie() {
+    GrelhaSuperficie getGrelhaSuperficie() {
         return grelhaSuperficie;
     }
 }

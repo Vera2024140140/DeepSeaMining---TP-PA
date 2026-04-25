@@ -21,6 +21,9 @@ public class Drone {
 
     private int minerios;
     private List<Artefacto> artefactos;
+    private static int contadorIds = 1;
+    private final int id;
+
 
     public Drone() {
         this.combustivelMax = Settings.DRONE_COMBUSTIVEL_MAX;
@@ -31,7 +34,11 @@ public class Drone {
         this.coluna = -1;
         this.minerios = 0;
         this.artefactos = new ArrayList<>();
+        this.id = contadorIds++;
+    }
 
+    public int getId() {
+        return this.id;
     }
 
     // -- COMBUSTIVEL
@@ -76,7 +83,13 @@ public class Drone {
     public int getIntegridadeCasco() { return integridadeCasco; }
 
     public void setIntegridadeCasco(int integridadeCasco) {
-        this.integridadeCasco = integridadeCasco;
+        if (integridadeCasco < 0)  {
+            this.integridadeCasco = 0;
+        } else if (integridadeCasco > this.integridadeMax) {
+            this.integridadeCasco = integridadeMax;
+        } else {
+            this.integridadeCasco = integridadeCasco;
+        }
     }
 
     public int getIntegridadeMax() { return integridadeMax; }
@@ -99,13 +112,21 @@ public class Drone {
     // -- MINERIOS
     public int getMinerios() { return minerios; }
 
-    public void setMinerios(int minerios) {
-        this.minerios = minerios;
+    public void addMinerios() {
+        this.minerios++;
     }
 
-    public List<Artefacto> getArtefactos() { return artefactos; }
+    public List<Integer> getArtefactos() {
+        List<Integer> listaIdsArtefcactos = new ArrayList<>();
+
+        for (Artefacto artefacto : this.artefactos) {
+            listaIdsArtefcactos.add(artefacto.getId());
+        }
+        return listaIdsArtefcactos;
+    }
 
     public void addArtefacto(Artefacto a) {
-        artefactos.add(a);
+        if (a != null)
+            artefactos.add(a);
     }
 }
