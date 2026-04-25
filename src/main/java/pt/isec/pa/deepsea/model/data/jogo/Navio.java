@@ -39,7 +39,7 @@ public class Navio {
         this.coluna = coluna;
     }
 
-    public double getCombustivel() { return combustivel; }
+    public double getCombustivelNavio() { return combustivel; }
 
     //setter puro
     public void setCombustivel(double combustivel) {
@@ -57,7 +57,7 @@ public class Navio {
         }
     }
 
-    public int getMinerios() { return minerios; }
+    public int getMineriosNavio() { return minerios; }
 
     public void addMinerios(int qtd) {
         if (qtd > 0) {
@@ -65,7 +65,7 @@ public class Navio {
         }
     }
 
-    public List<Integer> getArtefactos() {
+    public List<Integer> getIdsArtefactosNavio() {
         List<Integer> listaIdsArtefactos = new ArrayList<>();
         for(Artefacto artefacto : this.artefactos) {
             listaIdsArtefactos.add(artefacto.getId());
@@ -79,7 +79,7 @@ public class Navio {
     }
 
     // -- DRONES
-    public Set<Integer> getDrones() {
+    public Set<Integer> getIdsDronesNavio() {
         //copia da lista
         Set<Integer> set_drones = new HashSet<>();
 

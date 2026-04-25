@@ -22,10 +22,10 @@ class NavioTest {
 
     @Test
     void testeValoresIniciais() {
-        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivel());
-        assertEquals(0 , navio.getMinerios());
-        assertEquals(0, navio.getArtefactos().size());
-        assertEquals(Settings.NUM_DRONES_INICIAIS, navio.getDrones().size());
+        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivelNavio());
+        assertEquals(0 , navio.getMineriosNavio());
+        assertEquals(0, navio.getIdsArtefactosNavio().size());
+        assertEquals(Settings.NUM_DRONES_INICIAIS, navio.getIdsDronesNavio().size());
         assertEquals(Settings.LINHAS_SUPERFICIE / 2, navio.getLinha());
         assertEquals(Settings.COLUNAS_SUPERFICIE / 2, navio.getColuna());
     }
@@ -44,65 +44,65 @@ class NavioTest {
 
         //teste add
         navio.addCombustivel(50);
-        assertEquals(150, navio.getCombustivel(), "100 + 50");
+        assertEquals(150, navio.getCombustivelNavio(), "100 + 50");
 
         //tentar transbordar
         navio.addCombustivel(Settings.NAVIO_COMBUSTIVEL_MAX + 500);
-        assertEquals(Settings.NAVIO_COMBUSTIVEL_MAX, navio.getCombustivel(), "Deve ficar com o max apenas");
+        assertEquals(Settings.NAVIO_COMBUSTIVEL_MAX, navio.getCombustivelNavio(), "Deve ficar com o max apenas");
     }
 
     @Test
     void setCombustivelValido() {
         navio.setCombustivel(100);
-        assertEquals(100, navio.getCombustivel());
+        assertEquals(100, navio.getCombustivelNavio());
     }
 
     @Test
     void setCombustivelAcimaMax() {
         navio.setCombustivel(2000);
-        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivel()); //como passa do limite é ignorado
+        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivelNavio()); //como passa do limite é ignorado
     }
 
     @Test
     void setCombustivelValorNegativo() {
         navio.setCombustivel(-1);
-        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivel());
+        assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, navio.getCombustivelNavio());
     }
 
     @Test
     void setMinerios() {
         navio.addMinerios(100);
-        assertEquals(100, navio.getMinerios());
+        assertEquals(100, navio.getMineriosNavio());
     }
 
     @Test
     void addArtefacto() {
         Artefacto a = new Artefacto(1,1);
         navio.addArtefacto(a);
-        assertEquals(1, navio.getArtefactos().size());
+        assertEquals(1, navio.getIdsArtefactosNavio().size());
     }
 
     @Test
     void rmDrones() {
-        int tam = navio.getDrones().size();
+        int tam = navio.getIdsDronesNavio().size();
         assertTrue(tam > 0, "Devia ter 3 drones");
 
         /*
         como é um set, usams um iterador para 'apanhar'o primeiro que apareça
             o iterator cria um apontador para o meu set e o next mostra o prox elemento que encontrar
         */
-        int id_rm = navio.getDrones().iterator().next();
+        int id_rm = navio.getIdsDronesNavio().iterator().next();
         navio.rmDrones(id_rm);
 
-        assertEquals(tam - 1, navio.getDrones().size(), "A lista deve ter 2");
+        assertEquals(tam - 1, navio.getIdsDronesNavio().size(), "A lista deve ter 2");
 
-        assertFalse(navio.getDrones().contains(id_rm), "Já nao deve existir");
+        assertFalse(navio.getIdsDronesNavio().contains(id_rm), "Já nao deve existir");
     }
 
     @Test
     void getDronesOrdenadosCombustivel() {
         //lista temp para ser + facil aceder aos 3 drones
-        List<Integer> lista_temp = new ArrayList<>(navio.getDrones());
+        List<Integer> lista_temp = new ArrayList<>(navio.getIdsDronesNavio());
         assertEquals(Settings.NUM_DRONES_INICIAIS, lista_temp.size(), "Numero de drones inicial");
 
         int id1 = lista_temp.get(0);
@@ -124,7 +124,7 @@ class NavioTest {
 
     @Test
     void getDronesOrdenadosIntegridade() {
-        List<Integer> lista_temp = new ArrayList<>(navio.getDrones());
+        List<Integer> lista_temp = new ArrayList<>(navio.getIdsDronesNavio());
 
         assertEquals(Settings.NUM_DRONES_INICIAIS, lista_temp.size());
 
