@@ -5,7 +5,7 @@ import pt.isec.pa.deepsea.model.data.Direcao;
  * Interface principal do Padrão State para o jogo Deep Sea.
  * <p>
  * Define todos os eventos e ações possíveis que podem ser desencadeados pelo utilizador
- * ou pelo sistema ao longo do jogo. Cada estado específico implementa esta interface
+ * ou pelo sistema ao longo do jogo. Cada estado específico implementa esta ‘interface’
  * (através do {@link DeepSeaStateAdapter}) e substitui apenas os métodos
  * que fazem sentido no seu contexto.
  * @author Diogo2024152576

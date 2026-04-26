@@ -16,8 +16,6 @@ public abstract class FossoState extends DeepSeaStateAdapter {
     public boolean moverDroneFosso(Direcao dir) {
         boolean moveu = jogo.moverDroneFosso(dir);
 
-        //verifica se a viagem chregou ao fim
-        verificarFimViagem();
         if (!moveu) return false;
 
         //verifica se o drone morreu
@@ -39,6 +37,4 @@ public abstract class FossoState extends DeepSeaStateAdapter {
         return false;
     }
 
-    //metodo implementado por Subida/Descida (classes filhas)
-    protected  abstract void verificarFimViagem();
 }

@@ -18,7 +18,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 public class SuperficieState extends DeepSeaStateAdapter {
 
     /**
-     * Cria uma nova instância do estado Superfície.
+     * Cria uma instância do estado Superfície.
      *
      * @param context contexto da máquina de estados
      * @param jogo    modelo de dados do jogo

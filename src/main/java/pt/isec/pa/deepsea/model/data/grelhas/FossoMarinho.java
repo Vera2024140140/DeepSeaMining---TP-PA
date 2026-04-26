@@ -94,12 +94,12 @@ public class FossoMarinho {
 
     private int variarEspessura(int valor, int max_lado) {
         int espessura;
-        // Nao passar maximo
-        // Minimo entre nova espessura e o maximo do lado
+        // Não passar máximo
+        // Mínimo entre nova espessura e o máximo do lado
         espessura = Math.min(max_lado, valor + Utilidades.aleatorio(-1, 1));
 
-        // Nao passar minimo
-        // Maximo entre nova espessura e o minimo do lado
+        // Não passar mínimo
+        // Maximo entre nova espessura e o mínimo do lado
         return Math.max(Settings.MINIMO_ROCHAS_LADO, espessura);
     }
 

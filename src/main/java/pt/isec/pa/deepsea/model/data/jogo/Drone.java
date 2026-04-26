@@ -16,6 +16,8 @@ public class Drone {
     private int integridadeCasco;
     private int integridadeMax;
 
+    private int impactosExpedicao;
+
     private int linha;
     private int coluna;
 
@@ -35,6 +37,7 @@ public class Drone {
         this.minerios = 0;
         this.artefactos = new ArrayList<>();
         this.id = contadorIds++;
+        this.impactosExpedicao = 0;
     }
 
     int getId() {
@@ -62,9 +65,7 @@ public class Drone {
             return 0;
         } else {
             this.combustivel = this.combustivelMax;
-            double resto = combustivel - espacoLivre;
-
-            return resto;
+            return (combustivel - espacoLivre);
         }
     }
 
@@ -139,15 +140,14 @@ public class Drone {
     }
 
     boolean consumirCombustivelDrone(double qtd) {
-        if (qtd <= 0) return false; // nao gasta nada
+        if (qtd <= 0) return false; // não gasta nada
 
         if (this.combustivel >= qtd) {
             this.combustivel -= qtd;
             return true;
-        } else {
-            this.combustivel = 0; //ficou sem combustivdel
-            return false; // false para o jgo saber que terminou o combustivel
         }
+            return false; // nao consumiu combustivel
+
     }
 
     //limpa a qtd de minerios da 'mochila' e retorna-os
@@ -169,5 +169,54 @@ public class Drone {
 
         this.artefactos.clear();
         return  artefactosRecolhidos;
+    }
+
+    //================================================
+    // --- Lógica dano w primos ---
+    //================================================
+
+    //metodo chamado a cada expedição
+    void resetImpactos() {
+        this.impactosExpedicao = 0;
+    }
+
+    void sofrerImpacto() {
+        int dano = calcularDanoAtual(impactosExpedicao);
+
+        this.integridadeCasco -= dano;
+        if (this.impactosExpedicao < 0) {
+            this.integridadeCasco = 0;
+        }
+
+        impactosExpedicao++; //inc contador de impactos
+    }
+
+    //calculo do valor da sequencia
+    int calcularDanoAtual(int impactoAtual) {
+        int primosEncontrados = 0;
+        int numeroTestePrimo = 1; //numero que vamos verificar se é primo
+
+        while(true) {
+            if (isPrimo(numeroTestePrimo)) {
+                if (primosEncontrados == impactoAtual) {
+                    return numeroTestePrimo;
+                }
+                primosEncontrados++;
+            }
+            numeroTestePrimo++;
+        }
+    }
+
+    boolean isPrimo(int n) {
+        if (n < 1) return false;
+        if (n == 1 || n == 2) return true;
+        if (n %  2 == 0) return false;
+
+        //divisores impares (2 em 2) a partir de 3
+        for(int i = 3; i * i <= n; i += 2) {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
     }
 }

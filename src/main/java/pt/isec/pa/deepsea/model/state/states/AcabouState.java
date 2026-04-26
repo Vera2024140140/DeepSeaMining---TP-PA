@@ -17,7 +17,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 public class AcabouState extends DeepSeaStateAdapter {
 
     /**
-     * Cria uma nova instância do estado Acabou.
+     * Cria uma instância do estado Acabou.
      *
      * @param context contexto da máquina de estados
      * @param jogo    modelo de dados do jogo

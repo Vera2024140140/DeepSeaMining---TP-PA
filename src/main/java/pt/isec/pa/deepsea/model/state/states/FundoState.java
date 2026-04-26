@@ -7,19 +7,19 @@ import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 /**
- * Estado do jogo, em que o drone está a navegar no Fundo Marinho.
+ * Estado do jogo, em que o ‘drone’ está a navegar no Fundo Marinho.
  * <p>
- * Neste estado, o jogador pode mover o drone pela grelha do fundo, recolher minérios
+ * Neste estado, o jogador pode mover o ‘drone’ pela grelha do fundo, recolher minérios
  * manualmente, acionar a transição para o minijogo ao encontrar um artefacto, ou
  * iniciar a subida de regresso. Este estado também é responsável por verificar as
- * condições de destruição do drone: falta de integridade ou combustível.
+ * condições de destruição do ‘drone’: falta de integridade ou combustível.
  *
  * @author Vera2024140140
  * @author Diogo2024152576
  */
 public class FundoState extends DeepSeaStateAdapter {
     /**
-     * Cria uma nova instância do estado de exploração do Fundo.
+     * Cria uma instância do estado de exploração do Fundo.
      * @param context contexto da máquina de estados
      * @param jogo    modelo de dados do jogo
      */
@@ -113,6 +113,7 @@ public class FundoState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean perderDrone() {
+        jogo.largarItensDroneNoFundo();
         if (jogo.removerDroneAtivo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;

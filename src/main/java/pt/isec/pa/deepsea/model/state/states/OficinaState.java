@@ -17,7 +17,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  */
 public class OficinaState extends DeepSeaStateAdapter {
     /**
-     * Cria uma nova instância do estado da Oficina.
+     * Cria uma instância do estado da Oficina.
      * @param context contexto da máquina de estados
      * @param jogo    modelo de dados do jogo
      */
@@ -92,7 +92,7 @@ public class OficinaState extends DeepSeaStateAdapter {
         return jogo.melhorarTanqueDroneAtivo();
     }
     /**
-     * Gasta minérios do navio para aumentar permanentemente a integridade  máxima
+     * Gasta minérios do navio para aumentar permanentemente a integridade máxima
      * do casco do drone ativo (restaurando também esse mesmo valor na integridade atual).
      *
      * @return {@code true} se a melhoria foi aplicada;

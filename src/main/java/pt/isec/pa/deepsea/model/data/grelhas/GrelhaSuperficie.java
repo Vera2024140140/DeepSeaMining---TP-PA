@@ -54,11 +54,11 @@ public class GrelhaSuperficie {
         int centroL = linhas / 2;
         int centroC = colunas / 2;
 
-        //centro esquerda
+        //centro-esquerda
         int lSup1 = centroL;
         int cSup1 = centroC - 1;
 
-        //centro direita
+        //centro-direita
         int lSup2 = centroL;
         int cSup2 = centroC + 1;
 

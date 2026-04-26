@@ -46,7 +46,6 @@ public interface Settings {
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;
     double CONSUMO_EXTRA_MINERIO = 0.01;
-    double DANO_MONSTRO_PERCENTAGEM = 0.05;
 
     //custo e melhoramentos oficina
     int CUSTO_MINERIOS_MELHORAR_TANQUE = 5;
@@ -61,7 +60,7 @@ public interface Settings {
     int DEFESA_MINERIOS = 2;
     int DEFESA_MINERIO_QTD_MAX = 10;
 
-
+    String FICHEIRO_SAVE = "deepsea_save.sav";
 
     String FICHEIRO_LOG = "deepsea.log";
     String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
