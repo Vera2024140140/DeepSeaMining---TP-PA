@@ -13,6 +13,7 @@ public interface Settings {
 
     //quantidades e limintes
     int ID_OBSTACULO_INICIAL = 1001;
+    int ID_MONSTRO_INICIAL = 2001;
     int ID_ARTEFACTOS_INICIAL = 1;
     int NUM_DRONES_INICIAIS = 3;
     int NUM_ARTEFACTOS = 16;
@@ -24,6 +25,7 @@ public interface Settings {
     int OBSTACULOS_FOSSO_MIN = 1;
     int MONSTROS_FUNDO_MIN = 1;
     int MONSTROS_FUNDO_MAX = 7;
+    int MINIMO_ROCHAS_LADO = 1;
 
     //combustivel e integridade casco
     double NAVIO_COMBUSTIVEL_INICIAL = 1000;
@@ -39,17 +41,17 @@ public interface Settings {
     //mini jogo
     int PUZZLE_MAX_MOVIMENTOS = 50;
     int PUZZLE_GRELHA = 4;
+    int PUZZLE_BARALHAR_GRELHA = 100;
 
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;
     double CONSUMO_EXTRA_MINERIO = 0.01;
-    double DANO_MONSTRO_PERCENTAGEM = 0.05;
 
     //custo e melhoramentos oficina
     int CUSTO_MINERIOS_MELHORAR_TANQUE = 5;
-    int CUSTO_MINERIOS_MELHORAR_BLINDAGEM = 5;
-    int INCREMENTO_TANQUE_COMBUSTIVEL = 50;
-    int INCREMENTO_BLINDAGEM_MAXIMA = 20;
+    int CUSTO_MINERIOS_MELHORAR_INTEGRIDADE = 5;
+    int INCREMENTO_INTEGRIDADE_MAXIMA = 20;
+    double INCREMENTO_COMBUSTIVEL_MAX = 20;
 
     //modo defesa
     int DEFESA_NUM_ARTEFACTOS_LADO = NUM_ARTEFACTOS/2;
@@ -58,8 +60,9 @@ public interface Settings {
     int DEFESA_MINERIOS = 2;
     int DEFESA_MINERIO_QTD_MAX = 10;
 
+    String FICHEIRO_SAVE = "deepsea_save.sav";
 
-
-
+    String FICHEIRO_LOG = "deepsea.log";
+    String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
 
 }

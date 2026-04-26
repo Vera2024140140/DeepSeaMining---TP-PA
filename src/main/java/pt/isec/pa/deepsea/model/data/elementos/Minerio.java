@@ -1,7 +1,10 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 
+import pt.isec.pa.deepsea.model.data.TipoComponente;
+
 public class Minerio extends Componente{
-    private int qtd;
+    private static final long serialVersionUID = 7L;
+    private final int qtd;
 
     public Minerio(int linha, int coluna, int qtd){
         super(linha, coluna);
@@ -9,5 +12,9 @@ public class Minerio extends Componente{
     }
     public int getQtd(){
         return qtd;
+    }
+    @Override
+    public TipoComponente getTipo(){
+        return TipoComponente.MINERIO;
     }
 }

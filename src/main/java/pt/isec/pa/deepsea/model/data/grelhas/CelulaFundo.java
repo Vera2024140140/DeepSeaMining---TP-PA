@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 public class CelulaFundo extends Celula{
-
+    private static final long serialVersionUID = 12L;
     private boolean revelada;
 
     public CelulaFundo(){
@@ -9,16 +9,15 @@ public class CelulaFundo extends Celula{
         this.revelada = false;
     }
 
-    public boolean isRevelada(){
+    boolean isRevelada(){
         return revelada;
     }
 
-    public void revelar(){
+    void revelar(){
         this.revelada = true;
     }
 
-    public void reset(){
-        setComponente(null);
+    void esconder(){
         this.revelada = false;
     }
 }
