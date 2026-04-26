@@ -18,7 +18,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  * @author Diogo2024152576
  */
 public class PuzzleState extends DeepSeaStateAdapter {
-
+    private static final long serialVersionUID = 54L;
     /**
      * Construtor do PuzzleState
      *

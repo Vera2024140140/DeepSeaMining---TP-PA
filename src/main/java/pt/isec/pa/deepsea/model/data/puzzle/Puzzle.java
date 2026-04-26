@@ -4,7 +4,10 @@ import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 
-public class Puzzle {
+import java.io.Serializable;
+
+public class Puzzle implements Serializable {
+    private static final long serialVersionUID = 30L;
     private int [][] grelha ;
     private int movimentosRestantes;
 

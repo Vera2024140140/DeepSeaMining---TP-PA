@@ -16,7 +16,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  * @author Diogo2024152576
  */
 public class SuperficieState extends DeepSeaStateAdapter {
-
+    private static final long serialVersionUID = 56L;
     /**
      * Cria uma instância do estado Superfície.
      *

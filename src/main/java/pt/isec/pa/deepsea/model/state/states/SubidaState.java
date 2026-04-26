@@ -17,7 +17,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaState;
  * @author Rafael2024143044
  */
 public class SubidaState extends FossoState {
-
+    private static final long serialVersionUID = 52L;
     /**
      * Construtor
      *

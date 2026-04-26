@@ -6,11 +6,12 @@ import pt.isec.pa.deepsea.model.data.Utilidades;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.elementos.Minerio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrelhaSuperficie {
-
+public class GrelhaSuperficie implements Serializable {
+    private static final long serialVersionUID = 16L;
     private final CelulaSuperficie[][] grelha;
 
     private final int linhas;

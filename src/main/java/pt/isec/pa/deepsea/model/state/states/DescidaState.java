@@ -15,7 +15,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  * @author Rafael2024143044
  */
 public class DescidaState extends FossoState {
-
+    private static final long serialVersionUID = 51L;
     /**
      *
      * Construtor do estado de descida.

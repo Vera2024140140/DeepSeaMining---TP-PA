@@ -4,10 +4,12 @@ package pt.isec.pa.deepsea.model.data.jogo;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Drone {
+public class Drone implements Serializable {
+    private static final long serialVersionUID = 20L;
     //combustivel
     private double combustivel;
     private double combustivelMax;

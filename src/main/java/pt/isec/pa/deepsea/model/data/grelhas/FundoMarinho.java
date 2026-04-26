@@ -9,11 +9,12 @@ import pt.isec.pa.deepsea.model.data.elementos.Componente;
 import pt.isec.pa.deepsea.model.data.elementos.Minerio;
 import pt.isec.pa.deepsea.model.data.elementos.Monstro;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FundoMarinho {
-
+public class FundoMarinho implements Serializable {
+    private static final long serialVersionUID = 15L;
     private final CelulaFundo[][] grelha;
 
     private final int linhas;

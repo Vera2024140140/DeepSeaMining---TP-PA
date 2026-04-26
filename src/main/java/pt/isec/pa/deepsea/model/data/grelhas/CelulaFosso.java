@@ -1,10 +1,8 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
-import pt.isec.pa.deepsea.model.data.elementos.AnimalMarinho;
-import pt.isec.pa.deepsea.model.data.elementos.Corrente;
-import pt.isec.pa.deepsea.model.data.elementos.Rocha;
 
 public class CelulaFosso extends Celula{
+    private static final long serialVersionUID = 11L;
 
     public CelulaFosso(){
         super();

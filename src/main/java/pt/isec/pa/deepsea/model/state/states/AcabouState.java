@@ -5,6 +5,8 @@ import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 
+import java.io.Serializable;
+
 /**
  * Estado final do jogo, atingido após vitória (recolha de todos os artefactos)
  * ou derrota (perda de todos os drones ou navio fica sem combustivel).
@@ -14,8 +16,8 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  *
  * @author Diogo2024152576
  */
-public class AcabouState extends DeepSeaStateAdapter {
-
+public class AcabouState extends DeepSeaStateAdapter implements Serializable {
+    private static final long serialVersionUID = 57L;
     /**
      * Cria uma instância do estado Acabou.
      *

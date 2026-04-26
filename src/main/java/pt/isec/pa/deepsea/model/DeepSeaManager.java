@@ -132,5 +132,26 @@ public class DeepSeaManager {
     //===========================================================
     // --- Serialização & Save 6 Load ---
     //===========================================================
-
+    public boolean gravarJogo(){
+        try(FileOutputStream fr = new FileOutputStream(Settings.FICHEIRO_SAVE);
+            BufferedOutputStream br = new BufferedOutputStream(fr);
+            ObjectOutputStream obj = new ObjectOutputStream(br);
+        ){
+            obj.writeObject(context);
+            return true;
+        }catch(IOException e){
+            return false;
+        }
+    }
+    public boolean carregarJogo(){
+        try(FileInputStream fr = new FileInputStream(Settings.FICHEIRO_SAVE);
+            BufferedInputStream br = new BufferedInputStream(fr);
+            ObjectInputStream obj = new ObjectInputStream(br);
+        ){
+            context = (DeepSeaContext) obj.readObject();
+            return true;
+        }catch(IOException | ClassNotFoundException e){
+            return false;
+        }
+    }
 }

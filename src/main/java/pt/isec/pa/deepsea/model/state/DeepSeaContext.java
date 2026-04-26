@@ -5,12 +5,14 @@ import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import static pt.isec.pa.deepsea.model.state.DeepSeaState.SUPERFICIE_STATE;
 
-public class DeepSeaContext {
+public class DeepSeaContext implements Serializable {
+    private static final long serialVersionUID = 40L;
     private Jogo jogo;
     private IDeepSeaState atual;
 

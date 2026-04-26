@@ -23,7 +23,8 @@ import java.util.*;
  * @author Vera2024140140
  */
 
-public class Jogo {
+public class Jogo implements Serializable {
+    private static final long serialVersionUID = 22L;
     private final Navio navio;
     private final GrelhaSuperficie grelhaSuperficie;
     private Puzzle puzzleAtual = null;

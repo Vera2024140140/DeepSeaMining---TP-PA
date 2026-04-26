@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 public class CelulaFundo extends Celula{
-
+    private static final long serialVersionUID = 12L;
     private boolean revelada;
 
     public CelulaFundo(){

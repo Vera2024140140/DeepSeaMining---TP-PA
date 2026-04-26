@@ -4,6 +4,7 @@ import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
 
 public class Artefacto extends Componente{
+    private static final long serialVersionUID = 6L;
     private static int contadorIDArtefactos = Settings.ID_ARTEFACTOS_INICIAL;
     private final int id;
     public Artefacto(int linha, int coluna){

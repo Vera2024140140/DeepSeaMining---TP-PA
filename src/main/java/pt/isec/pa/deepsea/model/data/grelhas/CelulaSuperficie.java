@@ -1,7 +1,9 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
-public class CelulaSuperficie {
+import java.io.Serializable;
 
+public class CelulaSuperficie implements Serializable{
+    private static final long serialVersionUID = 13L;
     private final FossoMarinho fosso;
     private final FundoMarinho fundo;
 

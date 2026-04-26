@@ -6,8 +6,9 @@ import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 
-public abstract class FossoState extends DeepSeaStateAdapter {
 
+public abstract class FossoState extends DeepSeaStateAdapter {
+    private static final long serialVersionUID = 50L;
     public FossoState(DeepSeaContext context, Jogo jogo) {
         super(context, jogo);
     }

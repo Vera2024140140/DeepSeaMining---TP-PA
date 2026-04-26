@@ -2,6 +2,7 @@ package pt.isec.pa.deepsea.model.data.elementos;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
 public class Monstro extends Componente{
+    private static final long serialVersionUID = 5L;
     private static int contadorID = Settings.ID_MONSTRO_INICIAL;
     private final int id;
     public Monstro(int linha, int coluna){

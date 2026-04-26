@@ -1,6 +1,7 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 import pt.isec.pa.deepsea.model.data.Settings;
 public abstract class Obstaculo extends Componente{
+    private static final long serialVersionUID = 2L;
     private static int contadorID = Settings.ID_OBSTACULO_INICIAL;
     private final int id;
 

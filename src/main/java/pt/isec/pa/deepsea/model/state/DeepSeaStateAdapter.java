@@ -3,6 +3,8 @@ package pt.isec.pa.deepsea.model.state;
 import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 
+import java.io.Serializable;
+
 
 /**
  * Classe Abstrata que fornece uma implementação por omissão para a
@@ -17,7 +19,8 @@ import pt.isec.pa.deepsea.model.data.jogo.Jogo;
  * @author Vera2024140140
  * @author Rafael2024143044
  */
-public abstract class DeepSeaStateAdapter implements IDeepSeaState {
+public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable {
+    private static final long serialVersionUID = 41L;
     /**
      * Referência para o contacto da máquina de estados, utilizada para acionar transições
      */

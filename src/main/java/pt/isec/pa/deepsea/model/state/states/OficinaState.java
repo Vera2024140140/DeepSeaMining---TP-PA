@@ -16,6 +16,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  * @author Diogo2024152576
  */
 public class OficinaState extends DeepSeaStateAdapter {
+    private static final long serialVersionUID = 55L;
     /**
      * Cria uma instância do estado da Oficina.
      * @param context contexto da máquina de estados

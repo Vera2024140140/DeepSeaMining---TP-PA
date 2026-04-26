@@ -8,11 +8,12 @@ import pt.isec.pa.deepsea.model.data.elementos.Componente;
 import pt.isec.pa.deepsea.model.data.elementos.Corrente;
 import pt.isec.pa.deepsea.model.data.elementos.Rocha;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FossoMarinho {
-
+public class FossoMarinho implements Serializable {
+    private static final long serialVersionUID = 14L;
     private final CelulaFosso[][] grelha;
 
     private final int linhas;

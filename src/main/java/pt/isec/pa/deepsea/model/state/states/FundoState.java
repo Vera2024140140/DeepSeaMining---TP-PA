@@ -18,6 +18,7 @@ import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
  * @author Diogo2024152576
  */
 public class FundoState extends DeepSeaStateAdapter {
+    private static final long serialVersionUID = 53L;
     /**
      * Cria uma instância do estado de exploração do Fundo.
      * @param context contexto da máquina de estados

@@ -3,9 +3,11 @@ package pt.isec.pa.deepsea.model.data.jogo;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Navio {
+public class Navio implements Serializable {
+    private static final long serialVersionUID = 21L;
     private double combustivel;
     private int minerios;
 
