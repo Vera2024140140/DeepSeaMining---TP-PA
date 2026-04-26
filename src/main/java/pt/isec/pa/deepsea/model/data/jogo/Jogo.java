@@ -487,5 +487,24 @@ public class Jogo {
         }
         limparPuzzle();
     }
+    //===================================================================
+    //-------------------Metodos simulacoes testes OFICINA --------------
+    //===================================================================
+    public void simularGastoDrone() {
+        Drone d = getDroneAtivo();
+        if (d != null) {
+            d.setCombustivel(1.0); // Gasta quase tudo
+        }
+    }
+
+    public void simularDanoDrone() {
+        Drone d = getDroneAtivo();
+        if (d != null) {
+            d.setIntegridadeCasco(d.getIntegridadeCasco() - 20);
+        }
+    }
+    public void simularMinerios(int quantidade) {
+        navio.addMinerios(quantidade);
+    }
 
 }
