@@ -30,6 +30,9 @@ public class DeepSeaContext {
                 String.format("Change State: %s => %s", atual.getState() ,novoEstado.getState())
         );
         this.atual = novoEstado;
+        if (novoEstado.getState() == DeepSeaState.SUPERFICIE_STATE) {
+            novoEstado.avaliarFimJogo();
+        }
     }
 
     public boolean iniciarDescida() {

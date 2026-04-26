@@ -33,7 +33,12 @@ public class DescidaState extends FossoState {
      * faz uma transição de estado.
      */
     @Override
-
+    public boolean moverDroneFosso(Direcao dir) {
+        if (dir == Direcao.BAIXO && jogo.droneNoFundoFosso()) {
+            return chegarFundo();
+        }
+        return super.moverDroneFosso(dir);
+    }
 
     /**
      * Transição de estado, quando o drone chega com sucesso ao fundo marinho.

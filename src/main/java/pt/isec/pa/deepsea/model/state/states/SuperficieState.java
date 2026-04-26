@@ -73,7 +73,7 @@ public class SuperficieState extends DeepSeaStateAdapter {
         if (!jogo.podeIniciarDescida()) {
             return false;
         }
-        if (!jogo.meteDroneNoFosso()){
+        if (!jogo.meteDroneNoInicioFosso()){
             return false;
         }
         changeState(DeepSeaState.DESCIDA_STATE);

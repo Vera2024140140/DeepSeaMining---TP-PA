@@ -7,6 +7,7 @@ import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -164,6 +165,14 @@ public class Jogo {
         return drone.getLinha() == 0;
     }
 
+    public boolean droneNoFundoFosso(){
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) {
+            return false;
+        }
+        return drone.getLinha() == grelhaSuperficie.getLinhasFosso(navio.getLinha(), navio.getColuna()) - 1;
+    }
+
     /**
      * Move o 'Drone' durante os estados de Subida/Descida do Fosso.
      * Calcula os gastos extras causados por correntes e regista impactos em rochas/animais.
@@ -226,11 +235,20 @@ public class Jogo {
         return d != null && d.getCombustivel() > 0 && d.getIntegridadeCasco() > 0;
     }
 
-    public boolean meteDroneNoFosso() {
+    public boolean meteDroneNoInicioFosso() {
+        navio.getDroneAtivo().resetImpactos();
+        return meteDroneNoFosso(0);
+    }
+
+    public boolean meteDroneNoFimFosso() {
+        return meteDroneNoFosso(grelhaSuperficie.getLinhasFosso(navio.getLinha(), navio.getColuna()) - 1);
+    }
+
+
+    public boolean meteDroneNoFosso(int linha) {
         Drone d = navio.getDroneAtivo();
         if (d != null) {
-            d.setLocalizacao(0, grelhaSuperficie.getColunasFosso(navio.getLinha(),navio.getColuna()) / 2);
-            d.resetImpactos(); //limpar num primos
+            d.setLocalizacao( linha, grelhaSuperficie.getColunasFosso(navio.getLinha(), navio.getColuna()) / 2);
             return true;
         }
         return false;

@@ -13,6 +13,16 @@ public abstract class FossoState extends DeepSeaStateAdapter {
     }
 
     @Override
+    public boolean perderDrone() {
+        jogo.largarItensDroneNoFundo();
+        if (jogo.removerDroneAtivo()){
+            changeState(DeepSeaState.SUPERFICIE_STATE);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean moverDroneFosso(Direcao dir) {
         boolean moveu = jogo.moverDroneFosso(dir);
 
@@ -25,16 +35,6 @@ public abstract class FossoState extends DeepSeaStateAdapter {
             return true;
         }
         return true;
-    }
-
-    @Override
-    public boolean perderDrone() {
-        jogo.largarItensDroneNoFundo();
-        if (jogo.removerDroneAtivo()){
-            changeState(DeepSeaState.SUPERFICIE_STATE);
-            return true;
-        }
-        return false;
     }
 
 }

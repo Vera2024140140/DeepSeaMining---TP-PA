@@ -48,7 +48,12 @@ public class SubidaState extends FossoState {
      * @return true, confirmando a transição de estado, após descarregar os itens.
      */
     @Override
+    public boolean subirSuperficie() {
+        jogo.descarregarDroneNavio();
 
+        changeState(DeepSeaState.SUPERFICIE_STATE);
+        return true;
+    }
 
     /**
      * Devolve o identificador do estado

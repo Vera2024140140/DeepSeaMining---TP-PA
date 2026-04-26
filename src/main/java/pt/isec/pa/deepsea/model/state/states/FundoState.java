@@ -100,6 +100,8 @@ public class FundoState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean iniciarSubida(){
+        if(!jogo.meteDroneNoFimFosso())
+            return false;
         changeState(DeepSeaState.SUBIDA_STATE);
         return true;
     }
