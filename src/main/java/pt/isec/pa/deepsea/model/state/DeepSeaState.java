@@ -2,7 +2,14 @@ package pt.isec.pa.deepsea.model.state;
 
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.states.*;
-
+/**
+ * Enumeração que define os identificadores únicos para todos os estados possíveis
+ * do jogo Deep Sea.
+ * <p>
+ * Além de identificar os estados, atua como um Factory Method que centraliza a
+ * instanciação das classes concretas de estado através do método {@link #getInstance(DeepSeaContext, Jogo)}.
+ * @author VeraRibeiro2024140140
+ */
 public enum DeepSeaState {
     SUPERFICIE_STATE,DESCIDA_STATE,FUNDO_STATE,SUBIDA_STATE,PUZZLE_STATE,OFICINA_STATE,ACABOU_STATE;
     public IDeepSeaState getInstance(DeepSeaContext context, Jogo jogo){
