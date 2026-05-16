@@ -60,11 +60,6 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     }
 
     @Override
-    public boolean chegarFundo() {
-        return false;
-    }
-
-    @Override
     public boolean iniciarSubida() {
         return false;
     }
@@ -76,23 +71,15 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     @Override
     public boolean recolherMinerio() { return false; }
 
-    @Override
-    public boolean fimPuzzle() {
-        return false;
-    }
-
-    @Override
-    public boolean subirSuperficie() {
-        return false;
-    }
-
-    @Override
     public boolean perderDrone() {
         return false;
     }
 
-    @Override
     public boolean avaliarFimJogo() {
+        if (jogo.derrota() || jogo.vitoria()) {
+            changeState(DeepSeaState.ACABOU_STATE);
+            return true;
+        }
         return false;
     }
 

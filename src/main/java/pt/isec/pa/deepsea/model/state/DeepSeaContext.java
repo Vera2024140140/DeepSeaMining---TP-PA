@@ -32,29 +32,11 @@ public class DeepSeaContext implements Serializable {
                 String.format("Change State: %s => %s", atual.getState() ,novoEstado.getState())
         );
         this.atual = novoEstado;
-        if (novoEstado.getState() == DeepSeaState.SUPERFICIE_STATE) {
-            novoEstado.avaliarFimJogo();
-        }
     }
 
     public boolean iniciarDescida() {
         DeepSeaLog.getInstance().log("iniciarDescida");
         return atual.iniciarDescida();
-    }
-
-    public boolean moverDroneFosso(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverDroneFosso (" + dir + ")");
-        return atual.moverDroneFosso(dir);
-    }
-
-    public boolean moverDroneFundo(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverDroneFundo (" + dir + ")");
-        return atual.moverDroneFundo(dir);
-    }
-
-    public boolean chegarFundo() {
-        DeepSeaLog.getInstance().log("chegarFundo");
-        return atual.chegarFundo();
     }
 
     public boolean apanharArtefacto() {
@@ -72,26 +54,6 @@ public class DeepSeaContext implements Serializable {
         return atual.iniciarSubida();
     }
 
-    public boolean fimPuzzle() {
-        DeepSeaLog.getInstance().log("fimPuzzle");
-        return atual.fimPuzzle();
-    }
-
-    public boolean subirSuperficie() {
-        DeepSeaLog.getInstance().log("subirSuperficie");
-        return atual.subirSuperficie();
-    }
-
-    public boolean perderDrone() {
-        DeepSeaLog.getInstance().log("perderDrone");
-        return atual.perderDrone();
-    }
-
-    public boolean avaliarFimJogo() {
-        DeepSeaLog.getInstance().log("avaliarFimJogo");
-        return atual.avaliarFimJogo();
-    }
-
     public boolean abrirOficina() {
         DeepSeaLog.getInstance().log("abrirOficina");
         return atual.abrirOficina();
@@ -102,9 +64,9 @@ public class DeepSeaContext implements Serializable {
         return atual.fecharOficina();
     }
 
-    public boolean moverNavio(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverNavio (" + dir + ")");
-        return atual.moverNavio(dir);
+    public boolean mover(Direcao dir) {
+        DeepSeaLog.getInstance().log("mover (" + dir + ")");
+        return atual.mover(dir);
     }
 
     public boolean selecionarDrone(int idDrone) {
