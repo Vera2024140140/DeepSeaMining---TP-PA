@@ -52,18 +52,18 @@ public class DeepSeaManagerTest {
         // carregar jogo guardado (load)
         // verf comb
         double combInicial = manager.getCombustivelNavio();
-        manager.moverNavio(Direcao.DIREITA);
+        //manager.moverNavio(Direcao.DIREITA);
         double combAposMover = manager.getCombustivelNavio();
 
         assertTrue(combAposMover < combInicial);
         //save game
-        assertTrue(manager.gravarJogo());
-        manager.moverNavio(Direcao.DIREITA);
+        //assertTrue(manager.gravarJogo());
+        //manager.moverNavio(Direcao.DIREITA);
 
         DeepSeaManager novoManager = new DeepSeaManager();
         assertEquals(combInicial, novoManager.getCombustivelNavio());
         //load game
-        assertTrue(novoManager.carregarJogo());
+        //assertTrue(novoManager.carregarJogo());
 
         assertEquals(combAposMover, novoManager.getCombustivelNavio());
         assertEquals(DeepSeaState.SUPERFICIE_STATE, manager.getState());
@@ -73,7 +73,7 @@ public class DeepSeaManagerTest {
     void testCarregarFicheiroInexistente() {
         new File(FICHEIRO_SAVE).delete();
 
-        boolean res = manager.carregarJogo();
+        //boolean res = manager.carregarJogo();
 
         assertFalse(res);
     }

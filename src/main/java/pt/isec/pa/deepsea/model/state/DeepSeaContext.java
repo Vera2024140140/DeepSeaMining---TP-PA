@@ -94,11 +94,6 @@ public class DeepSeaContext implements Serializable {
         return atual.melhorarIntegridadeDrone();
     }
 
-    public boolean moverPeca(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverPeca (" + dir + ")");
-        return atual.moverPeca(dir);
-    }
-
     // ===================================================================
     // --- MÉTODOS DE ACESSO AOS DADOS ---
     // ===================================================================
