@@ -25,7 +25,9 @@ public class SubidaState extends FossoState {
      * @param jogo Referência para o modelo de dados central
      */
     public SubidaState(DeepSeaContext context, Jogo jogo) {
+
         super(context, jogo);
+        jogo.gerarObstaculosFosso();
     }
 
     /**
@@ -34,11 +36,11 @@ public class SubidaState extends FossoState {
      */
 
     @Override
-    public boolean moverDroneFosso(Direcao dir) {
+    public boolean mover(Direcao dir) {
         if (dir == Direcao.CIMA && jogo.droneNoTopo()) {
             return subirSuperficie();
         }
-        return super.moverDroneFosso(dir);
+        return super.mover(dir);
     }
 
     /**
@@ -47,8 +49,8 @@ public class SubidaState extends FossoState {
      *
      * @return true, confirmando a transição de estado, após descarregar os itens.
      */
-    @Override
-    public boolean subirSuperficie() {
+
+    private boolean subirSuperficie() {
         jogo.descarregarDroneNavio();
 
         changeState(DeepSeaState.SUPERFICIE_STATE);

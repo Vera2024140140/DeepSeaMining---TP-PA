@@ -69,6 +69,16 @@ public class FossoMarinho implements Serializable {
     }
 
     void gerarObstaculos() {
+        // limpar animais e correntes existentes
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                TipoComponente tipo = getTipoComponente(l, c);
+                if (tipo == TipoComponente.ANIMALMARINHO || tipo == TipoComponente.CORRENTE) {
+                    grelha[l][c].setComponente(null);
+                }
+            }
+        }
+        //gerar novos obstaculos
         if (Settings.MODO_DEFESA){
             int centrolinha = Settings.LINHAS_FOSSO / 2;
             int centrocoluna = Settings.COLUNAS_FOSSO / 2;

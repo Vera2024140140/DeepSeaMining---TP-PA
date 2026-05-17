@@ -195,7 +195,9 @@ public class GrelhaSuperficie implements Serializable {
     public void gerarMonstros(int lSup, int cSup) {
         grelha[lSup][cSup].getFundo().gerarMonstros();
     }
-
+    public void gerarObstaculos(int lSup, int cSup) {
+        grelha[lSup][cSup].getFosso().gerarObstaculos();
+    }
     public void fundoLargarItens(int lSup, int cSup, List<Artefacto> artefactos, int minerios) {
         grelha[lSup][cSup].getFundo().largarItens(artefactos, minerios);
     }

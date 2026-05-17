@@ -24,7 +24,9 @@ public class DescidaState extends FossoState {
      * @param jogo Referêmncia ao modelo de central de dados
      */
     public DescidaState(DeepSeaContext context, Jogo jogo) {
+
         super(context, jogo);
+        jogo.gerarObstaculosFosso();
     }
 
     /**
@@ -33,11 +35,11 @@ public class DescidaState extends FossoState {
      * faz uma transição de estado.
      */
     @Override
-    public boolean moverDroneFosso(Direcao dir) {
+    public boolean mover(Direcao dir) {
         if (dir == Direcao.BAIXO && jogo.droneNoFundoFosso()) {
             return chegarFundo();
         }
-        return super.moverDroneFosso(dir);
+        return super.mover(dir);
     }
 
     /**

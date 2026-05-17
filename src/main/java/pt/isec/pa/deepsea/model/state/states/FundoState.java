@@ -52,7 +52,7 @@ public class FundoState extends DeepSeaStateAdapter {
      * {@code false} caso o movimento seja inválido
      */
     @Override
-    public boolean moverDroneFundo(Direcao dir){
+    public boolean mover(Direcao dir){
         if (dir == Direcao.CIMA && jogo.droneNoTopo()) {
             return iniciarSubida();
         }
@@ -117,10 +117,14 @@ public class FundoState extends DeepSeaStateAdapter {
     @Override
     public boolean perderDrone() {
         jogo.largarItensDroneNoFundo();
-        if (jogo.removerDroneAtivo()){
+        if (!jogo.removerDroneAtivo()){
+            return false;
+        }
+        if(!avaliarFimJogo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;
         }
-        return false;
+        changeState(DeepSeaState.ACABOU_STATE);
+        return true;
     }
 }

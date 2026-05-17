@@ -552,6 +552,11 @@ public class Jogo implements Serializable {
 
         return grelhaSuperficie.fundoGetTipo(lSup, cSup, linha, coluna) == TipoComponente.ARTEFACTO;
     }
+    public void gerarObstaculosFosso(){
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+        grelhaSuperficie.gerarObstaculos(lSup, cSup);
+    }
     public void gerarMonstros() {
         int lSup = navio.getLinha();
         int cSup = navio.getColuna();
