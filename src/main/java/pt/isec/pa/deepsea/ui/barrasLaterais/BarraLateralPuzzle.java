@@ -10,8 +10,6 @@ import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
-import static pt.isec.pa.deepsea.Main.manager;
-
 public class BarraLateralPuzzle extends BarraLateralBase{
     private Label lblMovimentosTitulo;
     private Label lblMovimentos;

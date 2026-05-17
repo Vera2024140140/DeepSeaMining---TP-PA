@@ -10,10 +10,7 @@ import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralPuzzle;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFosso;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFundo;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
-import pt.isec.pa.deepsea.ui.canvas.FossoCanvas;
-import pt.isec.pa.deepsea.ui.canvas.FundoCanvas;
-import pt.isec.pa.deepsea.ui.canvas.PuzzleCanvas;
-import pt.isec.pa.deepsea.ui.canvas.SuperficieCanvas;
+import pt.isec.pa.deepsea.ui.canvas.*;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
 public class RootPane extends BorderPane {
@@ -21,7 +18,6 @@ public class RootPane extends BorderPane {
 
     StackPane stackPane;
     private SuperficieCanvas superficieCanvas;
-    private PuzzleCanvas puzzleCanvas;
     private FossoCanvas fossoCanvas;
     private FundoCanvas fundoCanvas;
     private BarraLateralSuperficie barraSuperficie;

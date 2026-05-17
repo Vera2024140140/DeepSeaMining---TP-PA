@@ -1,16 +1,15 @@
 package pt.isec.pa.deepsea.ui.barrasLaterais;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
-import pt.isec.pa.deepsea.model.DeepSeaManager;
-import pt.isec.pa.deepsea.model.data.Settings;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import pt.isec.pa.deepsea.model.DeepSeaManager;
+import pt.isec.pa.deepsea.model.data.Settings;
 
-public abstract class BarraLateralNavegacao extends BarraLateralBase{
-    protected Label combustivelNavio;
+public abstract class BarraLateralNavegacao extends BarraLateralBase {
+    protected  Label combustivelNavio;
     protected  Label qtdMineriosNavio;
     protected  Label qtdArtefactosNavio;
     protected  Label droneSelecionado;
@@ -142,6 +141,9 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
         rowCombustivelNavio.setMaxWidth(Double.MAX_VALUE);
 
         // HBOX -- combustivel do drone --
+        HBox.setHgrow(barCombDrone, Priority.ALWAYS);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
         HBox rowCombustivelDrone = new HBox(5,
                 combustivelDroneSelecionado,
@@ -154,7 +156,10 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
                 "-fx-padding: 0 0 10 0;"
         );
 
-        // HBOX -- integridade do drone
+        // HBOX -- integridade do drone --
+        HBox.setHgrow(barIntegridadeDrone, Priority.ALWAYS);
+        Region spacer2 = new Region();
+        HBox.setHgrow(spacer2, Priority.ALWAYS);
 
         HBox rowIntegridadeDrone = new HBox(5,
                 integridadeDroneSelecionado,
