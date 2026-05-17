@@ -77,7 +77,7 @@ public class DronesCanvas extends Canvas {
             gc.setEffect(null);
 
             gc.setFill(selecionado ? Color.web("#2980b9") : Color.web("#7f8c8d"));
-            gc.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+            gc.setFont(Font.font("Arial", FontWeight.BOLD, 16));
             gc.setTextAlign(TextAlignment.CENTER);
             gc.fillText("Drone " + id, x + celulaW / 2, ALTURA - 12);
         }

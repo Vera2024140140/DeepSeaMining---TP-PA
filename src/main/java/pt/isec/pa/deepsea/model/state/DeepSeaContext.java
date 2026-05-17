@@ -189,4 +189,8 @@ public class DeepSeaContext implements Serializable {
         return jogo.getColunaAtualNavio();
     }
 
+    public int[][] getMapaPistasArtefactos() {
+        return jogo.getMapaPistasArtefactos();
+    }
+
 }

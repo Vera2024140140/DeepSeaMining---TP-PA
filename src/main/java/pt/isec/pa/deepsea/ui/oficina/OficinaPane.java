@@ -30,7 +30,7 @@ public class OficinaPane extends BorderPane {
         setStyle("-fx-background-color: #d9d9d9;");
 
         Label titulo = new Label("OFICINA");
-        titulo.setFont(Font.font("Verdana", FontWeight.BOLD, 36));
+        titulo.setFont(Font.font("Arial", FontWeight.BOLD, 36));
         titulo.setStyle("-fx-text-fill: #2c3e50;");
         VBox top = new VBox(titulo);
         top.setAlignment(Pos.CENTER);
@@ -54,7 +54,7 @@ public class OficinaPane extends BorderPane {
         setCenter(centro);
 
         btnFechar = new Button("Fechar Oficina");
-        btnFechar.setFont(Font.font("Verdana", FontWeight.NORMAL, 13));
+        btnFechar.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
         btnFechar.setStyle("-fx-background-color: #bdc3c7; -fx-text-fill: #2c3e50;");
         btnFechar.setPrefHeight(35);
         HBox baixo = new HBox(btnFechar);

@@ -37,17 +37,17 @@ public class OficinaInfoBox extends VBox {
         );
 
         Label titulo = new Label("Informação");
-        titulo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        titulo.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         titulo.setMaxWidth(Double.MAX_VALUE);
         titulo.setAlignment(Pos.CENTER);
         titulo.setStyle("-fx-text-fill: #2c3e50;");
 
         Label tituloNavio = new Label("Navio");
-        tituloNavio.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        tituloNavio.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         tituloNavio.setStyle("-fx-text-fill: #2c3e50;");
 
         Label tituloDrones = new Label("Drones");
-        tituloDrones.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        tituloDrones.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         tituloDrones.setStyle("-fx-text-fill: #2c3e50;");
 
         lblCombNavio     = textoInfo();
@@ -71,7 +71,7 @@ public class OficinaInfoBox extends VBox {
 
     private Label textoInfo() {
         Label l = new Label();
-        l.setFont(Font.font("Verdana", FontWeight.NORMAL, 13));
+        l.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
         l.setStyle("-fx-text-fill: #34495e;");
         return l;
     }

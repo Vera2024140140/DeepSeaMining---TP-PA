@@ -60,7 +60,7 @@ public class OficinaActionsBox extends GridPane {
     private Button botao(String texto) {
         Button b = new Button(texto);
         b.setPrefSize(BTN_W, BTN_H);
-        b.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
+        b.setFont(Font.font("Arial", FontWeight.BOLD, 13));
         b.setStyle(
             "-fx-background-color: #3498db;" +
             "-fx-text-fill: white;" +
