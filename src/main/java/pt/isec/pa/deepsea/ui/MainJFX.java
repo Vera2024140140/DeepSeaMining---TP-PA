@@ -3,7 +3,7 @@ package pt.isec.pa.deepsea.ui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pt.isec.pa.deepsea.Main;
+import pt.isec.pa.deepsea.DeepSeaApp;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
@@ -13,7 +13,7 @@ public class MainJFX extends Application {
     DeepSeaManager manager;
 
     public MainJFX() {
-        this.manager = Main.manager;
+        this.manager = DeepSeaApp.manager;
     }
 
 
