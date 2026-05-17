@@ -66,7 +66,12 @@ public class OficinaState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean abastecerDrone(double litros){
-        return jogo.abastecerDroneAtivo(litros);
+        boolean abasteceu = jogo.abastecerDroneAtivo((litros);
+
+        if (abasteceu) {
+            avaliarFimJogo();
+        }
+        return abasteceu;
     }
 
     /**
@@ -78,7 +83,11 @@ public class OficinaState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean repararDrone(int integridade){
-        return jogo.repararIntegridadeDroneAtivo(integridade);
+        boolean integridadeNavio = jogo.repararIntegridadeDroneAtivo(integridade);
+        if (integridadeNavio) {
+            avaliarFimJogo();
+        }
+        return  integridadeNavio;
     }
 
     /**

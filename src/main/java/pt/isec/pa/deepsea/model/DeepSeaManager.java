@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 public class DeepSeaManager {
-    private DeepSeaContext context;
 
     public static final String PROP_STATE   = "state";
     public static final String PROP_NAVIO   = "navio";
@@ -27,6 +26,7 @@ public class DeepSeaManager {
     public static final String PROP_GAME    = "game";
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private DeepSeaContext context;
 
     public DeepSeaManager() {
         this.context = new DeepSeaContext();
@@ -48,6 +48,9 @@ public class DeepSeaManager {
         if (depois == DeepSeaState.SUPERFICIE_STATE || depois == DeepSeaState.ACABOU_STATE){
             fire(PROP_NAVIO);
         }
+        if (depois == DeepSeaState.PUZZLE_STATE) {
+            fire(PROP_PUZZLE);
+        }
     }
 
     // ===========================================================
@@ -57,8 +60,15 @@ public class DeepSeaManager {
     public boolean iniciarDescida() {
         DeepSeaState antes = context.getState();
         boolean desceu = context.iniciarDescida();
-        if (desceu) { fireStateIfChanged(antes); fire(PROP_NAVIO); fire(PROP_DRONE); }
+        if (desceu) { fireStateIfChanged(antes); fire(PROP_NAVIO); fire(PROP_DRONE); fire(PROP_LOG); }
         return desceu;
+    }
+
+    public boolean iniciarSubida() {
+        DeepSeaState antes = context.getState();
+        boolean subiu = context.iniciarSubida();
+        if (subiu) { fireStateIfChanged(antes); fire(PROP_DRONE); fire(PROP_FOSSO); fire(PROP_LOG); }
+        return subiu;
     }
 
     public boolean mover(Direcao dir) {
@@ -73,6 +83,7 @@ public class DeepSeaManager {
             default -> {}
         }
         fireStateIfChanged(antes);
+        fire(PROP_LOG);
         return true;
     }
 
@@ -81,6 +92,7 @@ public class DeepSeaManager {
         if(recolheu) {
             fire(PROP_FUNDO);
             fire(PROP_DRONE);
+            fire(PROP_LOG);
         }
         return recolheu;
     }
@@ -88,14 +100,20 @@ public class DeepSeaManager {
     public boolean abrirOficina() {
         DeepSeaState antes = context.getState();
         boolean abriu = context.abrirOficina();
-        if (abriu) fireStateIfChanged(antes);
+        if (abriu){
+            fireStateIfChanged(antes);
+            fire(PROP_LOG);
+        }
         return abriu;
     }
 
     public boolean fecharOficina() {
         DeepSeaState antes = context.getState();
         boolean fechou = context.fecharOficina();
-        if (fechou) fireStateIfChanged(antes);
+        if (fechou){
+            fireStateIfChanged(antes);
+            fire(PROP_LOG);
+        }
         return fechou;
     }
 
@@ -105,6 +123,7 @@ public class DeepSeaManager {
             fire(PROP_OFICINA);
             fire(PROP_DRONE);
             fire(PROP_NAVIO);
+            fire(PROP_LOG);
         }
         return selecionou;
     }
@@ -115,6 +134,7 @@ public class DeepSeaManager {
             fire(PROP_DRONE);
             fire(PROP_NAVIO);
             fire(PROP_OFICINA);
+            fire(PROP_LOG);
             fireStateIfChanged(antes);
         }
         return abasteceu;
@@ -126,6 +146,7 @@ public class DeepSeaManager {
             fire(PROP_DRONE);
             fire(PROP_NAVIO);
             fire(PROP_OFICINA);
+            fire(PROP_LOG);
             fireStateIfChanged(antes);
         }
         return reparou;
@@ -137,6 +158,7 @@ public class DeepSeaManager {
             fire(PROP_DRONE);
             fire(PROP_NAVIO);
             fire(PROP_OFICINA);
+            fire(PROP_LOG);
         }
         return melhorou;
     }
@@ -147,15 +169,9 @@ public class DeepSeaManager {
             fire(PROP_DRONE);
             fire(PROP_NAVIO);
             fire(PROP_OFICINA);
+            fire(PROP_LOG);
         }
         return melhorou;
-    }
-
-    public boolean apanharArtefacto() {
-        return context.apanharArtefacto();
-    }
-    public boolean iniciarSubida() {
-        return context.iniciarSubida();
     }
 
     //===========================================================
@@ -198,6 +214,10 @@ public class DeepSeaManager {
         return  context.getMapaFundo(lSup, cSup);
     }
 
+    public int[][] getMatrizPuzzle() {
+        return context.getMatrizPuzzle();
+    }
+
     //===========================================================
     // --- log ---
     //===========================================================
@@ -209,8 +229,24 @@ public class DeepSeaManager {
         DeepSeaLog.getInstance().reset();
     }
 
-    public boolean gravarLog() {
-        return DeepSeaLog.getInstance().gravarLog();
+    public boolean gravarLog(String caminho) {
+        return DeepSeaLog.getInstance().gravarLog(caminho);
+    }
+
+    // --- UI grelha superficie
+
+    // -- pos atual do navio á superficie
+    public int getLinhaNavioSuperficie() {
+        return context.getLinhaNavioSuperficie();
+    }
+
+    public int getColunaNavioSuperficie() {
+        return context.getColunaNavioSuperficie();
+    }
+
+    // pistas dos artefactos int[l][c] pistas artefactos
+    public int[][] getMapaPistasArtefactos() {
+        return context.getMapaPistasArtefactos();
     }
 
     //===========================================================
@@ -218,10 +254,17 @@ public class DeepSeaManager {
     //===========================================================
 
     public void novoJogo(){
-        DeepSeaState antes = context.getState();
+        resetContadores();
         this.context = new DeepSeaContext();
         fire(PROP_GAME);
-        pcs.firePropertyChange(PROP_STATE, antes, context.getState());
+        pcs.firePropertyChange(PROP_STATE, null, context.getState());
+    }
+
+    private void resetContadores() {
+        Drone.resetContadorIds();
+        Obstaculo.resetContadorObstaculos();
+        Monstro.resetContadorMonstros();
+        Artefacto.resetContadorArtefactos();
     }
 
     public boolean gravarJogo(File file){
@@ -239,11 +282,51 @@ public class DeepSeaManager {
             context = (DeepSeaContext) ois.readObject();
         } catch (Exception e) {
             System.err.println("Erro ao carregar o jogo: " + e.getMessage());
-
-
             return false;
         }
+        resetContadores();
         fire(PROP_GAME);
+        pcs.firePropertyChange(PROP_STATE, null, context.getState());
+        fire(PROP_NAVIO);
+        fire(PROP_DRONE);
+        fire(PROP_FUNDO);
+        fire(PROP_FOSSO);
+        fire(PROP_PUZZLE);
+        fire(PROP_OFICINA);
+        fire(PROP_LOG);
         return true;
+    }
+
+    public List<String> getInfoDrones() { return context.getInfoDrones(); }
+
+    public int getArtefactosNavio() {
+        return context.getArtefactosNavio();
+    }
+
+    public int getIdDroneAtivo() {
+        return context.getIdDroneAtivo();
+    }
+
+    public int getLinhaDroneAtivo(){return context.getLinhaDroneAtivo();}
+    public int getColunaDroneAtivo(){return context.getColunaDroneAtivo();}
+
+    public int getMovimentosRestantesPuzzle()  {
+        return context.getMovimentosRestantesPuzzle();
+    }
+
+    public int getMineriosDroneAtivo() {
+        return context.getMineriosDroneAtivo();
+    }
+
+    public int getArtefactosDroneAtivo() {
+        return context.getArtefactosDroneAtivo();
+    }
+
+    public double getMaxCombustivelDroneAtivo() {
+        return context.getMaxCombustivelDroneAtivo();
+    }
+
+    public double getIntegridadeMaxDrone() {
+        return context.getIntegridadeMaxDrone();
     }
 }
