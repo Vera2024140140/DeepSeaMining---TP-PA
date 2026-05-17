@@ -193,7 +193,12 @@ public class Jogo implements Serializable {
     public boolean meteDroneNoFundo() {
         Drone drone = navio.getDroneAtivo();
         if (drone != null) {
-            drone.setLocalizacao( 0, grelhaSuperficie.getColunasFundo(navio.getLinha(), navio.getColuna()) / 2);
+            int lSup = navio.getLinha();
+            int cSup = navio.getColuna();
+            int linhaCentro = grelhaSuperficie.getLinhasFundo(lSup, cSup) / 2;
+            int colunaCentro = grelhaSuperficie.getColunasFundo(lSup, cSup) / 2;
+            drone.setLocalizacao(linhaCentro, colunaCentro);
+            grelhaSuperficie.fundoRevelar(lSup, cSup, drone.getLinha(), drone.getColuna());
             return true;
         }
         return false;
@@ -718,5 +723,9 @@ public class Jogo implements Serializable {
 
     public int getColunaAtualNavio() {
         return navio.getColuna();
+    }
+
+    public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
+        return grelhaSuperficie.fundoIsRevelada(lsup,csup,lF,cF);
     }
 }

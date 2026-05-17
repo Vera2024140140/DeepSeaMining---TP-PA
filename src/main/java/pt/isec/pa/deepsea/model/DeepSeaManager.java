@@ -319,6 +319,9 @@ public class DeepSeaManager {
         return context.getMovimentosRestantesPuzzle();
     }
 
+    public boolean isCelulaFundoRevelada(int lsup,int csup,int lF,int cF){
+        return context.isCelulaFundoRevelada(lsup,csup,lF,cF);
+    }
     public int getMineriosDroneAtivo() {
         return context.getMineriosDroneAtivo();
     }

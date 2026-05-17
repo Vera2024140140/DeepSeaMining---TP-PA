@@ -53,9 +53,6 @@ public class FundoState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean mover(Direcao dir){
-        if (dir == Direcao.CIMA && jogo.droneNoTopo()) {
-            return iniciarSubida();
-        }
         boolean moveu = jogo.moverDroneFundo(dir);
         if (!moveu) return false;
 

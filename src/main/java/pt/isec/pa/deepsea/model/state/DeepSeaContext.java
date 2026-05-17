@@ -193,4 +193,7 @@ public class DeepSeaContext implements Serializable {
         return jogo.getMapaPistasArtefactos();
     }
 
+    public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
+        return jogo.isCelulaFundoRevelada(lsup,csup,lF,cF);
+    }
 }

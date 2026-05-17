@@ -9,6 +9,7 @@ import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFosso;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFundo;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.FossoCanvas;
+import pt.isec.pa.deepsea.ui.canvas.FundoCanvas;
 import pt.isec.pa.deepsea.ui.canvas.SuperficieCanvas;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
@@ -18,6 +19,7 @@ public class RootPane extends BorderPane {
     StackPane stackPane;
     private SuperficieCanvas superficieCanvas;
     private FossoCanvas fossoCanvas;
+    private FundoCanvas fundoCanvas;
     private BarraLateralSuperficie barraSuperficie;
     private BarraLateralFosso barraFosso;
     private BarraLateralFundo barraFundo;
@@ -41,8 +43,11 @@ public class RootPane extends BorderPane {
 
         superficieCanvas = new SuperficieCanvas(manager);
         fossoCanvas = new FossoCanvas(manager);
+        fundoCanvas = new FundoCanvas(manager);
+
         barraSuperficie = new BarraLateralSuperficie(manager);
         barraFosso = new BarraLateralFosso(manager);
+        barraFundo = new BarraLateralFundo(manager);
         oficinaPane = new OficinaPane(manager);
 
         setCenter(stackPane);
@@ -69,6 +74,11 @@ public class RootPane extends BorderPane {
             case DESCIDA_STATE,SUBIDA_STATE -> {
                 stackPane.getChildren().add(fossoCanvas);
                 setRight(barraFosso);
+                stackPane.setAlignment(Pos.CENTER);
+            }
+            case FUNDO_STATE -> {
+                stackPane.getChildren().add(fundoCanvas);
+                setRight(barraFundo);
                 stackPane.setAlignment(Pos.CENTER);
             }
             default -> {
