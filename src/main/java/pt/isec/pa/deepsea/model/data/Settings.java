@@ -65,4 +65,7 @@ public interface Settings {
     String FICHEIRO_LOG = "deepsea.log";
     String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
 
+    int CANVAS_DRONE_W = 240;
+    int CANVAS_DRONE_H = 200;
+
 }

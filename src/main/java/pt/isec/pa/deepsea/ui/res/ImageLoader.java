@@ -1,4 +1,4 @@
-package pt.isec.pa.deepsea.ui.utils;
+package pt.isec.pa.deepsea.ui.res;
 
 import javafx.scene.image.Image;
 import java.util.HashMap;
