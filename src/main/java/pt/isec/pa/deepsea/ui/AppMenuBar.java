@@ -82,7 +82,16 @@ public class AppMenuBar extends MenuBar {
         mShowHide.setOnAction(e -> new LogStage(manager).show());
 
         MenuItem mSaveLogs = new MenuItem("Save Logs");
-        mSaveLogs.setOnAction(e -> {/*foda se*/});
+        mSaveLogs.setOnAction(e -> {
+            javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
+            fc.setTitle("Guardar Logs");
+            fc.getExtensionFilters().add(new javafx.stage.FileChooser.ExtensionFilter("Ficheiros de Texto", "*.log", "*.txt"));
+
+            java.io.File ficheiro = fc.showSaveDialog(null); // janela separada
+            if (ficheiro != null) {
+                manager.gravarLog(ficheiro.getAbsolutePath());
+            }
+        });
 
         MenuItem mClearLogs = new MenuItem("Clear Logs");
         mClearLogs.setOnAction(e -> manager.limparLog());
