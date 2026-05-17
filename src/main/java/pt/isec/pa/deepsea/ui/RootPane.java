@@ -7,6 +7,7 @@ import javafx.scene.layout.StackPane;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFosso;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFundo;
+import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralPuzzle;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.FossoCanvas;
 import pt.isec.pa.deepsea.ui.canvas.FundoCanvas;
@@ -24,6 +25,7 @@ public class RootPane extends BorderPane {
     private BarraLateralFosso barraFosso;
     private BarraLateralFundo barraFundo;
     private OficinaPane oficinaPane;
+    private BarraLateralPuzzle barraPuzzle;
 
     public RootPane(DeepSeaManager manager) {
         this.manager = manager;
@@ -41,6 +43,7 @@ public class RootPane extends BorderPane {
                 "-fx-background-color : " + Settings.BG_GRELHAS + ";"
         );
 
+        barraPuzzle = new BarraLateralPuzzle(manager);
         superficieCanvas = new SuperficieCanvas(manager);
         fossoCanvas = new FossoCanvas(manager);
         fundoCanvas = new FundoCanvas(manager);
@@ -57,7 +60,8 @@ public class RootPane extends BorderPane {
         setTop(menuBar);
     }
     private void registerHandlers() {
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
+                evt -> update());
     }
 
     private void update() {
@@ -79,6 +83,11 @@ public class RootPane extends BorderPane {
             case FUNDO_STATE -> {
                 stackPane.getChildren().add(fundoCanvas);
                 setRight(barraFundo);
+                stackPane.setAlignment(Pos.CENTER);
+            }
+            case PUZZLE_STATE ->{
+                stackPane.getChildren().add(puzzleCanvas);
+                setRight(barraPuzzle);
                 stackPane.setAlignment(Pos.CENTER);
             }
             default -> {
