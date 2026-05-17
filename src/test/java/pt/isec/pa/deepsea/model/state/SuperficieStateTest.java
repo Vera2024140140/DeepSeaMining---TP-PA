@@ -56,15 +56,4 @@ class SuperficieStateTest {
         assertTrue(context.iniciarDescida());
         assertEquals(DeepSeaState.DESCIDA_STATE, context.getState());
     }
-
-    /*/**
-     * Confirma que, sem condições de fim de jogo cumpridas
-     * a avaliação de fim de jogo devolve {@code false} e mantém o estado
-     * em {@link DeepSeaState#SUPERFICIE_STATE}.
-     *//*
-    @Test
-    void avaliarFimJogo() {
-        assertFalse(context.avaliarFimJogo());
-        assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
-    }*/
 }

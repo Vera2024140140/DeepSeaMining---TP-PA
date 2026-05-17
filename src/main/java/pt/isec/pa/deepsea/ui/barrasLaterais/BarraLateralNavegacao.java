@@ -194,8 +194,8 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase {
         combustivelNavio.setText("Combustível");
         combustivelNavioQuantidades.setText((int)manager.getCombustivelNavio() + "/" + (int) Settings.NAVIO_COMBUSTIVEL_MAX);
         qtdMineriosNavio.setText("Minérios: " + manager.getMineriosNavio());
-        qtdArtefactosNavio.setText("Artefactos: " + manager.getArtefactosNavio());
         droneSelecionado.setText("Drone ativo: " + manager.getIdDroneAtivo());
+        qtdArtefactosNavio.setText("Artefactos: " + manager.getArtefactosNavio() + " / " + Settings.NUM_ARTEFACTOS);
         combustivelDroneSelecionado.setText("Combustível");
         combustivelDroneQuantidades.setText( (int) manager.getCombustivelDroneAtivo() + "/" + (int) manager.getMaxCombustivelDroneAtivo());
         integridadeDroneSelecionado.setText("Integridade");

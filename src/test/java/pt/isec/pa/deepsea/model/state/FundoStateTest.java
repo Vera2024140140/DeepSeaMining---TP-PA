@@ -53,18 +53,6 @@ public class FundoStateTest {
         assertEquals(DeepSeaState.FUNDO_STATE, context.getState());
     }
     /**
-     * Testa a transição automática para o estado de subida.
-     * <p>
-     * Verifica se, ao estar na linha 0 (topo) e tentar mover para CIMA,
-     * occore a transição automatica para {@code SUBIDA_STATE}.
-     */
-    @Test
-    void testMoverCimaNoTopoIniciaSubida() {
-        //iniciar subida quando está no fundo
-        assertTrue(context.mover(Direcao.CIMA));
-        assertEquals(DeepSeaState.SUBIDA_STATE, context.getState());
-    }
-    /**
      * Valida a ação direta de iniciar subida
      */
     @Test

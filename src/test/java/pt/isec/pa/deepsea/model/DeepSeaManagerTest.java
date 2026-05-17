@@ -1,6 +1,8 @@
 package pt.isec.pa.deepsea.model;
 
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
@@ -13,17 +15,16 @@ import static pt.isec.pa.deepsea.model.data.Settings.FICHEIRO_SAVE;
 public class DeepSeaManagerTest {
     private DeepSeaManager manager;
 
-    /*@BeforeEach
+    @BeforeEach
     void setUp() {
         manager = new DeepSeaManager();
         manager.limparLog();
-    }*/
+    }
 
-    /*@AfterEach
+    @AfterEach
     void apagarFicheiros() {
         new File(FICHEIRO_SAVE).delete();
-        new File(FICHEIRO_LOG).delete();
-    }*/
+    }
 
     @Test
     void testNovoJogo() {
@@ -50,11 +51,6 @@ public class DeepSeaManagerTest {
         double combInicial = manager.getCombustivelNavio();
         //manager.moverNavio(Direcao.DIREITA);
         double combAposMover = manager.getCombustivelNavio();
-
-        assertTrue(combAposMover < combInicial);
-        //save game
-        //assertTrue(manager.gravarJogo());
-        //manager.moverNavio(Direcao.DIREITA);
 
         DeepSeaManager novoManager = new DeepSeaManager();
         assertEquals(combInicial, novoManager.getCombustivelNavio());

@@ -32,8 +32,6 @@ class DeepSeaLogTest {
         deepSeaLog.reset(); // Garantir que o log está vazio antes de cada teste
     }
 
-
-
     /**
      * Testa o método de adição de registos (log).
      * Verifica se strings válidas são adicionadas com sucesso à lista e assegura
@@ -98,6 +96,4 @@ class DeepSeaLogTest {
         assertFalse(deepSeaLog.eliminar(-1));
         assertFalse(deepSeaLog.eliminar(5));
     }
-
-
 }
