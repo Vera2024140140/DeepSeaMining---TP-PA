@@ -1,7 +1,7 @@
 
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
@@ -25,7 +25,9 @@ public class SubidaState extends FossoState {
      * @param jogo Referência para o modelo de dados central
      */
     public SubidaState(DeepSeaContext context, Jogo jogo) {
+
         super(context, jogo);
+        jogo.gerarObstaculosFosso();
     }
 
     /**
@@ -34,11 +36,11 @@ public class SubidaState extends FossoState {
      */
 
     @Override
-    public boolean moverDroneFosso(Direcao dir) {
+    public boolean mover(Direcao dir) {
         if (dir == Direcao.CIMA && jogo.droneNoTopo()) {
             return subirSuperficie();
         }
-        return super.moverDroneFosso(dir);
+        return super.mover(dir);
     }
 
     /**
@@ -47,10 +49,10 @@ public class SubidaState extends FossoState {
      *
      * @return true, confirmando a transição de estado, após descarregar os itens.
      */
-    @Override
-    public boolean subirSuperficie() {
-        jogo.descarregarDroneNavio();
 
+    private boolean subirSuperficie() {
+        jogo.descarregarDroneNavio();
+        if (avaliarFimJogo()) return true;            // verifica vitória ANTES de transitar
         changeState(DeepSeaState.SUPERFICIE_STATE);
         return true;
     }

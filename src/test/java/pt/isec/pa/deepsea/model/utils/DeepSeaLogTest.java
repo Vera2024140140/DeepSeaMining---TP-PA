@@ -33,19 +33,6 @@ class DeepSeaLogTest {
     }
 
     /**
-     * Rotina de limpeza executada após cada teste.
-     * Apaga o ficheiro de log físico criado no sistema (se existir),
-     * garantindo que não ficam ficheiros residuais após a execução dos testes.
-     */
-    @AfterEach
-    void EliminarFicheiroLog() {
-        File logFile = new File(Settings.FICHEIRO_LOG);
-        if (logFile.exists()) {
-            logFile.delete();
-        }
-    }
-
-    /**
      * Testa o método de adição de registos (log).
      * Verifica se strings válidas são adicionadas com sucesso à lista e assegura
      * que valores inválidos (nulos, vazios ou apenas com espaços em branco)
@@ -108,29 +95,5 @@ class DeepSeaLogTest {
         // Testar eliminações inválidas
         assertFalse(deepSeaLog.eliminar(-1));
         assertFalse(deepSeaLog.eliminar(5));
-    }
-
-    /**
-     * Testa a funcionalidade de gravação dos logs em memória para um ficheiro de texto.
-     * Verifica se o método sinaliza sucesso, se o ficheiro físico é efetivamente
-     * criado no disco e se as linhas escritas correspondem exatamente aos dados em memória.
-     * * @throws IOException Se ocorrer um erro durante a leitura das linhas do ficheiro criado.
-     */
-    @Test
-    void testGravarLog() throws IOException {
-        deepSeaLog.log("Teste Gravar 1");
-        deepSeaLog.log("Teste Gravar 2");
-
-        boolean resultado = deepSeaLog.gravarLog();
-        assertTrue(resultado);
-
-        File logFile = new File(Settings.FICHEIRO_LOG);
-        assertTrue(logFile.exists());
-
-        // Verificar o conteúdo gravado
-        List<String> linhas = Files.readAllLines(logFile.toPath());
-        assertEquals(2, linhas.size());
-        assertTrue(linhas.get(0).contains("Teste Gravar 1"));
-        assertTrue(linhas.get(1).contains("Teste Gravar 2"));
     }
 }

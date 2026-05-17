@@ -1,11 +1,12 @@
 package pt.isec.pa.deepsea.model.data.jogo;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
 import java.io.Serializable;
 import java.util.*;
@@ -38,7 +39,9 @@ public class Jogo implements Serializable {
         this.navio = new Navio();
     }
 
-    // -- Getter's
+    // ===================================================================
+    // --- GETTERS DE FACHADA (para DeepSeaContext) ---
+    // ===================================================================
     Navio getNavio() {
         return navio;
     }
@@ -61,6 +64,49 @@ public class Jogo implements Serializable {
 
     public Set<Integer> getIdsDronesNavio() {
         return navio.getIdsDronesNavio();
+    }
+
+    public double getMaxCombustivelDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getCombustivelMax();
+    }
+
+    public int getMovimentosRestantesPuzzle()  {
+        if (puzzleAtual == null) return 0;
+        return puzzleAtual.getMovimentosRestantes();
+    }
+
+    public int getMineriosDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getQtdMinerios();
+    }
+
+    public int[][] getMatrizPuzzle() {
+        if (puzzleAtual == null) return null;
+        int tam = Settings.PUZZLE_GRELHA;
+        int[][] copiaGreha = new int[tam][tam];
+
+        //copia de faxada
+        for (int l = 0; l < tam; l++) {
+            for (int c = 0; c < tam; c++) {
+                copiaGreha[l][c] = puzzleAtual.getCelula(l, c);
+            }
+        }
+        return copiaGreha;
+    }
+
+    public double getIntegridadeMaxDrone() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getIntegridadeMax();
+    }
+
+    public int  getArtefactosDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getQtdArtefactos();
     }
 
     // ===================================================================
@@ -148,7 +194,12 @@ public class Jogo implements Serializable {
     public boolean meteDroneNoFundo() {
         Drone drone = navio.getDroneAtivo();
         if (drone != null) {
-            drone.setLocalizacao( 0, grelhaSuperficie.getColunasFundo(navio.getLinha(), navio.getColuna()) / 2);
+            int lSup = navio.getLinha();
+            int cSup = navio.getColuna();
+            int linhaCentro = grelhaSuperficie.getLinhasFundo(lSup, cSup) / 2;
+            int colunaCentro = grelhaSuperficie.getColunasFundo(lSup, cSup) / 2;
+            drone.setLocalizacao(linhaCentro, colunaCentro);
+            grelhaSuperficie.fundoRevelar(lSup, cSup, drone.getLinha(), drone.getColuna());
             return true;
         }
         return false;
@@ -312,14 +363,22 @@ public class Jogo implements Serializable {
      * @return true, caso o jogador tenha recolhido todos os artefactos
      */
     public boolean vitoria() {
-        return navio.getIdsArtefactosNavio().size() >= Settings.NUM_ARTEFACTOS;
+        boolean vitoria = navio.getIdsArtefactosNavio().size() >= Settings.NUM_ARTEFACTOS;
+        if(vitoria){
+            DeepSeaLog.getInstance().log("Ganhou jogo");
+        }
+        return vitoria;
     }
 
     /**
      * @return true, caso o navio não tenha combustível ou os 3 'Drones' tenham sido todos destruídos.
      */
     public boolean derrota() {
-        return navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
+        boolean derrota = navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
+        if(derrota){
+            DeepSeaLog.getInstance().log("Perdeu jogo");
+        }
+        return derrota;
     }
 
     // simulação para testes de fim de jogo (PUBLIC APENAS PARA TESTES)
@@ -552,11 +611,20 @@ public class Jogo implements Serializable {
 
         return grelhaSuperficie.fundoGetTipo(lSup, cSup, linha, coluna) == TipoComponente.ARTEFACTO;
     }
+    public void gerarObstaculosFosso(){
+        int lSup = navio.getLinha();
+        int cSup = navio.getColuna();
+        grelhaSuperficie.gerarObstaculos(lSup, cSup);
+    }
     public void gerarMonstros() {
         int lSup = navio.getLinha();
         int cSup = navio.getColuna();
 
         grelhaSuperficie.gerarMonstros(lSup, cSup);
+    }
+
+    public List<String> getInfoDrones() {
+        return navio.getInfoDrones();
     }
 
     // ===================================================================
@@ -631,4 +699,42 @@ public class Jogo implements Serializable {
         navio.addMinerios(quantidade);
     }
 
+    public int getLinhaDroneAtivo() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return -1;
+        return drone.getLinha();
+    }
+    public int getColunaDroneAtivo() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return -1;
+        return drone.getColuna();
+    }
+
+    public int getArtefactosNavio() {
+        return navio.getArtefactosNavio();
+    }
+
+    public int getIdDroneAtivo() {
+        return navio.getDroneAtivoId();
+    }
+
+    public boolean posicaoComMinerio() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return false;
+        TipoComponente tipo = grelhaSuperficie.getTipoNoFundo(navio.getLinha(),navio.getColuna(),
+                drone.getLinha(),drone.getColuna());
+        return tipo == TipoComponente.MINERIO;
+    }
+
+    public int getLinhaAtualNavio() {
+        return navio.getLinha();
+    }
+
+    public int getColunaAtualNavio() {
+        return navio.getColuna();
+    }
+
+    public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
+        return grelhaSuperficie.fundoIsRevelada(lsup,csup,lF,cF);
+    }
 }

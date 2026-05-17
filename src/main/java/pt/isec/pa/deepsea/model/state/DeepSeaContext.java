@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.state;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.Direcao;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
@@ -32,34 +32,11 @@ public class DeepSeaContext implements Serializable {
                 String.format("Change State: %s => %s", atual.getState() ,novoEstado.getState())
         );
         this.atual = novoEstado;
-        if (novoEstado.getState() == DeepSeaState.SUPERFICIE_STATE) {
-            novoEstado.avaliarFimJogo();
-        }
     }
 
     public boolean iniciarDescida() {
         DeepSeaLog.getInstance().log("iniciarDescida");
         return atual.iniciarDescida();
-    }
-
-    public boolean moverDroneFosso(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverDroneFosso (" + dir + ")");
-        return atual.moverDroneFosso(dir);
-    }
-
-    public boolean moverDroneFundo(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverDroneFundo (" + dir + ")");
-        return atual.moverDroneFundo(dir);
-    }
-
-    public boolean chegarFundo() {
-        DeepSeaLog.getInstance().log("chegarFundo");
-        return atual.chegarFundo();
-    }
-
-    public boolean apanharArtefacto() {
-        DeepSeaLog.getInstance().log("apanharArtefacto");
-        return atual.apanharArtefacto();
     }
 
     public boolean recolherMinerio(){
@@ -72,26 +49,6 @@ public class DeepSeaContext implements Serializable {
         return atual.iniciarSubida();
     }
 
-    public boolean fimPuzzle() {
-        DeepSeaLog.getInstance().log("fimPuzzle");
-        return atual.fimPuzzle();
-    }
-
-    public boolean subirSuperficie() {
-        DeepSeaLog.getInstance().log("subirSuperficie");
-        return atual.subirSuperficie();
-    }
-
-    public boolean perderDrone() {
-        DeepSeaLog.getInstance().log("perderDrone");
-        return atual.perderDrone();
-    }
-
-    public boolean avaliarFimJogo() {
-        DeepSeaLog.getInstance().log("avaliarFimJogo");
-        return atual.avaliarFimJogo();
-    }
-
     public boolean abrirOficina() {
         DeepSeaLog.getInstance().log("abrirOficina");
         return atual.abrirOficina();
@@ -102,9 +59,9 @@ public class DeepSeaContext implements Serializable {
         return atual.fecharOficina();
     }
 
-    public boolean moverNavio(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverNavio (" + dir + ")");
-        return atual.moverNavio(dir);
+    public boolean mover(Direcao dir) {
+        DeepSeaLog.getInstance().log("mover (" + dir + ")");
+        return atual.mover(dir);
     }
 
     public boolean selecionarDrone(int idDrone) {
@@ -132,9 +89,47 @@ public class DeepSeaContext implements Serializable {
         return atual.melhorarIntegridadeDrone();
     }
 
-    public boolean moverPeca(Direcao dir) {
-        DeepSeaLog.getInstance().log("moverPeca (" + dir + ")");
-        return atual.moverPeca(dir);
+    public double getIntegridadeMaxDrone() {
+        return jogo.getIntegridadeMaxDrone();
+    }
+
+    public List<String> getInfoDrones() {
+        return jogo.getInfoDrones();
+    }
+
+    public int getArtefactosNavio() {
+        return jogo.getArtefactosNavio();
+    }
+
+    public int getIdDroneAtivo() {
+        return jogo.getIdDroneAtivo();
+    }
+
+    public int[][] getMatrizPuzzle() {
+        return jogo.getMatrizPuzzle();
+    }
+
+    public int getMineriosDroneAtivo() {
+        return jogo.getMineriosDroneAtivo();
+    }
+
+    public double getMaxCombustivelDroneAtivo() {
+        return jogo.getMaxCombustivelDroneAtivo();
+    }
+
+    public int getMovimentosRestantesPuzzle()  {
+        return jogo.getMovimentosRestantesPuzzle();
+    }
+
+    public int getLinhaDroneAtivo() {
+        return jogo.getLinhaDroneAtivo();
+    }
+    public int getColunaDroneAtivo() {
+        return jogo.getColunaDroneAtivo();
+    }
+
+    public int getArtefactosDroneAtivo() {
+        return jogo.getArtefactosDroneAtivo();
     }
 
     // ===================================================================
@@ -181,5 +176,24 @@ public class DeepSeaContext implements Serializable {
 
     public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
         return jogo.getMapaFundo(lSup, cSup);
+    }
+
+    public boolean posicaoComMinerio() {
+        return jogo.posicaoComMinerio();
+    }
+
+    public int getLinhaNavioSuperficie() {
+        return jogo.getLinhaAtualNavio();
+    }
+    public int getColunaNavioSuperficie() {
+        return jogo.getColunaAtualNavio();
+    }
+
+    public int[][] getMapaPistasArtefactos() {
+        return jogo.getMapaPistasArtefactos();
+    }
+
+    public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
+        return jogo.isCelulaFundoRevelada(lsup,csup,lF,cF);
     }
 }

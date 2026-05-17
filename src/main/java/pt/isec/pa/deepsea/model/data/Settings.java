@@ -1,13 +1,15 @@
 package pt.isec.pa.deepsea.model.data;
 
+import javafx.scene.text.Font;
+
 public interface Settings {
      boolean MODO_DEFESA = false;
 
     //Dimensao das grelhas
-    int LINHAS_SUPERFICIE = 30;
-    int COLUNAS_SUPERFICIE = 15;
-    int LINHAS_FOSSO = 20;
-    int COLUNAS_FOSSO = 10;
+    int LINHAS_SUPERFICIE = 14;
+    int COLUNAS_SUPERFICIE = 14;
+    int LINHAS_FOSSO = 14;
+    int COLUNAS_FOSSO = 12;
     int LINHAS_FUNDO = 10;
     int COLUNAS_FUNDO = 10;
 
@@ -41,7 +43,7 @@ public interface Settings {
     //mini jogo
     int PUZZLE_MAX_MOVIMENTOS = 50;
     int PUZZLE_GRELHA = 4;
-    int PUZZLE_BARALHAR_GRELHA = 100;
+    int PUZZLE_BARALHAR_GRELHA = 5;
 
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;
@@ -62,7 +64,29 @@ public interface Settings {
 
     String FICHEIRO_SAVE = "deepsea_save.sav";
 
-    String FICHEIRO_LOG = "deepsea.log";
     String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
 
+    int CELL_SIZE = 50;
+
+    int CANVAS_DRONE_W = 240;
+    int CANVAS_DRONE_H = 200;
+    int WIDTH_LOG = 300;
+    int HEIGHT_LOG = 500;
+    int WIDTH_BARRA_LATERAL = 340;
+    int HEIGHT_JANELA = 800;
+    int WIDTH_JANELA = 1100;
+
+    String FICHEIRO_RECENTES = "recentes.txt";
+    int MAX_RECENT = 5;
+
+    String BG_FUNDO      = "#b0b7bd";
+    String BG_PANEL      = "#34495E";
+    String BG_GRELHAS    = "#c9ddf0";
+    String TEXT_PRIMARY  = "#ECF0F1";
+    String TEXT_DARK     = "#2C3E50";
+    String BAR_CRIT      = "#C0392B";
+    String BTN_PRIMARY   = "#3498DB";
+    String BTN_ACTION    = "#F39C12";
+
+    Font FONTE = Font.font("Arial");
 }

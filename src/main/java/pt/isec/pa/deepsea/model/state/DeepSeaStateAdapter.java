@@ -1,6 +1,6 @@
 package pt.isec.pa.deepsea.model.state;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 
 import java.io.Serializable;
@@ -60,11 +60,6 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     }
 
     @Override
-    public boolean chegarFundo() {
-        return false;
-    }
-
-    @Override
     public boolean iniciarSubida() {
         return false;
     }
@@ -76,23 +71,15 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     @Override
     public boolean recolherMinerio() { return false; }
 
-    @Override
-    public boolean fimPuzzle() {
-        return false;
-    }
-
-    @Override
-    public boolean subirSuperficie() {
-        return false;
-    }
-
-    @Override
     public boolean perderDrone() {
         return false;
     }
 
-    @Override
     public boolean avaliarFimJogo() {
+        if (jogo.derrota() || jogo.vitoria()) {
+            changeState(DeepSeaState.ACABOU_STATE);
+            return true;
+        }
         return false;
     }
 
@@ -106,18 +93,6 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
         return false;
     }
 
-    @Override
-    public boolean moverNavio(Direcao dir) {
-        return false;
-    }
-
-    @Override
-    public boolean moverDroneFosso(Direcao dir) {
-        return false;
-    }
-
-    @Override
-    public boolean moverDroneFundo(Direcao dir){return false;}
     @Override
     public boolean selecionarDrone(int idDrone) {
         return false;
@@ -143,7 +118,7 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     }
 
     @Override
-    public boolean moverPeca(Direcao dir) {
+    public boolean mover(Direcao dir) {
         return false;
     }
 

@@ -197,4 +197,23 @@ public class Navio implements Serializable {
         Drone d = getDroneAtivo();
         return d != null ? d.getIntegridadeCasco() : 0;
     }
+
+    public int getArtefactosNavio() {
+        return artefactos.size();
+    }
+
+    List<String> getInfoDrones() {
+        List<Drone> ordenados = new ArrayList<>(drones);
+        ordenados.sort(Comparator.comparingInt(Drone::getId));
+        int idAtivo = getDroneAtivoId();
+        List<String> resultado = new ArrayList<>();
+        for (Drone d : ordenados) {
+            String marca = (d.getId() == idAtivo) ? " (ativo)" : "";
+            resultado.add(String.format("Drone %d%s — %.1f/%.1f L | %d/%d HP",
+                    d.getId(), marca,
+                    d.getCombustivel(), d.getCombustivelMax(),
+                    d.getIntegridadeCasco(), d.getIntegridadeMax()));
+        }
+        return resultado;
+    }
 }

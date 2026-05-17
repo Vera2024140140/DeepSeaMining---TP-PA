@@ -94,8 +94,8 @@ public class DeepSeaLog {
      * @return {@code true} se o ficheiro for gravado com sucesso;
      * {@code false} se ocorrer algum erro durante a escrita do ficheiro (ex: permissões, I/O).
      */
-    public boolean gravarLog(){
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(Settings.FICHEIRO_LOG))) {
+    public boolean gravarLog(String caminho){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminho))) {
             for (String s : log) {
                 bw.write(s);
                 bw.newLine();

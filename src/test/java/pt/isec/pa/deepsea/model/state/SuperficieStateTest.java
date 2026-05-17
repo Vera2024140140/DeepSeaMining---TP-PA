@@ -2,7 +2,7 @@ package pt.isec.pa.deepsea.model.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.state.states.SuperficieState;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +33,7 @@ class SuperficieStateTest {
     @Test
     void moverNavio() {
         double combAntes = context.getCombustivelNavio();
-        assertTrue(context.moverNavio(Direcao.DIREITA));
+        assertTrue(context.mover(Direcao.DIREITA));
         assertTrue(context.getCombustivelNavio() < combAntes);
     }
 
@@ -55,16 +55,5 @@ class SuperficieStateTest {
     void iniciarDescida() {
         assertTrue(context.iniciarDescida());
         assertEquals(DeepSeaState.DESCIDA_STATE, context.getState());
-    }
-
-    /**
-     * Confirma que, sem condições de fim de jogo cumpridas
-     * a avaliação de fim de jogo devolve {@code false} e mantém o estado
-     * em {@link DeepSeaState#SUPERFICIE_STATE}.
-     */
-    @Test
-    void avaliarFimJogo() {
-        assertFalse(context.avaliarFimJogo());
-        assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
     }
 }

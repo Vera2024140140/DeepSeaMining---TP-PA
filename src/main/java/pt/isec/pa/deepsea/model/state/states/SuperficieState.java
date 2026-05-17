@@ -1,6 +1,6 @@
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
@@ -43,9 +43,10 @@ public class SuperficieState extends DeepSeaStateAdapter {
      *         direção é inválida, se não há combustível suficiente ou se a
      *         posição resultante está fora da grelha
      */
-    @Override
-    public boolean moverNavio(Direcao dir) {
-        return jogo.moverNavio(dir);
+    public boolean mover(Direcao dir) {
+        boolean moveu = jogo.moverNavio(dir);
+        if (moveu) avaliarFimJogo();
+        return moveu;
     }
 
     /**
@@ -78,24 +79,5 @@ public class SuperficieState extends DeepSeaStateAdapter {
         }
         changeState(DeepSeaState.DESCIDA_STATE);
         return true;
-    }
-
-    /**
-     * Avalia se o jogo deve terminar, transitando para
-     * {@link DeepSeaState#ACABOU_STATE} caso o mesmo termine.
-     * <p>
-     * O jogo acaba quando deixam de existir drones / navio fica sem combustivel (derrota) ou
-     * quando foram recolhidos todos os artefactos (vitória).
-     *
-     * @return {@code true} se o jogo terminou e houve transição de estado;
-     *         {@code false} se o jogo continua
-     */
-    @Override
-    public boolean avaliarFimJogo() {
-        if (jogo.derrota() || jogo.vitoria()) {
-            changeState(DeepSeaState.ACABOU_STATE);
-            return true;
-        }
-        return false;
     }
 }

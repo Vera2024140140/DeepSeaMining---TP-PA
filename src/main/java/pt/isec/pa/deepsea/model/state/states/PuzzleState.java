@@ -1,10 +1,11 @@
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
 /**
  * Representa o estado do minijogo (Puzzle) para a recolha de artefactos.
@@ -41,32 +42,22 @@ public class PuzzleState extends DeepSeaStateAdapter {
      * {@code false} se vai contra os limites da grelha
      */
     @Override
-    public boolean moverPeca(Direcao dir) {
+    public boolean mover(Direcao dir) {
         boolean moveu = jogo.moverPecaPuzzle(dir);
 
         if (!moveu) return false; // movimento invalido
 
-        //verifcar condições de fim de jogo do puzzle
-        if (jogo.isPuzzleResolvido())
-            fimPuzzle(); //ganhou
-        else if (jogo.isPuzzleSemMovimentos())
-            iniciarSubida(); //ficou sem mov's
-        return true;
-    }
-
-    /**
-     * Acionado quando o jogador finaliza o 'puzzle' com sucesso
-     * Ordena ao modelo para recolher o 'artefacto' e regressa à
-     * exploração do fundo marinho.
-     *
-     * @return true, confirma a transição para o fundo marinho
-     */
-    //transicao de saida
-    @Override
-    public boolean fimPuzzle() {
-        jogo.recolherArtefactoPuzzle(); //recolher o artefacto e limpa o puzzle da memoria
-
-        changeState(DeepSeaState.FUNDO_STATE);
+        if (jogo.isPuzzleResolvido()) {
+            jogo.recolherArtefactoPuzzle();
+            DeepSeaLog.getInstance().log("Recolheu artefacto");
+            if (!avaliarFimJogo()) {
+                changeState(DeepSeaState.FUNDO_STATE);
+            }
+        } else if (jogo.isPuzzleSemMovimentos()) {
+            jogo.limparPuzzle();
+            DeepSeaLog.getInstance().log("Perdeu puzzle");
+            changeState(DeepSeaState.SUBIDA_STATE);
+        }
         return true;
     }
 
@@ -78,7 +69,7 @@ public class PuzzleState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean iniciarSubida() {
-        jogo.limparPuzzle(); //quando perde limpa o puzzle da memória
+        jogo.limparPuzzle(); //quando perde limpa o puzzle da memoria
         changeState(DeepSeaState.SUBIDA_STATE);
         return true;
     }

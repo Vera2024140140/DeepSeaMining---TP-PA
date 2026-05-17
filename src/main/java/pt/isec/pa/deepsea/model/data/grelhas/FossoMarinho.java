@@ -1,8 +1,8 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.AnimalMarinho;
 import pt.isec.pa.deepsea.model.data.elementos.Componente;
 import pt.isec.pa.deepsea.model.data.elementos.Corrente;
@@ -14,6 +14,7 @@ import java.util.List;
 
 public class FossoMarinho implements Serializable {
     private static final long serialVersionUID = 14L;
+
     private final CelulaFosso[][] grelha;
 
     private final int linhas;
@@ -43,15 +44,18 @@ public class FossoMarinho implements Serializable {
             }
         } else {
 
-            // maximo de colunas com rocha por lado (menos de metade - 1)
-            int maxPorLado = Math.max(Settings.MINIMO_ROCHAS_LADO, (int)(colunas * Settings.ROCHAS_PERCENTAGEM_MAX / 2) - 1);
+            int maxPorLado = Math.max(Settings.MINIMO_ROCHAS_LADO , (int)(colunas * Settings.ROCHAS_PERCENTAGEM_MAX) / 2);
 
             int esq = Utilidades.aleatorio(Settings.MINIMO_ROCHAS_LADO, maxPorLado);
 
             for (int l=0; l < linhas; l++){
+                int esqantes = esq;
+
                 if(l > 0){
                     // variar a espessura das rochas de linha para linha
-                    esq = variarEspessura(esq, maxPorLado);
+                    while (esqantes == esq){
+                        esq = variarEspessura(esq, maxPorLado);
+                    }
                 }
 
                 // colocar rochas no lado esquerdo
@@ -69,6 +73,16 @@ public class FossoMarinho implements Serializable {
     }
 
     void gerarObstaculos() {
+        // limpar animais e correntes existentes
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                TipoComponente tipo = getTipoComponente(l, c);
+                if (tipo == TipoComponente.ANIMALMARINHO || tipo == TipoComponente.CORRENTE) {
+                    grelha[l][c].setComponente(null);
+                }
+            }
+        }
+        //gerar novos obstaculos
         if (Settings.MODO_DEFESA){
             int centrolinha = Settings.LINHAS_FOSSO / 2;
             int centrocoluna = Settings.COLUNAS_FOSSO / 2;
@@ -95,17 +109,16 @@ public class FossoMarinho implements Serializable {
 
     private int variarEspessura(int valor, int max_lado) {
         int espessura;
-        // Não passar máximo
-        // Mínimo entre nova espessura e o máximo do lado
+        // Nao passar maximo
+        // Minimo entre nova espessura e o maximo do lado
         espessura = Math.min(max_lado, valor + Utilidades.aleatorio(-1, 1));
 
-        // Não passar mínimo
-        // Maximo entre nova espessura e o mínimo do lado
+        // Nao passar minimo
+        // Maximo entre nova espessura e o minimo do lado
         return Math.max(Settings.MINIMO_ROCHAS_LADO, espessura);
     }
-
     private int[] posicaoFossoLivre() {
-        List<int[]> livres =  new ArrayList<>();
+        List <int[]> livres =  new ArrayList<>();
         for (int i  = 0; i < linhas; i++ ){
             for (int j = 0; j < colunas; j++){
                 if (grelha[i][j].isEmpty()){
@@ -141,7 +154,7 @@ public class FossoMarinho implements Serializable {
         return null;
     }
 
-    //métodos de colisão
+    // metodos de colisao
     boolean celulaTemRocha(int l, int c) {
         if (l < 0 || l >= linhas || c < 0 || c >= colunas) return false;
 

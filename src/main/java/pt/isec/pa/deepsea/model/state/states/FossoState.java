@@ -1,10 +1,11 @@
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
 
 public abstract class FossoState extends DeepSeaStateAdapter {
@@ -16,15 +17,20 @@ public abstract class FossoState extends DeepSeaStateAdapter {
     @Override
     public boolean perderDrone() {
         jogo.largarItensDroneNoFundo();
-        if (jogo.removerDroneAtivo()){
+        if (!jogo.removerDroneAtivo()){
+            return false;
+        }
+        DeepSeaLog.getInstance().log("Perdeu drone");
+        if(!avaliarFimJogo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;
         }
-        return false;
+        changeState(DeepSeaState.ACABOU_STATE);
+        return true;
     }
 
     @Override
-    public boolean moverDroneFosso(Direcao dir) {
+    public boolean mover(Direcao dir) {
         boolean moveu = jogo.moverDroneFosso(dir);
 
         if (!moveu) return false;

@@ -1,10 +1,9 @@
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
-import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 
 /**
  * Estado de descida do drone no fosso marinho.
@@ -24,7 +23,9 @@ public class DescidaState extends FossoState {
      * @param jogo Referêmncia ao modelo de central de dados
      */
     public DescidaState(DeepSeaContext context, Jogo jogo) {
+
         super(context, jogo);
+        jogo.gerarObstaculosFosso();
     }
 
     /**
@@ -33,11 +34,11 @@ public class DescidaState extends FossoState {
      * faz uma transição de estado.
      */
     @Override
-    public boolean moverDroneFosso(Direcao dir) {
+    public boolean mover(Direcao dir) {
         if (dir == Direcao.BAIXO && jogo.droneNoFundoFosso()) {
             return chegarFundo();
         }
-        return super.moverDroneFosso(dir);
+        return super.mover(dir);
     }
 
     /**
@@ -45,8 +46,7 @@ public class DescidaState extends FossoState {
      *
      * @return true, confirmando a transição de estado.
      */
-    @Override
-    public boolean chegarFundo() {
+    private  boolean chegarFundo() {
         if(!jogo.meteDroneNoFundo())
             return false;
         jogo.gerarMonstros();

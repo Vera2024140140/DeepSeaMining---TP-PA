@@ -1,11 +1,13 @@
 
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
+
 /**
  * Estado do jogo, em que o ‘drone’ está a navegar no Fundo Marinho.
  * <p>
@@ -33,7 +35,6 @@ public class FundoState extends DeepSeaStateAdapter {
      */
     @Override
     public DeepSeaState getState() {
-        jogo.iniciarPuzzle();
         return DeepSeaState.FUNDO_STATE;
     }
     /**
@@ -52,10 +53,7 @@ public class FundoState extends DeepSeaStateAdapter {
      * {@code false} caso o movimento seja inválido
      */
     @Override
-    public boolean moverDroneFundo(Direcao dir){
-        if (dir == Direcao.CIMA && jogo.droneNoTopo()) {
-            return iniciarSubida();
-        }
+    public boolean mover(Direcao dir){
         boolean moveu = jogo.moverDroneFundo(dir);
         if (!moveu) return false;
 
@@ -117,10 +115,15 @@ public class FundoState extends DeepSeaStateAdapter {
     @Override
     public boolean perderDrone() {
         jogo.largarItensDroneNoFundo();
-        if (jogo.removerDroneAtivo()){
+        if (!jogo.removerDroneAtivo()){
+            return false;
+        }
+        DeepSeaLog.getInstance().log("Perdeu drone");
+        if(!avaliarFimJogo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;
         }
-        return false;
+        changeState(DeepSeaState.ACABOU_STATE);
+        return true;
     }
 }

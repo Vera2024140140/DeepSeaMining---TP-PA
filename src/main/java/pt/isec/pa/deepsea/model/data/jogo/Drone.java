@@ -42,6 +42,10 @@ public class Drone implements Serializable {
         this.impactosExpedicao = 0;
     }
 
+    public static void resetContadorIds() {
+        contadorIds = 1;
+    }
+
     int getId() {
         return this.id;
     }
@@ -207,6 +211,14 @@ public class Drone implements Serializable {
             }
             numeroTestePrimo++;
         }
+    }
+
+    int getQtdMinerios() {
+        return this.minerios;
+    }
+
+    int getQtdArtefactos() {
+        return this.artefactos.size();
     }
 
     boolean isPrimo(int n) {
