@@ -5,6 +5,7 @@ import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
 
 public abstract class FossoState extends DeepSeaStateAdapter {
@@ -19,6 +20,7 @@ public abstract class FossoState extends DeepSeaStateAdapter {
         if (!jogo.removerDroneAtivo()){
             return false;
         }
+        DeepSeaLog.getInstance().log("Perdeu drone");
         if(!avaliarFimJogo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;

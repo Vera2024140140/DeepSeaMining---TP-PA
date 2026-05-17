@@ -6,6 +6,7 @@ import pt.isec.pa.deepsea.model.data.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 
 import java.io.Serializable;
 import java.util.*;
@@ -362,14 +363,22 @@ public class Jogo implements Serializable {
      * @return true, caso o jogador tenha recolhido todos os artefactos
      */
     public boolean vitoria() {
-        return navio.getIdsArtefactosNavio().size() >= Settings.NUM_ARTEFACTOS;
+        boolean vitoria = navio.getIdsArtefactosNavio().size() >= Settings.NUM_ARTEFACTOS;
+        if(vitoria){
+            DeepSeaLog.getInstance().log("Ganhou jogo");
+        }
+        return vitoria;
     }
 
     /**
      * @return true, caso o navio não tenha combustível ou os 3 'Drones' tenham sido todos destruídos.
      */
     public boolean derrota() {
-        return navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
+        boolean derrota = navio.getCombustivelNavio() <= 0 || navio.getIdsDronesNavio().isEmpty();
+        if(derrota){
+            DeepSeaLog.getInstance().log("Perdeu jogo");
+        }
+        return derrota;
     }
 
     // simulação para testes de fim de jogo (PUBLIC APENAS PARA TESTES)

@@ -6,6 +6,8 @@ import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
+import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
+
 /**
  * Estado do jogo, em que o ‘drone’ está a navegar no Fundo Marinho.
  * <p>
@@ -117,6 +119,7 @@ public class FundoState extends DeepSeaStateAdapter {
         if (!jogo.removerDroneAtivo()){
             return false;
         }
+        DeepSeaLog.getInstance().log("Perdeu drone");
         if(!avaliarFimJogo()){
             changeState(DeepSeaState.SUPERFICIE_STATE);
             return true;

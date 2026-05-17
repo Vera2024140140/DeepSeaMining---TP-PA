@@ -79,7 +79,15 @@ public class AppMenuBar extends MenuBar {
         Menu menuLog = new Menu("Log");
 
         MenuItem mShowHide = new MenuItem("Show/Hide");
-        mShowHide.setOnAction(e -> new LogStage(manager).show());
+        mShowHide.setOnAction(e -> {
+            if (janelaLogs.isShowing()) {
+                janelaLogs.hide();
+            } else {
+                janelaLogs.setX(owner().getX() + getWidth());
+                janelaLogs.setY(owner().getY());
+                janelaLogs.show();
+            }
+        });
 
         MenuItem mSaveLogs = new MenuItem("Save Logs");
         mSaveLogs.setOnAction(e -> {
