@@ -39,11 +39,6 @@ public class DeepSeaContext implements Serializable {
         return atual.iniciarDescida();
     }
 
-    public boolean apanharArtefacto() {
-        DeepSeaLog.getInstance().log("apanharArtefacto");
-        return atual.apanharArtefacto();
-    }
-
     public boolean recolherMinerio(){
         DeepSeaLog.getInstance().log("recolherMinerio");
         return atual.recolherMinerio();

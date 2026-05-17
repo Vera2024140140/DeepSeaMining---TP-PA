@@ -45,8 +45,7 @@ public class DescidaState extends FossoState {
      *
      * @return true, confirmando a transição de estado.
      */
-    @Override
-    public boolean chegarFundo() {
+    private  boolean chegarFundo() {
         if(!jogo.meteDroneNoFundo())
             return false;
         jogo.gerarMonstros();
