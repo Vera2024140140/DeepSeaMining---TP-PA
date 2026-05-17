@@ -35,8 +35,6 @@ public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
     private void update() {
         GraphicsContext gc = getGraphicsContext2D();
         interface2D(gc);
-
-
     }
 
     private void interface2D(GraphicsContext gc) {

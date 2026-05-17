@@ -49,14 +49,13 @@ public class BarraLateralPuzzle extends BarraLateralBase{
     void registerHandlers() {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_PUZZLE,
                 evt -> update());
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
-                evt -> {
-                    DeepSeaState anterior = (DeepSeaState) evt.getOldValue();
-                    DeepSeaState atual = (DeepSeaState) evt.getNewValue();
-                    if (anterior == DeepSeaState.PUZZLE_STATE && atual != DeepSeaState.PUZZLE_STATE) {
-                        update();
-                    }
-                }
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,evt -> {
+            DeepSeaState anterior = (DeepSeaState) evt.getOldValue();
+            DeepSeaState atual = (DeepSeaState) evt.getNewValue();
+            if (anterior == DeepSeaState.PUZZLE_STATE && atual != DeepSeaState.PUZZLE_STATE) {
+                update();
+            }
+        }
         );
     }
 

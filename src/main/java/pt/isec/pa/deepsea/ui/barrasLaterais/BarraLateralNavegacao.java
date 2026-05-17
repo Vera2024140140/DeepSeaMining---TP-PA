@@ -2,9 +2,12 @@ package pt.isec.pa.deepsea.ui.barrasLaterais;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 public abstract class BarraLateralNavegacao extends BarraLateralBase{
     protected Label combustivelNavio;
@@ -19,6 +22,11 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
     protected  Label combustivelNavioQuantidades;
     protected  Label combustivelDroneQuantidades;
     protected  Label integridadeDroneQuantidades;
+
+    protected ProgressBar barCombNavio;
+    protected ProgressBar barCombDrone;
+    protected ProgressBar barIntegridadeDrone;
+
     public BarraLateralNavegacao(DeepSeaManager manager){
         super(manager);
     }
@@ -77,6 +85,17 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
         droneSelecionado = new Label("Drone ativo: --");
         droneSelecionado.setStyle(estiloLabels);
 
+        barCombNavio = new ProgressBar(1.0);
+        barCombNavio.setMaxWidth(Double.MAX_VALUE);
+        barCombNavio.setMinHeight(22);
+
+        barCombDrone = new ProgressBar(1.0);
+        barCombDrone.setMaxWidth(Double.MAX_VALUE);
+        barCombDrone.setMinHeight(15);
+
+        barIntegridadeDrone = new ProgressBar(1.0);
+        barIntegridadeDrone.setMaxWidth(Double.MAX_VALUE);
+        barIntegridadeDrone.setMinHeight(15);
 
         // --- DRONE ---
         Label tituloDrone = new Label("DRONE");
@@ -110,10 +129,13 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
         qtdArtefactosDrone.setStyle(estiloLabels);
 
         // HBOX -- combustivel do navio
-
+        HBox.setHgrow(barCombNavio, Priority.ALWAYS);
+        Region spacer3 = new Region();
+        HBox.setHgrow(spacer3, Priority.ALWAYS);
 
         HBox rowCombustivelNavio = new HBox(5,
                 combustivelNavio,
+                barCombNavio,
                 combustivelNavioQuantidades
         );
         rowCombustivelNavio.setAlignment(Pos.CENTER_LEFT);
@@ -123,6 +145,7 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
 
         HBox rowCombustivelDrone = new HBox(5,
                 combustivelDroneSelecionado,
+                barCombDrone,
                 combustivelDroneQuantidades
         );
         rowCombustivelDrone.setAlignment(Pos.CENTER_LEFT);
@@ -135,6 +158,7 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
 
         HBox rowIntegridadeDrone = new HBox(5,
                 integridadeDroneSelecionado,
+                barIntegridadeDrone,
                 integridadeDroneQuantidades
         );
         rowIntegridadeDrone.setAlignment(Pos.CENTER_LEFT);
@@ -182,5 +206,40 @@ public abstract class BarraLateralNavegacao extends BarraLateralBase{
         combustivelDroneQuantidades.setPrefWidth(larguraLabelDir);
         integridadeDroneQuantidades.setPrefWidth(larguraLabelDir);
 
+        //progress bar comb navio
+        double progNavio = manager.getCombustivelNavio() / Settings.NAVIO_COMBUSTIVEL_MAX;
+        double progDRONE = manager.getCombustivelDroneAtivo() / Settings.DRONE_COMBUSTIVEL_MAX;
+        double progIntDrone = (double) manager.getIntegridadeDroneAtivo() / Settings.DRONE_INTEGRIDADE_MAX;
+
+
+        barCombNavio.setProgress(progNavio);
+        barCombNavio.setStyle(
+                "-fx-accent: " + corCombustivel(progNavio) + ";" +
+                        "-fx-control-inner-background: #555555;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-padding: 3;"
+        );
+
+        barCombDrone.setProgress(progDRONE);
+        barCombDrone.setStyle(
+                "-fx-accent: " + corCombustivel(progDRONE) + ";" +
+                        "-fx-control-inner-background: #555555;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-padding: 3;"
+        );
+
+        barIntegridadeDrone.setProgress(progIntDrone);
+        barIntegridadeDrone.setStyle(
+                "-fx-accent: " + corCombustivel(progIntDrone) + ";" +
+                        "-fx-control-inner-background: #555555;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-padding: 3;"
+        );
+    }
+
+    private String corCombustivel(double progresso) {
+        if (progresso > 0.6) return "#27ae60";
+        if (progresso > 0.3) return "#f39c12";
+        return "#e74c3c";
     }
 }

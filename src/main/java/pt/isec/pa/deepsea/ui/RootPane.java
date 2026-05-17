@@ -11,6 +11,7 @@ import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralPuzzle;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.FossoCanvas;
 import pt.isec.pa.deepsea.ui.canvas.FundoCanvas;
+import pt.isec.pa.deepsea.ui.canvas.PuzzleCanvas;
 import pt.isec.pa.deepsea.ui.canvas.SuperficieCanvas;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
@@ -26,6 +27,7 @@ public class RootPane extends BorderPane {
     private BarraLateralFundo barraFundo;
     private OficinaPane oficinaPane;
     private BarraLateralPuzzle barraPuzzle;
+    private PuzzleCanvas puzzleCanvas;
 
     public RootPane(DeepSeaManager manager) {
         this.manager = manager;
@@ -44,6 +46,7 @@ public class RootPane extends BorderPane {
         );
 
         barraPuzzle = new BarraLateralPuzzle(manager);
+        puzzleCanvas = new PuzzleCanvas(manager);
         superficieCanvas = new SuperficieCanvas(manager);
         fossoCanvas = new FossoCanvas(manager);
         fundoCanvas = new FundoCanvas(manager);
@@ -75,7 +78,7 @@ public class RootPane extends BorderPane {
                 stackPane.getChildren().add(oficinaPane);
                 setRight(null);
             }
-            case DESCIDA_STATE,SUBIDA_STATE -> {
+            case DESCIDA_STATE, SUBIDA_STATE -> {
                 stackPane.getChildren().add(fossoCanvas);
                 setRight(barraFosso);
                 stackPane.setAlignment(Pos.CENTER);
@@ -85,7 +88,7 @@ public class RootPane extends BorderPane {
                 setRight(barraFundo);
                 stackPane.setAlignment(Pos.CENTER);
             }
-            case PUZZLE_STATE ->{
+            case PUZZLE_STATE -> {
                 stackPane.getChildren().add(puzzleCanvas);
                 setRight(barraPuzzle);
                 stackPane.setAlignment(Pos.CENTER);

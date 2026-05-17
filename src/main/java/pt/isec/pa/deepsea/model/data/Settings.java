@@ -43,7 +43,7 @@ public interface Settings {
     //mini jogo
     int PUZZLE_MAX_MOVIMENTOS = 50;
     int PUZZLE_GRELHA = 4;
-    int PUZZLE_BARALHAR_GRELHA = 100;
+    int PUZZLE_BARALHAR_GRELHA = 5;
 
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;
@@ -74,7 +74,7 @@ public interface Settings {
     int HEIGHT_LOG = 500;
     int WIDTH_BARRA_LATERAL = 340;
     int HEIGHT_JANELA = 800;
-    int WIDTH_JANELA = 1300;
+    int WIDTH_JANELA = 1100;
 
     String FICHEIRO_RECENTES = "recentes.txt";
     int MAX_RECENT = 5;

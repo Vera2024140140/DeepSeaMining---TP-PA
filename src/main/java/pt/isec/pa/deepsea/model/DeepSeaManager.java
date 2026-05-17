@@ -82,7 +82,11 @@ public class DeepSeaManager {
             case SUPERFICIE_STATE -> fire(PROP_NAVIO);
             case FUNDO_STATE -> { fire(PROP_DRONE); fire(PROP_FUNDO); }
             case DESCIDA_STATE, SUBIDA_STATE -> { fire(PROP_DRONE); fire(PROP_FOSSO); }
-            case PUZZLE_STATE -> fire(PROP_PUZZLE);
+            case PUZZLE_STATE -> {
+                fire(PROP_PUZZLE);
+                fire(PROP_DRONE);
+                fire(PROP_FUNDO);
+            }
             default -> {}
         }
         fireStateIfChanged(antes);
@@ -309,6 +313,7 @@ public class DeepSeaManager {
     public int getIdDroneAtivo() {
         return context.getIdDroneAtivo();
     }
+
     public boolean posicaoComMinerio() {
         return context.posicaoComMinerio();
     }
@@ -318,10 +323,10 @@ public class DeepSeaManager {
     public int getMovimentosRestantesPuzzle()  {
         return context.getMovimentosRestantesPuzzle();
     }
-
     public boolean isCelulaFundoRevelada(int lsup,int csup,int lF,int cF){
         return context.isCelulaFundoRevelada(lsup,csup,lF,cF);
     }
+
     public int getMineriosDroneAtivo() {
         return context.getMineriosDroneAtivo();
     }

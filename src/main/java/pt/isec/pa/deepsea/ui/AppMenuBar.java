@@ -76,7 +76,10 @@ public class AppMenuBar extends MenuBar {
         );
 
         // LOG
-        Menu menuLog = new Menu("Log");
+        Label lblLog = new Label("Log");
+        lblLog.setStyle("-fx-text-fill: " + Settings.TEXT_PRIMARY + ";");
+        Menu menuLog = new Menu();
+        menuLog.setGraphic(lblLog);
 
         MenuItem mShowHide = new MenuItem("Show/Hide");
         mShowHide.setOnAction(e -> {
@@ -90,6 +93,8 @@ public class AppMenuBar extends MenuBar {
         });
 
         MenuItem mSaveLogs = new MenuItem("Save Logs");
+
+
         mSaveLogs.setOnAction(e -> {
             javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
             fc.setTitle("Guardar Logs");
@@ -99,6 +104,7 @@ public class AppMenuBar extends MenuBar {
             if (ficheiro != null) {
                 manager.gravarLog(ficheiro.getAbsolutePath());
             }
+
         });
 
         MenuItem mClearLogs = new MenuItem("Clear Logs");
