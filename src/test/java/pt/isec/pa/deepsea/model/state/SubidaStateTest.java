@@ -2,8 +2,11 @@ package pt.isec.pa.deepsea.model.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,21 +34,23 @@ public class SubidaStateTest {
 
         // Fazer a transição forçada até à subida
         context.iniciarDescida();
-        context.chegarFundo();
-        context.iniciarSubida();
+        jogo.meteDroneNoFimFosso();
 
+        context.changeState(DeepSeaState.SUBIDA_STATE.getInstance(context, jogo));
         assertEquals(DeepSeaState.SUBIDA_STATE, context.getState());
     }
 
     /**
      * Testa a transição manual de sucesso quando o drone atinge
-     * efetivamente a linha de topo do fosso e tenta movimentar-se para cima, volta ao navio,
+     * efetivamente a linha de topo do fosso e volta ao navio,
      * garantindo que os itens são descarregados.
      */
     @Test
     void testSubirSuperficieDiretamente() {
-        // Testar a transição manual de chegar à superfície
-        assertTrue(context.subirSuperficie());
+        while(context.getState() == DeepSeaState.SUBIDA_STATE) {
+            context.mover(Direcao.CIMA);
+        }
+
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
     }
 
@@ -60,7 +65,7 @@ public class SubidaStateTest {
         jogo.simularGastoDrone();
 
         // Um movimento gasta combustível suficiente para matar o drone
-        context.moverDroneFosso(Direcao.CIMA);
+        context.mover(Direcao.CIMA);
 
         // Drone deve ter sido destruído e estado voltou para a Superfície
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
@@ -81,7 +86,7 @@ public class SubidaStateTest {
         jogo.simularDanoDrone();
 
         // Tentar mover
-        context.moverDroneFosso(Direcao.CIMA);
+        context.mover(Direcao.CIMA);
 
         // Drone deve ter sido destruído e estado voltou para a Superfície
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
@@ -92,10 +97,18 @@ public class SubidaStateTest {
      * a transição de estado de volta para a Superfície.
      */
     @Test
-    void testPerderDroneDiretamente() {
-        // Forçar a perda do drone manualmente
-        assertTrue(context.perderDrone());
+    void testPerderDroneDiretamente() throws Exception {
+        // 1. Aceder ao estado atual
+        Field f = DeepSeaContext.class.getDeclaredField("atual");
+        f.setAccessible(true);
+        IDeepSeaState state = (IDeepSeaState) f.get(context);
+        // 2. Aceder ao método protegido "perderDrone"
+        Method m = DeepSeaStateAdapter.class.getDeclaredMethod("perderDrone");
+        m.setAccessible(true);
+        // 3. Forçar a perda do drone invocando o método
+        boolean resultado = (boolean) m.invoke(state);
+
+        assertTrue(resultado);
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
     }
-
 }

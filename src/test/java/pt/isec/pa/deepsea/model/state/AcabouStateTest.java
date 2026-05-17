@@ -1,11 +1,8 @@
-// Este teste está neste package (e não em state.states junto do SuperficieStateTest)
-// para conseguir usar o construtor package-private DeepSeaContext(Jogo).
-// Assim evitamos ter 3 metodos a simular no DeepSeaContext os métodos
-// de simulação ficam só no Jogo.
 package pt.isec.pa.deepsea.model.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +35,7 @@ class AcabouStateTest {
     @Test
     void acabaPorVitoria() {
         jogo.simularVitoria();
-        assertTrue(context.avaliarFimJogo());
+        context.mover(Direcao.DIREITA);
         assertEquals(DeepSeaState.ACABOU_STATE, context.getState());
     }
 
@@ -48,8 +45,10 @@ class AcabouStateTest {
      */
     @Test
     void acabaPorSemCombustivel() {
-        jogo.simularNavioSemCombustivel();
-        assertTrue(context.avaliarFimJogo());
+        while (context.getState() == DeepSeaState.SUPERFICIE_STATE) {
+            context.mover(Direcao.DIREITA);
+            context.mover(Direcao.ESQUERDA);
+        }
         assertEquals(DeepSeaState.ACABOU_STATE, context.getState());
     }
 
@@ -60,7 +59,23 @@ class AcabouStateTest {
     @Test
     void acabaPorPerderDrones() {
         jogo.simularNavioSemDrones();
-        assertTrue(context.avaliarFimJogo());
+        context.mover(Direcao.DIREITA);
         assertEquals(DeepSeaState.ACABOU_STATE, context.getState());
+    }
+
+    @Test
+    void testRestricoes() {
+        //forcar outro estad
+        jogo.simularVitoria();
+
+        context.changeState(DeepSeaState.ACABOU_STATE.getInstance(context, jogo));
+
+        assertEquals(DeepSeaState.ACABOU_STATE, context.getState());
+
+        //verf que nao pode hvr ações dps do jogo estar terminado
+        assertFalse(context.mover(Direcao.ESQUERDA));
+        assertFalse(context.iniciarDescida());
+        assertFalse(context.abrirOficina());
+        assertFalse(context.recolherMinerio());
     }
 }

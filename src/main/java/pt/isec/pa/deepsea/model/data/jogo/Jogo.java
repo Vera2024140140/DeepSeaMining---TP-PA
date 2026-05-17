@@ -1,8 +1,8 @@
 package pt.isec.pa.deepsea.model.data.jogo;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;

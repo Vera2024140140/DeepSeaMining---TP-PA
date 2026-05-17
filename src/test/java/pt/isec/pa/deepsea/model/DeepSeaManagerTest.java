@@ -1,10 +1,7 @@
 package pt.isec.pa.deepsea.model;
 
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 import java.io.File;

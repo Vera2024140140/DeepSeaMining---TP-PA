@@ -2,11 +2,12 @@ package pt.isec.pa.deepsea.model.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.lang.reflect.Field;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Classe de testes unitários para o estado {@link pt.isec.pa.deepsea.model.state.states.FundoState}.
@@ -32,7 +33,9 @@ public class FundoStateTest {
 
         // Fazer a transição forçada até ao fundo
         context.iniciarDescida();
-        context.chegarFundo(); // Mete o drone no fundo (linha 0) e muda para FUNDO_STATE
+        while(context.getState() == DeepSeaState.DESCIDA_STATE) {
+            context.mover(Direcao.BAIXO);
+        }
 
         assertEquals(DeepSeaState.FUNDO_STATE, context.getState());
     }
@@ -43,7 +46,10 @@ public class FundoStateTest {
     @Test
     void testMoverDroneFundoNormal() {
         // mover drone para baixo
-        assertTrue(context.moverDroneFundo(Direcao.BAIXO));
+        while(context.getState() == DeepSeaState.DESCIDA_STATE) {
+            context.mover(Direcao.BAIXO);
+        }
+        assertTrue(context.mover(Direcao.BAIXO));
         assertEquals(DeepSeaState.FUNDO_STATE, context.getState());
     }
     /**
@@ -55,7 +61,7 @@ public class FundoStateTest {
     @Test
     void testMoverCimaNoTopoIniciaSubida() {
         //iniciar subida quando está no fundo
-        assertTrue(context.moverDroneFundo(Direcao.CIMA));
+        assertTrue(context.mover(Direcao.CIMA));
         assertEquals(DeepSeaState.SUBIDA_STATE, context.getState());
     }
     /**
@@ -72,9 +78,13 @@ public class FundoStateTest {
      * Simula a descoberta de um artefacto e a consequente mudança de estado.
      */
     @Test
-    void testApanharArtefacto() {
-        // Testar a transição ao apanhar um artefacto
-        assertTrue(context.apanharArtefacto());
+    void testApanharArtefacto() throws Exception {
+        Field f = DeepSeaContext.class.getDeclaredField("atual");
+        f.setAccessible(true);
+        IDeepSeaState state = (IDeepSeaState) f.get(context);
+
+        state.apanharArtefacto();
+
         assertEquals(DeepSeaState.PUZZLE_STATE, context.getState());
     }
     /**
@@ -89,7 +99,7 @@ public class FundoStateTest {
         jogo.simularGastoDrone();
 
         // movimento para baixo gasta combustível para matar o drone
-        context.moverDroneFundo(Direcao.BAIXO);
+        context.mover(Direcao.BAIXO);
 
         // Drone é destruído e estado volta para a Superfície
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
@@ -110,9 +120,10 @@ public class FundoStateTest {
         jogo.simularDanoDrone();
 
         // Tentar mover com integridade a 0 ou menos
-        context.moverDroneFundo(Direcao.BAIXO);
+        context.mover(Direcao.BAIXO);
 
         // Drone deve ter sido destruído e estado voltou para a Superfície
         assertEquals(DeepSeaState.SUPERFICIE_STATE, context.getState());
     }
+
 }

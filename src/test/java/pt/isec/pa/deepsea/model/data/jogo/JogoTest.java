@@ -2,7 +2,7 @@ package pt.isec.pa.deepsea.model.data.jogo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 
 import static org.junit.jupiter.api.Assertions.*;

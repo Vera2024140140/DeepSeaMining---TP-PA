@@ -1,24 +1,29 @@
 package pt.isec.pa.deepsea.ui;
 
-import pt.isec.pa.deepsea.model.data.Settings;
+
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
+import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralPuzzle;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFosso;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFundo;
-import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralPuzzle;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.FossoCanvas;
 import pt.isec.pa.deepsea.ui.canvas.FundoCanvas;
+import pt.isec.pa.deepsea.ui.canvas.PuzzleCanvas;
 import pt.isec.pa.deepsea.ui.canvas.SuperficieCanvas;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
+import pt.isec.pa.deepsea.ui.canvas.AcabouCanvas;
 
 public class RootPane extends BorderPane {
     DeepSeaManager manager;
 
     StackPane stackPane;
     private SuperficieCanvas superficieCanvas;
+    private PuzzleCanvas puzzleCanvas;
     private FossoCanvas fossoCanvas;
     private FundoCanvas fundoCanvas;
     private BarraLateralSuperficie barraSuperficie;
@@ -26,6 +31,7 @@ public class RootPane extends BorderPane {
     private BarraLateralFundo barraFundo;
     private OficinaPane oficinaPane;
     private BarraLateralPuzzle barraPuzzle;
+    private AcabouCanvas acabouCanvas;
 
     public RootPane(DeepSeaManager manager) {
         this.manager = manager;
@@ -45,20 +51,23 @@ public class RootPane extends BorderPane {
 
         barraPuzzle = new BarraLateralPuzzle(manager);
         superficieCanvas = new SuperficieCanvas(manager);
+        puzzleCanvas = new PuzzleCanvas(manager);
         fossoCanvas = new FossoCanvas(manager);
         fundoCanvas = new FundoCanvas(manager);
-
+        //adicionar ao stackPane sobrepostos
         barraSuperficie = new BarraLateralSuperficie(manager);
         barraFosso = new BarraLateralFosso(manager);
         barraFundo = new BarraLateralFundo(manager);
         oficinaPane = new OficinaPane(manager);
+        acabouCanvas = new AcabouCanvas(manager);
 
         setCenter(stackPane);
 
-        // adicionar MenuBar no setTop() e a InfoBox no setRight() depois
+        // adicionar MenuBar no setTop()
         AppMenuBar menuBar = new AppMenuBar(manager);
         setTop(menuBar);
     }
+
     private void registerHandlers() {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
                 evt -> update());
@@ -83,12 +92,15 @@ public class RootPane extends BorderPane {
             case FUNDO_STATE -> {
                 stackPane.getChildren().add(fundoCanvas);
                 setRight(barraFundo);
-                stackPane.setAlignment(Pos.CENTER);
             }
-            case PUZZLE_STATE ->{
+            case PUZZLE_STATE -> {
                 stackPane.getChildren().add(puzzleCanvas);
                 setRight(barraPuzzle);
                 stackPane.setAlignment(Pos.CENTER);
+            }
+            case ACABOU_STATE -> {
+                stackPane.getChildren().add(acabouCanvas);
+                setRight(null);
             }
             default -> {
 
