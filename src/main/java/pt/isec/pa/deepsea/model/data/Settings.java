@@ -6,8 +6,8 @@ public interface Settings {
      boolean MODO_DEFESA = false;
 
     //Dimensao das grelhas
-    int LINHAS_SUPERFICIE = 30;
-    int COLUNAS_SUPERFICIE = 15;
+    int LINHAS_SUPERFICIE = 14;
+    int COLUNAS_SUPERFICIE = 14;
     int LINHAS_FOSSO = 20;
     int COLUNAS_FOSSO = 10;
     int LINHAS_FUNDO = 10;
@@ -66,16 +66,19 @@ public interface Settings {
 
     String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
 
+    int CELL_SIZE = 50;
+
     int CANVAS_DRONE_W = 240;
     int CANVAS_DRONE_H = 200;
     int WIDTH_LOG = 300;
     int HEIGHT_LOG = 500;
     int WIDTH_BARRA_LATERAL = 340;
     int HEIGHT_JANELA = 800;
+    int WIDTH_JANELA = 1300;
 
     String BG_PANEL      = "#34495E";
     String TEXT_PRIMARY  = "#ECF0F1";
     String BTN_PRIMARY   = "#3498DB";
-    Font FONTE = Font.font("Arial");
 
+    Font FONTE = Font.font("Arial");
 }

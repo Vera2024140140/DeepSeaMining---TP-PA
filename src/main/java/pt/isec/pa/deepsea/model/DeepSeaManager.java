@@ -2,10 +2,6 @@ package pt.isec.pa.deepsea.model;
 
 import pt.isec.pa.deepsea.model.data.Direcao;
 import pt.isec.pa.deepsea.model.data.TipoComponente;
-import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
-import pt.isec.pa.deepsea.model.data.elementos.Monstro;
-import pt.isec.pa.deepsea.model.data.elementos.Obstaculo;
-import pt.isec.pa.deepsea.model.data.jogo.Drone;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
