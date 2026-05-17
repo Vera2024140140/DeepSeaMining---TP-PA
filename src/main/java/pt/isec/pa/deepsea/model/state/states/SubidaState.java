@@ -52,7 +52,7 @@ public class SubidaState extends FossoState {
 
     private boolean subirSuperficie() {
         jogo.descarregarDroneNavio();
-
+        if (avaliarFimJogo()) return true;            // verifica vitória ANTES de transitar
         changeState(DeepSeaState.SUPERFICIE_STATE);
         return true;
     }
