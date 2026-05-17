@@ -89,6 +89,49 @@ public class DeepSeaContext implements Serializable {
         return atual.melhorarIntegridadeDrone();
     }
 
+    public double getIntegridadeMaxDrone() {
+        return jogo.getIntegridadeMaxDrone();
+    }
+
+    public List<String> getInfoDrones() {
+        return jogo.getInfoDrones();
+    }
+
+    public int getArtefactosNavio() {
+        return jogo.getArtefactosNavio();
+    }
+
+    public int getIdDroneAtivo() {
+        return jogo.getIdDroneAtivo();
+    }
+
+    public int[][] getMatrizPuzzle() {
+        return jogo.getMatrizPuzzle();
+    }
+
+    public int getMineriosDroneAtivo() {
+        return jogo.getMineriosDroneAtivo();
+    }
+
+    public double getMaxCombustivelDroneAtivo() {
+        return jogo.getMaxCombustivelDroneAtivo();
+    }
+
+    public int getMovimentosRestantesPuzzle()  {
+        return jogo.getMovimentosRestantesPuzzle();
+    }
+
+    public int getLinhaDroneAtivo() {
+        return jogo.getLinhaDroneAtivo();
+    }
+    public int getColunaDroneAtivo() {
+        return jogo.getColunaDroneAtivo();
+    }
+
+    public int getArtefactosDroneAtivo() {
+        return jogo.getArtefactosDroneAtivo();
+    }
+
     // ===================================================================
     // --- MÉTODOS DE ACESSO AOS DADOS ---
     // ===================================================================

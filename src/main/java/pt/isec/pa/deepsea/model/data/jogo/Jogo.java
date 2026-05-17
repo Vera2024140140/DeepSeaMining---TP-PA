@@ -38,7 +38,9 @@ public class Jogo implements Serializable {
         this.navio = new Navio();
     }
 
-    // -- Getter's
+    // ===================================================================
+    // --- GETTERS DE FACHADA (para DeepSeaContext) ---
+    // ===================================================================
     Navio getNavio() {
         return navio;
     }
@@ -61,6 +63,49 @@ public class Jogo implements Serializable {
 
     public Set<Integer> getIdsDronesNavio() {
         return navio.getIdsDronesNavio();
+    }
+
+    public double getMaxCombustivelDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getCombustivelMax();
+    }
+
+    public int getMovimentosRestantesPuzzle()  {
+        if (puzzleAtual == null) return 0;
+        return puzzleAtual.getMovimentosRestantes();
+    }
+
+    public int getMineriosDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getQtdMinerios();
+    }
+
+    public int[][] getMatrizPuzzle() {
+        if (puzzleAtual == null) return null;
+        int tam = Settings.PUZZLE_GRELHA;
+        int[][] copiaGreha = new int[tam][tam];
+
+        //copia de faxada
+        for (int l = 0; l < tam; l++) {
+            for (int c = 0; c < tam; c++) {
+                copiaGreha[l][c] = puzzleAtual.getCelula(l, c);
+            }
+        }
+        return copiaGreha;
+    }
+
+    public double getIntegridadeMaxDrone() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getIntegridadeMax();
+    }
+
+    public int  getArtefactosDroneAtivo() {
+        Drone d = getDroneAtivo();
+        if (d == null) return 0;
+        return d.getQtdArtefactos();
     }
 
     // ===================================================================
@@ -564,6 +609,10 @@ public class Jogo implements Serializable {
         grelhaSuperficie.gerarMonstros(lSup, cSup);
     }
 
+    public List<String> getInfoDrones() {
+        return navio.getInfoDrones();
+    }
+
     // ===================================================================
     // --- PUZZLE ---
     // ===================================================================
@@ -636,4 +685,22 @@ public class Jogo implements Serializable {
         navio.addMinerios(quantidade);
     }
 
+    public int getLinhaDroneAtivo() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return -1;
+        return drone.getLinha();
+    }
+    public int getColunaDroneAtivo() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return -1;
+        return drone.getColuna();
+    }
+
+    public int getArtefactosNavio() {
+        return navio.getArtefactosNavio();
+    }
+
+    public int getIdDroneAtivo() {
+        return navio.getDroneAtivoId();
+    }
 }

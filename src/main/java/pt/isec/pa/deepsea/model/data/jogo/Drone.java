@@ -209,6 +209,14 @@ public class Drone implements Serializable {
         }
     }
 
+    int getQtdMinerios() {
+        return this.minerios;
+    }
+
+    int getQtdArtefactos() {
+        return this.artefactos.size();
+    }
+
     boolean isPrimo(int n) {
         if (n < 1) return false;
         if (n == 1 || n == 2) return true;

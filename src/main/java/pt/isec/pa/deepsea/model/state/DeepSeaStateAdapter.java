@@ -94,18 +94,6 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     }
 
     @Override
-    public boolean moverNavio(Direcao dir) {
-        return false;
-    }
-
-    @Override
-    public boolean moverDroneFosso(Direcao dir) {
-        return false;
-    }
-
-    @Override
-    public boolean moverDroneFundo(Direcao dir){return false;}
-    @Override
     public boolean selecionarDrone(int idDrone) {
         return false;
     }
@@ -130,7 +118,7 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     }
 
     @Override
-    public boolean moverPeca(Direcao dir) {
+    public boolean mover(Direcao dir) {
         return false;
     }
 

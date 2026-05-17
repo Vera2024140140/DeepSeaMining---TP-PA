@@ -49,6 +49,5 @@ public class PuzzleStateTest {
         // Deve voltar para o estado de Fundo
         assertEquals(DeepSeaState.FUNDO_STATE, context.getState());
         */
-         */
     }
 }

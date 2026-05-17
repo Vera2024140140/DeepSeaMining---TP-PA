@@ -197,4 +197,8 @@ public class Navio implements Serializable {
         Drone d = getDroneAtivo();
         return d != null ? d.getIntegridadeCasco() : 0;
     }
+
+    public int getArtefactosNavio() {
+        return artefactos.size();
+    }
 }

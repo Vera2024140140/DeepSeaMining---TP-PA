@@ -66,7 +66,7 @@ public class OficinaState extends DeepSeaStateAdapter {
      */
     @Override
     public boolean abastecerDrone(double litros){
-        boolean abasteceu = jogo.abastecerDroneAtivo((litros);
+        boolean abasteceu = jogo.abastecerDroneAtivo(litros);
 
         if (abasteceu) {
             avaliarFimJogo();
