@@ -5,14 +5,21 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
+import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFosso;
+import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralFundo;
 import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.SuperficieCanvas;
+import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
 public class RootPane extends BorderPane {
     DeepSeaManager manager;
 
     StackPane stackPane;
+    private SuperficieCanvas superficieCanvas;
     private BarraLateralSuperficie barraSuperficie;
+    private BarraLateralFosso barraFosso;
+    private BarraLateralFundo barraFundo;
+    private OficinaPane oficinaPane;
 
     public RootPane(DeepSeaManager manager) {
         this.manager = manager;
@@ -30,11 +37,11 @@ public class RootPane extends BorderPane {
                 "-fx-background-color : " + Settings.BG_GRELHAS + ";"
         );
 
-        //correr o superficie canvas (TESTE)
-        SuperficieCanvas superficieCanvas = new SuperficieCanvas(manager);
-        stackPane.getChildren().add(superficieCanvas);
-
+        superficieCanvas = new SuperficieCanvas(manager);
         barraSuperficie = new BarraLateralSuperficie(manager);
+        oficinaPane = new OficinaPane(manager);
+
+        setCenter(stackPane);
 
         // adicionar MenuBar no setTop() e a InfoBox no setRight() depois
         AppMenuBar menuBar = new AppMenuBar(manager);
@@ -45,7 +52,19 @@ public class RootPane extends BorderPane {
     }
 
     private void update() {
-        //aqui verificamos o get state do manager e de acordo  com isso damos upd dos canvas
-        //temos aqui apenas o canva do estado atual
+        stackPane.getChildren().clear();
+        switch (manager.getState()) {
+            case SUPERFICIE_STATE -> {
+                stackPane.getChildren().add(superficieCanvas);
+                setRight(barraSuperficie);
+            }
+            case OFICINA_STATE -> {
+                stackPane.getChildren().add(oficinaPane);
+                setRight(null);
+            }
+            default -> {
+
+            }
+        }
     }
 }

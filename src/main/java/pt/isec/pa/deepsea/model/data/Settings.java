@@ -76,9 +76,17 @@ public interface Settings {
     int HEIGHT_JANELA = 800;
     int WIDTH_JANELA = 1300;
 
+    String FICHEIRO_RECENTES = "recentes.txt";
+    int MAX_RECENT = 5;
+
+    String BG_FUNDO      = "#b0b7bd";
     String BG_PANEL      = "#34495E";
+    String BG_GRELHAS    = "#c9ddf0";
     String TEXT_PRIMARY  = "#ECF0F1";
+    String TEXT_DARK     = "#2C3E50";
+    String BAR_CRIT      = "#C0392B";
     String BTN_PRIMARY   = "#3498DB";
+    String BTN_ACTION    = "#F39C12";
 
     Font FONTE = Font.font("Arial");
 }
