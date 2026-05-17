@@ -306,7 +306,9 @@ public class DeepSeaManager {
     public int getIdDroneAtivo() {
         return context.getIdDroneAtivo();
     }
-
+    public boolean posicaoComMinerio() {
+        return context.posicaoComMinerio();
+    }
     public int getLinhaDroneAtivo(){return context.getLinhaDroneAtivo();}
     public int getColunaDroneAtivo(){return context.getColunaDroneAtivo();}
 

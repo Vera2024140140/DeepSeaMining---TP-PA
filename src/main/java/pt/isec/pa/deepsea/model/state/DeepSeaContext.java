@@ -177,4 +177,16 @@ public class DeepSeaContext implements Serializable {
     public TipoComponente[][] getMapaFundo(int lSup, int cSup) {
         return jogo.getMapaFundo(lSup, cSup);
     }
+
+    public boolean posicaoComMinerio() {
+        return jogo.posicaoComMinerio();
+    }
+
+    public int getLinhaNavioSuperficie() {
+        return jogo.getLinhaAtualNavio();
+    }
+    public int getColunaNavioSuperficie() {
+        return jogo.getColunaAtualNavio();
+    }
+
 }

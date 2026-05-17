@@ -703,4 +703,20 @@ public class Jogo implements Serializable {
     public int getIdDroneAtivo() {
         return navio.getDroneAtivoId();
     }
+
+    public boolean posicaoComMinerio() {
+        Drone drone = navio.getDroneAtivo();
+        if (drone == null) return false;
+        TipoComponente tipo = grelhaSuperficie.getTipoNoFundo(navio.getLinha(),navio.getColuna(),
+                drone.getLinha(),drone.getColuna());
+        return tipo == TipoComponente.MINERIO;
+    }
+
+    public int getLinhaAtualNavio() {
+        return navio.getLinha();
+    }
+
+    public int getColunaAtualNavio() {
+        return navio.getColuna();
+    }
 }

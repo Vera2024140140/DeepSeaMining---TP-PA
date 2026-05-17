@@ -1,5 +1,7 @@
 package pt.isec.pa.deepsea.model.data;
 
+import javafx.scene.text.Font;
+
 public interface Settings {
      boolean MODO_DEFESA = false;
 
@@ -62,10 +64,18 @@ public interface Settings {
 
     String FICHEIRO_SAVE = "deepsea_save.sav";
 
-    String FICHEIRO_LOG = "deepsea.log";
     String FORMATO_TEMPO_LOG = "yyyy-MM-dd HH:mm:ss";
 
     int CANVAS_DRONE_W = 240;
     int CANVAS_DRONE_H = 200;
+    int WIDTH_LOG = 300;
+    int HEIGHT_LOG = 500;
+    int WIDTH_BARRA_LATERAL = 340;
+    int HEIGHT_JANELA = 800;
+
+    String BG_PANEL      = "#34495E";
+    String TEXT_PRIMARY  = "#ECF0F1";
+    String BTN_PRIMARY   = "#3498DB";
+    Font FONTE = Font.font("Arial");
 
 }
