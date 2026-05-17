@@ -11,23 +11,22 @@ import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pt.isec.pa.deepsea.model.data.Settings.FICHEIRO_LOG;
 import static pt.isec.pa.deepsea.model.data.Settings.FICHEIRO_SAVE;
 
 public class DeepSeaManagerTest {
     private DeepSeaManager manager;
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         manager = new DeepSeaManager();
         manager.limparLog();
-    }
+    }*/
 
-    @AfterEach
+    /*@AfterEach
     void apagarFicheiros() {
         new File(FICHEIRO_SAVE).delete();
         new File(FICHEIRO_LOG).delete();
-    }
+    }*/
 
     @Test
     void testNovoJogo() {

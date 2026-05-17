@@ -8,8 +8,8 @@ public interface Settings {
     //Dimensao das grelhas
     int LINHAS_SUPERFICIE = 14;
     int COLUNAS_SUPERFICIE = 14;
-    int LINHAS_FOSSO = 20;
-    int COLUNAS_FOSSO = 10;
+    int LINHAS_FOSSO = 14;
+    int COLUNAS_FOSSO = 12;
     int LINHAS_FUNDO = 10;
     int COLUNAS_FUNDO = 10;
 
