@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.data.grelhas;
 
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import pt.isec.pa.deepsea.model.data.elementos.Minerio;

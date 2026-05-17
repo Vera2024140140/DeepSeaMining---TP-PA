@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.state;
 
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 
 /**
  * Interface principal do Padrão State para o jogo Deep Sea.

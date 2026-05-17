@@ -1,6 +1,6 @@
 package pt.isec.pa.deepsea.model.data.puzzle;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.Utilidades;
 

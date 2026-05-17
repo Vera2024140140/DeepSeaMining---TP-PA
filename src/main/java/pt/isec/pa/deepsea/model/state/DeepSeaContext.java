@@ -1,7 +1,7 @@
 package pt.isec.pa.deepsea.model.state;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.Direcao;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
 

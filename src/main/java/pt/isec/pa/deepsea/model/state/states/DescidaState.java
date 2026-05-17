@@ -1,10 +1,9 @@
 package pt.isec.pa.deepsea.model.state.states;
 
-import pt.isec.pa.deepsea.model.data.Direcao;
+import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.jogo.Jogo;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
-import pt.isec.pa.deepsea.model.state.DeepSeaStateAdapter;
 
 /**
  * Estado de descida do drone no fosso marinho.

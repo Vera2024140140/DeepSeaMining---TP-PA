@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
-import pt.isec.pa.deepsea.model.data.TipoComponente;
+import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
 public class FundoCanvas extends Canvas {

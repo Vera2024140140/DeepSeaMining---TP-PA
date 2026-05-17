@@ -1,4 +1,4 @@
-package pt.isec.pa.deepsea.model.data;
+package pt.isec.pa.deepsea.model;
 /**
  * Enumeração que define todos os tipos de componentes (entidades e obstáculos)
  * que podem existir nas células das grelhas do jogo (Fundo Marinho e Fosso).

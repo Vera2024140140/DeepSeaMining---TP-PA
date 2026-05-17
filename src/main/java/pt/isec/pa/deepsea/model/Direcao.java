@@ -1,4 +1,4 @@
-package pt.isec.pa.deepsea.model.data;
+package pt.isec.pa.deepsea.model;
 /**
  * Enumeração que define as direções possíveis para os movimentos dentro do jogo.
  * <p>
