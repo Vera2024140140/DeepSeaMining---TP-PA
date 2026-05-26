@@ -41,7 +41,11 @@ public class DeepSeaManager {
         pcs.removePropertyChangeListener(prop, l);
     }
 
-    private void fire(String prop) { pcs.firePropertyChange(prop, null, null); }
+    private void fire(String... props) {
+        for (String prop : props) {
+            pcs.firePropertyChange(prop, null, null);
+        }
+    }
 
     private void fireStateIfChanged(DeepSeaState antes) {
         DeepSeaState depois = context.getState();
@@ -61,14 +65,14 @@ public class DeepSeaManager {
     public boolean iniciarDescida() {
         DeepSeaState antes = context.getState();
         boolean desceu = context.iniciarDescida();
-        if (desceu) { fireStateIfChanged(antes); fire(PROP_NAVIO); fire(PROP_DRONE); fire(PROP_LOG); }
+        if (desceu) { fireStateIfChanged(antes); fire(PROP_FOSSO, PROP_DRONE, PROP_LOG); }
         return desceu;
     }
 
     public boolean iniciarSubida() {
         DeepSeaState antes = context.getState();
         boolean subiu = context.iniciarSubida();
-        if (subiu) { fireStateIfChanged(antes); fire(PROP_DRONE); fire(PROP_FOSSO); fire(PROP_LOG); }
+        if (subiu) { fireStateIfChanged(antes); fire(PROP_DRONE, PROP_FOSSO, PROP_LOG); }
         return subiu;
     }
 
@@ -78,13 +82,9 @@ public class DeepSeaManager {
         if (!ok) return false;
         switch (antes) {
             case SUPERFICIE_STATE -> fire(PROP_NAVIO);
-            case FUNDO_STATE -> { fire(PROP_DRONE); fire(PROP_FUNDO); }
-            case DESCIDA_STATE, SUBIDA_STATE -> { fire(PROP_DRONE); fire(PROP_FOSSO); }
-            case PUZZLE_STATE -> {
-                fire(PROP_PUZZLE);
-                fire(PROP_DRONE);
-                fire(PROP_FUNDO);
-            }
+            case FUNDO_STATE -> fire(PROP_DRONE, PROP_FUNDO);
+            case DESCIDA_STATE, SUBIDA_STATE -> fire(PROP_DRONE, PROP_FOSSO);
+            case PUZZLE_STATE -> fire(PROP_PUZZLE);
             default -> {}
         }
         fireStateIfChanged(antes);
@@ -95,9 +95,7 @@ public class DeepSeaManager {
     public boolean recolherMinerio(){
         boolean recolheu = context.recolherMinerio();
         if(recolheu) {
-            fire(PROP_FUNDO);
-            fire(PROP_DRONE);
-            fire(PROP_LOG);
+            fire(PROP_FUNDO, PROP_DRONE, PROP_LOG);
         }
         return recolheu;
     }
@@ -125,10 +123,7 @@ public class DeepSeaManager {
     public boolean selecionarDrone(int idDrone) {
         boolean selecionou = context.selecionarDrone(idDrone);
         if (selecionou){
-            fire(PROP_OFICINA);
-            fire(PROP_DRONE);
-            fire(PROP_NAVIO);
-            fire(PROP_LOG);
+            fire(PROP_OFICINA, PROP_DRONE, PROP_LOG);
         }
         return selecionou;
     }
@@ -136,10 +131,7 @@ public class DeepSeaManager {
         DeepSeaState antes = context.getState();
         boolean abasteceu = context.abastecerDrone(litros);
         if (abasteceu){
-            fire(PROP_DRONE);
-            fire(PROP_NAVIO);
-            fire(PROP_OFICINA);
-            fire(PROP_LOG);
+            fire(PROP_DRONE, PROP_NAVIO, PROP_OFICINA, PROP_LOG);
             fireStateIfChanged(antes);
         }
         return abasteceu;
@@ -148,10 +140,7 @@ public class DeepSeaManager {
         DeepSeaState antes = context.getState();
         boolean reparou = context.repararDrone(pontos);
         if (reparou){
-            fire(PROP_DRONE);
-            fire(PROP_NAVIO);
-            fire(PROP_OFICINA);
-            fire(PROP_LOG);
+            fire(PROP_DRONE, PROP_NAVIO, PROP_OFICINA, PROP_LOG);
             fireStateIfChanged(antes);
         }
         return reparou;
@@ -160,10 +149,7 @@ public class DeepSeaManager {
     public boolean melhorarTanqueDrone(){
         boolean melhorou = context.melhorarTanqueDrone();
         if (melhorou){
-            fire(PROP_DRONE);
-            fire(PROP_NAVIO);
-            fire(PROP_OFICINA);
-            fire(PROP_LOG);
+            fire(PROP_DRONE, PROP_NAVIO, PROP_OFICINA, PROP_LOG);
         }
         return melhorou;
     }
@@ -171,10 +157,7 @@ public class DeepSeaManager {
     public boolean melhorarIntegridadeDrone(){
         boolean melhorou = context.melhorarIntegridadeDrone();
         if (melhorou){
-            fire(PROP_DRONE);
-            fire(PROP_NAVIO);
-            fire(PROP_OFICINA);
-            fire(PROP_LOG);
+            fire(PROP_DRONE, PROP_NAVIO, PROP_OFICINA, PROP_LOG);
         }
         return melhorou;
     }
@@ -292,13 +275,7 @@ public class DeepSeaManager {
         resetContadores();
         fire(PROP_GAME);
         pcs.firePropertyChange(PROP_STATE, null, context.getState());
-        fire(PROP_NAVIO);
-        fire(PROP_DRONE);
-        fire(PROP_FUNDO);
-        fire(PROP_FOSSO);
-        fire(PROP_PUZZLE);
-        fire(PROP_OFICINA);
-        fire(PROP_LOG);
+        fire(PROP_NAVIO, PROP_DRONE, PROP_FUNDO, PROP_FOSSO, PROP_PUZZLE, PROP_OFICINA, PROP_LOG);
         return true;
     }
 

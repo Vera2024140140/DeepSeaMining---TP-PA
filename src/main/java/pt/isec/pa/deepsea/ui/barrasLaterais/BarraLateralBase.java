@@ -1,12 +1,12 @@
 package pt.isec.pa.deepsea.ui.barrasLaterais;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
+import javafx.scene.layout.VBox;
 import pt.isec.pa.deepsea.model.data.Settings;
+import javafx.geometry.Insets;
 
 public abstract class BarraLateralBase extends VBox {
     DeepSeaManager manager;
@@ -22,9 +22,8 @@ public abstract class BarraLateralBase extends VBox {
         registerHandlers();
         update();
     }
-    void registerHandlers(){
+    abstract void registerHandlers();
 
-    }
     void createViews() {
         this.setMaxHeight(Settings.HEIGHT_JANELA);
         this.setPrefWidth(Settings.WIDTH_BARRA_LATERAL);
