@@ -1,27 +1,24 @@
 package pt.isec.pa.deepsea.model;
 
-
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.List;
 import java.util.Set;
-
 public class DeepSeaManager {
 
-    public static final String PROP_STATE   = "state";
-    public static final String PROP_NAVIO   = "navio";
-    public static final String PROP_DRONE   = "drone";
-    public static final String PROP_FUNDO   = "fundo";
-    public static final String PROP_FOSSO   = "fosso";
-    public static final String PROP_PUZZLE  = "puzzle";
+    public static final String PROP_STATE = "state";
+    public static final String PROP_NAVIO = "navio";
+    public static final String PROP_DRONE = "drone";
+    public static final String PROP_FUNDO = "fundo";
+    public static final String PROP_FOSSO = "fosso";
+    public static final String PROP_PUZZLE = "puzzle";
     public static final String PROP_OFICINA = "oficina";
-    public static final String PROP_LOG     = "log";
-    public static final String PROP_GAME    = "game";
+    public static final String PROP_LOG = "log";
+    public static final String PROP_GAME = "game";
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private DeepSeaContext context;
@@ -32,10 +29,6 @@ public class DeepSeaManager {
 
     public void addPropertyChangeListener(String prop, PropertyChangeListener l) {
         pcs.addPropertyChangeListener(prop, l);
-    }
-
-    public void removePropertyChangeListener(String prop, PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(prop, l);
     }
 
     private void fire(String... props) {
@@ -81,7 +74,7 @@ public class DeepSeaManager {
             case SUPERFICIE_STATE -> fire(PROP_NAVIO);
             case FUNDO_STATE -> fire(PROP_DRONE, PROP_FUNDO);
             case DESCIDA_STATE, SUBIDA_STATE -> fire(PROP_DRONE, PROP_FOSSO);
-            case PUZZLE_STATE -> fire(PROP_PUZZLE);
+            case PUZZLE_STATE -> fire(PROP_PUZZLE, PROP_DRONE, PROP_FUNDO);
             default -> {}
         }
         fireStateIfChanged(antes);

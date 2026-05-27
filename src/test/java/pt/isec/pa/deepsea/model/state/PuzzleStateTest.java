@@ -77,4 +77,17 @@ public class PuzzleStateTest {
         }
         assertEquals(DeepSeaState.SUBIDA_STATE, context.getState());
     }
+
+    /**
+     * Valida que, ao perder o puzzle (esgotar os movimentos), o drone é
+     * reposicionado na última linha do fosso para iniciar a subida.
+     */
+    @Test
+    void testPerderPuzzle() {
+        jogo.simularDerrotaPuzzle();
+
+        assertTrue(context.mover(Direcao.BAIXO));
+        assertEquals(DeepSeaState.SUBIDA_STATE, context.getState());
+        assertTrue(jogo.droneNoFundoFosso());
+    }
 }
