@@ -7,6 +7,7 @@ import pt.isec.pa.deepsea.model.DeepSeaManager;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.deepsea.model.data.Settings;
 import javafx.geometry.Insets;
+import pt.isec.pa.deepsea.ui.canvas.DeepSeaCanvas;
 
 public abstract class BarraLateralBase extends VBox {
     DeepSeaManager manager;
@@ -25,8 +26,10 @@ public abstract class BarraLateralBase extends VBox {
     abstract void registerHandlers();
 
     void createViews() {
-        this.setMaxHeight(Settings.HEIGHT_JANELA);
+        this.setMaxHeight(Double.MAX_VALUE);
         this.setPrefWidth(Settings.WIDTH_BARRA_LATERAL);
+        this.setMinWidth(Settings.WIDTH_BARRA_LATERAL);
+        this.setMaxWidth(Settings.WIDTH_BARRA_LATERAL);
         this.setStyle(
                 "-fx-background-color: " + Settings.BG_PANEL + ";" +
                         " -fx-border-color: #555;" +
@@ -43,6 +46,8 @@ public abstract class BarraLateralBase extends VBox {
                         "-fx-padding: 0 0 10 0;" +
                         "-fx-font-family:" + Settings.FONTE
         );
+        titulo.setWrapText(true);
+        titulo.setAlignment(Pos.CENTER);
 
         subtitulo = new Label("P R O G R A M A Ç Ã O   A V A N Ç A D A   2 5 / 2 6\n\nD E I S  -  I S E C\n");
         subtitulo.setStyle(
@@ -69,6 +74,8 @@ public abstract class BarraLateralBase extends VBox {
                         "-fx-font-size: 10px;" +
                         "-fx-font-family:" + Settings.FONTE + ";"
         );
+        nomes.setWrapText(true);
+        nomes.setAlignment(Pos.CENTER);
 
         VBox cabecalho = new VBox(titulo,subtitulo,autores,nomes);
         cabecalho.setAlignment(Pos.CENTER);

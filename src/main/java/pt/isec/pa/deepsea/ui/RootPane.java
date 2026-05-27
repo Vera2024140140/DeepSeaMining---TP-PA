@@ -17,8 +17,9 @@ import static pt.isec.pa.deepsea.model.state.DeepSeaState.*;
 
 public class RootPane extends BorderPane {
     DeepSeaManager manager;
-
     StackPane stackPane;
+    AppMenuBar menuBar;
+
     private SuperficieCanvas superficieCanvas;
     private FossoCanvas fossoCanvas;
     private FundoCanvas fundoCanvas;
@@ -46,6 +47,10 @@ public class RootPane extends BorderPane {
                 "-fx-background-color : " + Settings.BG_GRELHAS + ";"
         );
 
+        // para que nao exista um limite
+        stackPane.setMinWidth(0);
+        stackPane.setMinHeight(0);
+
         barraPuzzle = new BarraLateralPuzzle(manager);
         puzzleCanvas = new PuzzleCanvas(manager);
         superficieCanvas = new SuperficieCanvas(manager);
@@ -59,14 +64,37 @@ public class RootPane extends BorderPane {
 
         //adicionar ao stackPane sobrepostos
         stackPane.getChildren().addAll(
-                superficieCanvas, fossoCanvas, fundoCanvas,
-                puzzleCanvas, oficinaPane, acabouCanvas
+            superficieCanvas,
+            fossoCanvas,
+            fundoCanvas,
+            puzzleCanvas,
+            oficinaPane,
+            acabouCanvas
         );
+
+        this.widthProperty().addListener((observable, oldValue, newValue) -> {
+            resizeAll(newValue.doubleValue(), this.getHeight());
+        });
+        this.heightProperty().addListener((observable, oldValue, newValue) -> {
+            resizeAll(this.getWidth(), newValue.doubleValue());
+        });
+
         setCenter(stackPane);
 
         // adicionar MenuBar no setTop()
-        AppMenuBar menuBar = new AppMenuBar(manager);
+        menuBar = new AppMenuBar(manager);
         setTop(menuBar);
+    }
+
+    private void resizeAll(double rootW, double rootH) {
+        double w = rootW - Settings.WIDTH_BARRA_LATERAL - 40;
+        double h = rootH - 40;
+
+        // resize para cada um dos canvas
+        superficieCanvas.resizeJanela(w, h);
+        fossoCanvas.resizeJanela(w, h);
+        fundoCanvas.resizeJanela(w, h);
+        puzzleCanvas.resizeJanela(w, h);
     }
 
     private void registerHandlers() {

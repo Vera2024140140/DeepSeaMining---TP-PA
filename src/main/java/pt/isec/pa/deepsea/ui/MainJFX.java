@@ -49,7 +49,9 @@ public class MainJFX extends Application {
 
         stage.setTitle("Deep Sea Mining");
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.setMinWidth(900);
+        stage.setMinHeight(700);
         stage.show();
     }
 }

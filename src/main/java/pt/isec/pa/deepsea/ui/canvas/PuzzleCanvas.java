@@ -11,22 +11,21 @@ import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
-public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
-    double CELL_SIZE = Settings.CELL_SIZE * 3.25;
+public class PuzzleCanvas extends DeepSeaCanvas {
 
     public PuzzleCanvas(DeepSeaManager manager) {
         super(
-                Settings.PUZZLE_GRELHA * (Settings.CELL_SIZE * 3.25),
-                Settings.PUZZLE_GRELHA * (Settings.CELL_SIZE * 3.25)
+                manager,
+                Settings.PUZZLE_GRELHA ,
+                Settings.PUZZLE_GRELHA
         );
-        this.manager = manager;
-        registarHandlers();
         boolean ativo = manager.getState() == DeepSeaState.PUZZLE_STATE;
         setVisible(ativo);
         if (ativo) update();
     }
 
-    private void registarHandlers() {
+    @Override
+    protected void registerHandlers() {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_PUZZLE,
                 evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
@@ -40,7 +39,8 @@ public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
         });
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         GraphicsContext gc = getGraphicsContext2D();
         interface2D(gc);
     }

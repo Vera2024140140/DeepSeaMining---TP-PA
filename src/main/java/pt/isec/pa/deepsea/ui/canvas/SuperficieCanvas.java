@@ -8,24 +8,21 @@ import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
-public class SuperficieCanvas extends Canvas {
-    private final DeepSeaManager manager;
-    int CELL_SIZE = Settings.CELL_SIZE;
+public class SuperficieCanvas extends DeepSeaCanvas {
 
     public SuperficieCanvas(DeepSeaManager manager) {
         super(
-                Settings.COLUNAS_SUPERFICIE * Settings.CELL_SIZE,
-                Settings.LINHAS_SUPERFICIE * Settings.CELL_SIZE
+                manager,
+                Settings.COLUNAS_SUPERFICIE ,
+                Settings.LINHAS_SUPERFICIE
         );
-        this.manager = manager;
-        registarHandlers();
-        // visibilidade inicial definida
         boolean ativo = manager.getState() == DeepSeaState.SUPERFICIE_STATE;
         setVisible(ativo);
         if (ativo) update();
     }
 
-    private void registarHandlers() {
+    @Override
+    protected void registerHandlers() {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_NAVIO, evt ->{
             if (isVisible()) update();
         });
@@ -42,7 +39,8 @@ public class SuperficieCanvas extends Canvas {
         });
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         GraphicsContext gc = getGraphicsContext2D();
         interface2D(gc);
     }
