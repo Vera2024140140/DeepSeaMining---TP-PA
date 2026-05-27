@@ -642,6 +642,13 @@ public class Jogo implements Serializable {
         this.puzzleAtual = null;
     }
 
+    // simulação para testes de derrota no puzzle (PUBLIC APENAS PARA TESTES)
+    public void simularDerrotaPuzzle() {
+        if (puzzleAtual != null) {
+            puzzleAtual.simularDerrota();
+        }
+    }
+
     /** Método responsável por delegar o comando de movimento na lógica interna do puzzle */
     public boolean moverPecaPuzzle(Direcao dir) {
         if (puzzleAtual != null) {

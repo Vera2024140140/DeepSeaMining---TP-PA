@@ -131,4 +131,14 @@ public class Puzzle implements Serializable {
         }
         resetMovimentos();
     }
+
+    public void simularDerrota() {
+        int valor = 0;
+        for (int l = 0; l < Settings.PUZZLE_GRELHA; l++) {
+            for (int c = 0; c < Settings.PUZZLE_GRELHA; c++) {
+                grelha[l][c] = valor++; // peça vazia (0) no topo-esquerdo => garantidamente desordenado
+            }
+        }
+        this.movimentosRestantes = 0;
+    }
 }
