@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.TipoComponente;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
 public class FossoCanvas extends Canvas {
@@ -20,16 +21,24 @@ public class FossoCanvas extends Canvas {
         );
         this.manager = manager;
         registerHandlers();
-        update();
+        boolean ativo = manager.getState() == DeepSeaState.DESCIDA_STATE || manager.getState() == DeepSeaState.SUBIDA_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
     private void registerHandlers(){
         // Sempre que o drone se move ou o fosso muda (correntes, obstáculos) redesenha o canvas
         manager.addPropertyChangeListener(DeepSeaManager.PROP_FOSSO,
-                evt -> Platform.runLater(this::update));
+                evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_DRONE,
-                evt -> Platform.runLater(this::update));
+                evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_GAME,
-                evt -> Platform.runLater(this::update));
+                evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.DESCIDA_STATE
+                    || manager.getState() == DeepSeaState.SUBIDA_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
     private void update() {
         GraphicsContext gc = getGraphicsContext2D();

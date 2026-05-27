@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
 public class SuperficieCanvas extends Canvas {
@@ -18,14 +19,27 @@ public class SuperficieCanvas extends Canvas {
         );
         this.manager = manager;
         registarHandlers();
-        update();
+        // visibilidade inicial definida
+        boolean ativo = manager.getState() == DeepSeaState.SUPERFICIE_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
     private void registarHandlers() {
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_NAVIO, evt -> update());
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_GAME, evt -> update());
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> update());
-        manager.addPropertyChangeListener(DeepSeaManager.PROP_LOG,evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_NAVIO, evt ->{
+            if (isVisible()) update();
+        });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_GAME, evt -> {
+            if (isVisible()) update();
+        });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt ->{
+            boolean ativo = manager.getState() == DeepSeaState.SUPERFICIE_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_LOG,evt -> {
+            if (isVisible()) update();
+        });
     }
 
     private void update() {

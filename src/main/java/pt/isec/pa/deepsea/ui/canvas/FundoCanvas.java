@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.TipoComponente;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
 public class FundoCanvas extends Canvas {
@@ -18,7 +19,9 @@ public class FundoCanvas extends Canvas {
                 Settings.COLUNAS_FUNDO * CELL_SIZE);
         this.manager = manager;
         registerHandlers();
-        update();
+        boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
     private void registerHandlers() {
@@ -31,6 +34,11 @@ public class FundoCanvas extends Canvas {
                 evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
                 evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
 
     private void update() {

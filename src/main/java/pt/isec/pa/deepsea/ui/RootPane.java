@@ -13,6 +13,8 @@ import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.*;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
+import static pt.isec.pa.deepsea.model.state.DeepSeaState.*;
+
 public class RootPane extends BorderPane {
     DeepSeaManager manager;
 
@@ -49,13 +51,17 @@ public class RootPane extends BorderPane {
         superficieCanvas = new SuperficieCanvas(manager);
         fossoCanvas = new FossoCanvas(manager);
         fundoCanvas = new FundoCanvas(manager);
-        //adicionar ao stackPane sobrepostos
         barraSuperficie = new BarraLateralSuperficie(manager);
         barraFosso = new BarraLateralFosso(manager);
         barraFundo = new BarraLateralFundo(manager);
         oficinaPane = new OficinaPane(manager);
         acabouCanvas = new AcabouCanvas(manager);
 
+        //adicionar ao stackPane sobrepostos
+        stackPane.getChildren().addAll(
+                superficieCanvas, fossoCanvas, fundoCanvas,
+                puzzleCanvas, oficinaPane, acabouCanvas
+        );
         setCenter(stackPane);
 
         // adicionar MenuBar no setTop()
@@ -69,37 +75,15 @@ public class RootPane extends BorderPane {
     }
 
     private void update() {
-        stackPane.getChildren().clear();
-        switch (manager.getState()) {
-            case SUPERFICIE_STATE -> {
-                stackPane.getChildren().add(superficieCanvas);
-                setRight(barraSuperficie);
-            }
-            case OFICINA_STATE -> {
-                stackPane.getChildren().add(oficinaPane);
-                setRight(null);
-            }
-            case DESCIDA_STATE, SUBIDA_STATE -> {
-                stackPane.getChildren().add(fossoCanvas);
-                setRight(barraFosso);
-                stackPane.setAlignment(Pos.CENTER);
-            }
-            case FUNDO_STATE -> {
-                stackPane.getChildren().add(fundoCanvas);
-                setRight(barraFundo);
-            }
-            case PUZZLE_STATE -> {
-                stackPane.getChildren().add(puzzleCanvas);
-                setRight(barraPuzzle);
-                stackPane.setAlignment(Pos.CENTER);
-            }
-            case ACABOU_STATE -> {
-                stackPane.getChildren().add(acabouCanvas);
-                setRight(null);
-            }
-            default -> {
-
-            }
+        switch (manager.getState()){
+            case SUPERFICIE_STATE -> setRight(barraSuperficie);
+            case OFICINA_STATE -> setRight(null);
+            case DESCIDA_STATE,SUBIDA_STATE -> setRight(barraFosso);
+            case FUNDO_STATE ->  setRight(barraFundo);
+            case PUZZLE_STATE -> setRight(barraPuzzle);
+            case ACABOU_STATE -> setRight(null);
+            default -> setRight(null);
         }
+
     }
 }

@@ -4,6 +4,8 @@ import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.TipoComponente;
 import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
+import pt.isec.pa.deepsea.model.data.elementos.Monstro;
+import pt.isec.pa.deepsea.model.data.elementos.Obstaculo;
 import pt.isec.pa.deepsea.model.data.grelhas.GrelhaSuperficie;
 import pt.isec.pa.deepsea.model.data.puzzle.Puzzle;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
@@ -744,5 +746,12 @@ public class Jogo implements Serializable {
 
     public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
         return grelhaSuperficie.fundoIsRevelada(lsup,csup,lF,cF);
+    }
+
+    public void resetContadores() {
+        Drone.resetContadorIds();
+        Obstaculo.resetContadorObstaculos();
+        Monstro.resetContadorMonstros();
+        Artefacto.resetContadorArtefactos();
     }
 }

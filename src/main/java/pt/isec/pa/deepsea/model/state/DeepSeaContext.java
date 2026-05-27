@@ -203,4 +203,8 @@ public class DeepSeaContext implements Serializable {
     public boolean isCelulaFundoRevelada(int lsup, int csup, int lF, int cF) {
         return jogo.isCelulaFundoRevelada(lsup,csup,lF,cF);
     }
+
+    public void resetContadores() {
+        jogo.resetContadores();
+    }
 }

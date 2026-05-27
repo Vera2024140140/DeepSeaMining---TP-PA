@@ -9,6 +9,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
     double CELL_SIZE = Settings.CELL_SIZE * 3.25;
@@ -20,7 +21,9 @@ public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
         );
         this.manager = manager;
         registarHandlers();
-        update();
+        boolean ativo = manager.getState() == DeepSeaState.PUZZLE_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
     private void registarHandlers() {
@@ -30,6 +33,11 @@ public class PuzzleCanvas extends Canvas {private  final DeepSeaManager manager;
                 evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_FUNDO,
                 evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.PUZZLE_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
 
     private void update() {

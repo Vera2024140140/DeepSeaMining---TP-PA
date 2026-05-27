@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 
 public class AcabouCanvas extends BorderPane {
@@ -27,7 +28,9 @@ public class AcabouCanvas extends BorderPane {
         this.manager = manager;
         createViews();
         registerHandlers();
-        update();
+        boolean ativo = manager.getState() == DeepSeaState.ACABOU_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
     private void createViews() {
@@ -86,6 +89,11 @@ public class AcabouCanvas extends BorderPane {
 
         manager.addPropertyChangeListener(DeepSeaManager.PROP_GAME,  ev -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_NAVIO, ev -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.ACABOU_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
 
     private void update() {
