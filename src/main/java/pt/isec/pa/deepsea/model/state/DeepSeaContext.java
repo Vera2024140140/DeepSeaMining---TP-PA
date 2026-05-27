@@ -44,6 +44,11 @@ public class DeepSeaContext implements Serializable {
         return atual.recolherMinerio();
     }
 
+    public boolean recolherArtefacto() {
+        DeepSeaLog.getInstance().log("recolherArtefacto");
+        return atual.recolherArtefacto();
+    }
+
     public boolean iniciarSubida() {
         DeepSeaLog.getInstance().log("iniciarSubida");
         return atual.iniciarSubida();
@@ -181,6 +186,8 @@ public class DeepSeaContext implements Serializable {
     public boolean posicaoComMinerio() {
         return jogo.posicaoComMinerio();
     }
+
+    public boolean posicaoComArtefacto() {return jogo.posicaoComArtefacto(); }
 
     public int getLinhaNavioSuperficie() {
         return jogo.getLinhaAtualNavio();

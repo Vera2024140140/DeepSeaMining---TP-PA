@@ -30,6 +30,7 @@ public interface IDeepSeaState {
     boolean iniciarSubida();
     boolean apanharArtefacto();
     boolean recolherMinerio();
+    boolean recolherArtefacto();
     boolean abrirOficina();
     boolean fecharOficina();
     boolean mover(Direcao dir);

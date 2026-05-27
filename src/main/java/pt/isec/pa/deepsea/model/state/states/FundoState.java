@@ -63,9 +63,6 @@ public class FundoState extends DeepSeaStateAdapter {
             return true;
         }
 
-        if (jogo.verificarArtefacto())
-            apanharArtefacto();
-
         return true;
     }
     /**
@@ -90,6 +87,12 @@ public class FundoState extends DeepSeaStateAdapter {
     @Override
     public boolean recolherMinerio() {
         return jogo.recolherMinerio();
+    }
+
+    @Override
+    public boolean recolherArtefacto() {
+        if (!jogo.verificarArtefacto()) return false;
+        return apanharArtefacto();
     }
 
     /**

@@ -8,7 +8,9 @@ import pt.isec.pa.deepsea.model.data.Settings;
 
 public class BarraLateralFundo extends BarraLateralNavegacao{
     Button btnApanharMinerio;
+    Button btnApanharArtefacto;
     Button btnIniciarSubida;
+
     public BarraLateralFundo(DeepSeaManager manager){
         super(manager);
     }
@@ -16,6 +18,9 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
     void registerHandlers() {
         btnApanharMinerio.setOnAction(evento -> {
             manager.recolherMinerio();
+        });
+        btnApanharArtefacto.setOnAction(evento -> {
+            manager.recolherArtefacto();
         });
         btnIniciarSubida.setOnAction(evento -> {
             manager.iniciarSubida();
@@ -47,6 +52,23 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         btnApanharMinerio.setVisible(false);
         btnApanharMinerio.setManaged(false);
 
+        btnApanharArtefacto = new Button("Recolher Artefacto");
+        btnApanharArtefacto.setMaxWidth(Double.MAX_VALUE);
+        btnApanharArtefacto.setStyle(
+                "-fx-background-color:#D4B872;" +
+                        "-fx-font-family:" + Settings.FONTE + ";" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-size: 12px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8 12 8 12;" +
+                        "-fx-cursor: hand;"
+        );
+        VBox.setMargin(btnApanharArtefacto, new Insets(20, 0, 0, 0));
+
+        btnApanharArtefacto.setVisible(false);
+        btnApanharArtefacto.setManaged(false);
+
         btnIniciarSubida = new Button("Iniciar Subida");
 
         btnIniciarSubida.setMaxWidth(Double.MAX_VALUE);
@@ -70,8 +92,8 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         // Adiciona ao final da VBox
         areaMeio.getChildren().addAll(
                 btnIniciarSubida,
-                btnApanharMinerio
-
+                btnApanharMinerio,
+                btnApanharArtefacto
         );
 
     }
@@ -85,6 +107,10 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         btnApanharMinerio.setVisible(temMinerio);
         btnApanharMinerio.setManaged(temMinerio);
 
+        if (btnApanharArtefacto == null) return;
 
+        boolean temArtefacto = manager.posicaoComArtefacto();
+        btnApanharArtefacto.setVisible(temArtefacto);
+        btnApanharArtefacto.setManaged(temArtefacto);
     }
 }

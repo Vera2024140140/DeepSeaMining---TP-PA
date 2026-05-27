@@ -55,6 +55,7 @@ public class PuzzleState extends DeepSeaStateAdapter {
             }
         } else if (jogo.isPuzzleSemMovimentos()) {
             jogo.limparPuzzle();
+            jogo.meteDroneNoFimFosso();
             DeepSeaLog.getInstance().log("Perdeu puzzle");
             changeState(DeepSeaState.SUBIDA_STATE);
         }
@@ -70,6 +71,7 @@ public class PuzzleState extends DeepSeaStateAdapter {
     @Override
     public boolean iniciarSubida() {
         jogo.limparPuzzle(); //quando perde limpa o puzzle da memoria
+        jogo.meteDroneNoFimFosso();
         changeState(DeepSeaState.SUBIDA_STATE);
         return true;
     }

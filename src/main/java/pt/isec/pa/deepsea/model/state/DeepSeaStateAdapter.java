@@ -71,6 +71,11 @@ public abstract class DeepSeaStateAdapter implements IDeepSeaState, Serializable
     @Override
     public boolean recolherMinerio() { return false; }
 
+    @Override
+    public boolean recolherArtefacto() {
+        return false;
+    };
+
     public boolean perderDrone() {
         return false;
     }

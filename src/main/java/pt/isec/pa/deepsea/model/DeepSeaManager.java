@@ -100,6 +100,16 @@ public class DeepSeaManager {
         return recolheu;
     }
 
+    public boolean recolherArtefacto() {
+        DeepSeaState antes = context.getState();
+        boolean ok = context.recolherArtefacto();
+        if (ok) {
+            fireStateIfChanged(antes);  // muda para PUZZLE_STATE
+            fire(PROP_PUZZLE, PROP_FUNDO, PROP_LOG);
+        }
+        return ok;
+    }
+
     public boolean abrirOficina() {
         DeepSeaState antes = context.getState();
         boolean abriu = context.abrirOficina();
@@ -292,6 +302,11 @@ public class DeepSeaManager {
     public boolean posicaoComMinerio() {
         return context.posicaoComMinerio();
     }
+
+    public boolean posicaoComArtefacto() {
+        return context.posicaoComArtefacto();
+    }
+
     public int getLinhaDroneAtivo(){return context.getLinhaDroneAtivo();}
     public int getColunaDroneAtivo(){return context.getColunaDroneAtivo();}
 
