@@ -13,6 +13,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Grelha do fundo marinho associada a uma célula de superfície.
+ * Contém minérios, artefactos e monstros, e implementa
+ * o mecanismo de revelação progressiva das células.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class FundoMarinho implements Serializable {
     private static final long serialVersionUID = 15L;
     private final CelulaFundo[][] grelha;
@@ -54,6 +63,8 @@ public class FundoMarinho implements Serializable {
             }
         }
     }
+
+    /** Gera monstros em posições aleatórias do fundo. */
     public void gerarMonstros() {
         int qtdMonstros;
         List<int[]> livres = getCelulasLivres();
@@ -132,6 +143,7 @@ public class FundoMarinho implements Serializable {
         }
     }
 
+    /** Gera minérios em posições aleatórias. */
     private void gerarMinerios() {
         int numMinerios = Utilidades.aleatorio(Settings.MINERIO_ZONA_MIN, Settings.MINERIO_ZONA_MAX);
         for (int i = 0; i < numMinerios; i++) {
@@ -152,6 +164,7 @@ public class FundoMarinho implements Serializable {
         return false;
     }
 
+    /** Coloca um artefacto na posição indicada. */
     boolean colocarArtefacto(int linha, int coluna) {
         if (dentroLimites(linha, coluna) && grelha[linha][coluna].isEmpty()) {
             grelha[linha][coluna].setComponente(new Artefacto(linha, coluna));
@@ -160,6 +173,7 @@ public class FundoMarinho implements Serializable {
         return false;
     }
 
+    /** Devolve o tipo de componente na posição, ou null se vazia. */
     TipoComponente getTipoComponente(int lFundo, int cFundo) {
         if (dentroLimites(lFundo, cFundo)) {
             Componente comp = grelha[lFundo][cFundo].getComponente();
@@ -219,6 +233,7 @@ public class FundoMarinho implements Serializable {
         return null;
     }
 
+    /** Larga artefactos e minérios do drone no fundo e esconde a grelha. */
     void largarItens(List<Artefacto> artefactos, int minerios) {
         // esconder a grelha toda
         esconderTudo();

@@ -6,6 +6,14 @@ import pt.isec.pa.deepsea.model.data.Utilidades;
 
 import java.io.Serializable;
 
+/**
+ * Minijogo de 15 peças (4x4) que o jogador resolve
+ * para recolher um artefacto. Tem limite de movimentos.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class Puzzle implements Serializable {
     private static final long serialVersionUID = 30L;
     private int [][] grelha ;
@@ -18,6 +26,7 @@ public class Puzzle implements Serializable {
         baralhar();
     }
 
+    /** Preenche a grelha com os números 1..15 e 0 (vazio). */
     void inicializarGrelha() {
         int numeros = 1;
         for(int i = 0; i < Settings.PUZZLE_GRELHA; i++){
@@ -74,6 +83,7 @@ public class Puzzle implements Serializable {
         return new int[]{Settings.PUZZLE_GRELHA -1, Settings.PUZZLE_GRELHA -1};
     }
 
+    /** Move a peça vazia na direção indicada, decrementando movimentos. */
     public boolean mover(Direcao dir) {
         int[] posVazio = encontrarCelulaVazia();
         int lVazia = posVazio[0];
@@ -100,6 +110,7 @@ public class Puzzle implements Serializable {
     }
 
 
+    /** Verifica se as peças estão ordenadas (‘puzzle’ resolvido). */
     //verificar se o ‘puzzle’ já está por ordem
     public  boolean estaResolvido() {
         int esperado = 1;
@@ -117,6 +128,7 @@ public class Puzzle implements Serializable {
         return true;
     }
 
+    /** Baralha o ‘puzzle’ com movimentos aleatórios. */
     //baralhar o puzzle
     public void baralhar() {
         // vai ao enum buscar as pos (CIMA/BAIXO/DIR/ESQ) -> (0/1/2/3)

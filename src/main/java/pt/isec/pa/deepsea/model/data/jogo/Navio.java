@@ -6,6 +6,15 @@ import pt.isec.pa.deepsea.model.data.elementos.Artefacto;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Representa o navio do jogador na superfície.
+ * Contém combustível, minérios, artefactos recolhidos
+ * e a frota de drones.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class Navio implements Serializable {
     private static final long serialVersionUID = 21L;
     private double combustivel;
@@ -65,6 +74,7 @@ public class Navio implements Serializable {
 
     int getMineriosNavio() { return minerios; }
 
+    /** Remove combustível do navio. Retorna false se for insuficiente. */
     boolean removerCombustivel(double combustivel){
         if(combustivel <= 0)
             return false;
@@ -81,6 +91,7 @@ public class Navio implements Serializable {
         }
     }
 
+    /** Remove minérios do navio. Retorna false se insuficientes. */
     boolean removerMinerios(int qtd){
         if(qtd <= 0)
             return false;
@@ -115,6 +126,7 @@ public class Navio implements Serializable {
         return set_drones;
     }
 
+    /** Remove um drone da frota pelo seu id. */
     //quando os mesmos são perdids pq ficaram sem combustivel por ex
     void rmDrones(int idDrone) {
         //remove caso o id seja ==
@@ -124,6 +136,7 @@ public class Navio implements Serializable {
         }
     }
 
+    /** Define o drone ativo pelo id. */
     boolean setDroneAtivo(int idDrone) {
         for (Drone d : drones) {
             if (d.getId() == idDrone) {
@@ -138,6 +151,7 @@ public class Navio implements Serializable {
         return droneAtivoId;
     }
 
+    /** Devolve o drone ativo ou null se nenhum estiver selecionado. */
     Drone getDroneAtivo() {
         for (Drone d : drones) {
             if (d.getId() == droneAtivoId) return d;
@@ -202,6 +216,7 @@ public class Navio implements Serializable {
         return artefactos.size();
     }
 
+    /** Devolve informação formatada de todos os drones. */
     List<String> getInfoDrones() {
         List<Drone> ordenados = new ArrayList<>(drones);
         ordenados.sort(Comparator.comparingInt(Drone::getId));

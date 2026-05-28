@@ -2,6 +2,13 @@ package pt.isec.pa.deepsea.model.data;
 
 import java.util.Random;
 
+/**
+ * Classe utilitária com métodos estáticos para
+ * gerar valores aleatórios.
+ *
+ * @author Rafael2024143044
+ * @author Diogo2024152576
+ */
 public class Utilidades {
 
     private Utilidades(){}
