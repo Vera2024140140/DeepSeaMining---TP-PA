@@ -18,7 +18,7 @@ public class Puzzle implements Serializable {
         baralhar();
     }
 
-    private void inicializarGrelha() {
+    void inicializarGrelha() {
         int numeros = 1;
         for(int i = 0; i < Settings.PUZZLE_GRELHA; i++){
             for (int j = 0; j < Settings.PUZZLE_GRELHA; j++){
