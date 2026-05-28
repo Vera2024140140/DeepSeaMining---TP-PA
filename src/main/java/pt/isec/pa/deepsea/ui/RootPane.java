@@ -13,13 +13,12 @@ import pt.isec.pa.deepsea.ui.barrasLaterais.BarraLateralSuperficie;
 import pt.isec.pa.deepsea.ui.canvas.*;
 import pt.isec.pa.deepsea.ui.oficina.OficinaPane;
 
-import static pt.isec.pa.deepsea.model.state.DeepSeaState.*;
 
 public class RootPane extends BorderPane {
     DeepSeaManager manager;
     StackPane stackPane;
     AppMenuBar menuBar;
-
+    StackPane barrasPane;
     private SuperficieCanvas superficieCanvas;
     private FossoCanvas fossoCanvas;
     private FundoCanvas fundoCanvas;
@@ -62,7 +61,7 @@ public class RootPane extends BorderPane {
         oficinaPane = new OficinaPane(manager);
         acabouCanvas = new AcabouCanvas(manager);
 
-        //adicionar ao stackPane sobrepostos
+        //adicionar ao stackPane sobrepostos as canvas
         stackPane.getChildren().addAll(
             superficieCanvas,
             fossoCanvas,
@@ -80,6 +79,11 @@ public class RootPane extends BorderPane {
         });
 
         setCenter(stackPane);
+
+        barrasPane = new StackPane();
+        //adicionar ao stackPane sobrepostos as barras
+        barrasPane.getChildren().addAll(barraSuperficie,barraFundo,barraFosso,barraPuzzle);
+        setRight(barrasPane);
 
         // adicionar MenuBar no setTop()
         menuBar = new AppMenuBar(manager);
@@ -102,16 +106,5 @@ public class RootPane extends BorderPane {
                 evt -> update());
     }
 
-    private void update() {
-        switch (manager.getState()){
-            case SUPERFICIE_STATE -> setRight(barraSuperficie);
-            case OFICINA_STATE -> setRight(null);
-            case DESCIDA_STATE,SUBIDA_STATE -> setRight(barraFosso);
-            case FUNDO_STATE ->  setRight(barraFundo);
-            case PUZZLE_STATE -> setRight(barraPuzzle);
-            case ACABOU_STATE -> setRight(null);
-            default -> setRight(null);
-        }
-
-    }
+    private void update() { }
 }

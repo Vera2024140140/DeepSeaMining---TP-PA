@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 public class BarraLateralFundo extends BarraLateralNavegacao{
     Button btnApanharMinerio;
@@ -13,6 +14,9 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
 
     public BarraLateralFundo(DeepSeaManager manager){
         super(manager);
+        boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
     @Override
     void registerHandlers() {
@@ -28,6 +32,12 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         // Verifica se o drone calhou numa posicao com minerio
         manager.addPropertyChangeListener(DeepSeaManager.PROP_DRONE,evento->{
             update();
+        });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+            setVisible(ativo);
+            setManaged(ativo);
+            if (ativo) update();
         });
 
     }

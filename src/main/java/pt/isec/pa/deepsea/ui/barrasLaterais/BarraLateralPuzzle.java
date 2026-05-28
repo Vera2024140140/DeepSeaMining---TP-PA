@@ -16,6 +16,10 @@ public class BarraLateralPuzzle extends BarraLateralBase{
 
     public BarraLateralPuzzle(DeepSeaManager manager) {
         super(manager);
+        boolean ativo = manager.getState() == DeepSeaState.PUZZLE_STATE;
+        setVisible(ativo);
+        setManaged(ativo);
+        if (ativo) update();
     }
 
     @Override
@@ -53,8 +57,13 @@ public class BarraLateralPuzzle extends BarraLateralBase{
             if (anterior == DeepSeaState.PUZZLE_STATE && atual != DeepSeaState.PUZZLE_STATE) {
                 update();
             }
-        }
-        );
+        });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.PUZZLE_STATE;
+            setVisible(ativo);
+            setManaged(ativo);
+            if (ativo) update();
+        });
     }
 
     @Override
