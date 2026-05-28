@@ -7,6 +7,15 @@ import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
+/**
+ * Barra lateral exibida quando o ‘drone’ está no fundo, marinho.
+ * Adiciona botões de recolha de minério/artefacto e de iniciar subida,
+ * que aparecem dinamicamente conforme a posição do ‘drone’.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class BarraLateralFundo extends BarraLateralNavegacao{
     Button btnApanharMinerio;
     Button btnApanharArtefacto;
@@ -18,6 +27,8 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         setVisible(ativo);
         if (ativo) update();
     }
+
+    /** Regista as ações dos botões e o listener do drone. */
     @Override
     void registerHandlers() {
         btnApanharMinerio.setOnAction(evento -> {
@@ -41,20 +52,22 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         });
 
     }
+
+    /** Cria os botões de recolha e subida. */
     @Override
     void createViews() {
         super.createViews();
         btnApanharMinerio = new Button("Recolher Minério");
         btnApanharMinerio.setMaxWidth(Double.MAX_VALUE);
         btnApanharMinerio.setStyle(
-                "-fx-background-color:#D4B872;" +
-                        "-fx-font-family:" + Settings.FONTE + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-font-size: 12px;" +
-                        "-fx-background-radius: 8;" +
-                        "-fx-padding: 8 12 8 12;" +
-                        "-fx-cursor: hand;"
+            "-fx-background-color:#D4B872;" +
+            "-fx-font-family:" + Settings.FONTE + ";" +
+            "-fx-text-fill: white;" +
+            "-fx-font-weight: bold;" +
+            "-fx-font-size: 12px;" +
+            "-fx-background-radius: 8;" +
+            "-fx-padding: 8 12 8 12;" +
+            "-fx-cursor: hand;"
         );
         VBox.setMargin(btnApanharMinerio, new Insets(20, 0, 0, 0));
 
@@ -65,14 +78,14 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         btnApanharArtefacto = new Button("Recolher Artefacto");
         btnApanharArtefacto.setMaxWidth(Double.MAX_VALUE);
         btnApanharArtefacto.setStyle(
-                "-fx-background-color:#D4B872;" +
-                        "-fx-font-family:" + Settings.FONTE + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-font-size: 12px;" +
-                        "-fx-background-radius: 8;" +
-                        "-fx-padding: 8 12 8 12;" +
-                        "-fx-cursor: hand;"
+            "-fx-background-color:#D4B872;" +
+            "-fx-font-family:" + Settings.FONTE + ";" +
+            "-fx-text-fill: white;" +
+            "-fx-font-weight: bold;" +
+            "-fx-font-size: 12px;" +
+            "-fx-background-radius: 8;" +
+            "-fx-padding: 8 12 8 12;" +
+            "-fx-cursor: hand;"
         );
         VBox.setMargin(btnApanharArtefacto, new Insets(20, 0, 0, 0));
 
@@ -85,14 +98,14 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
         btnIniciarSubida.setOnAction(e -> manager.iniciarDescida());
         btnIniciarSubida.setPadding(new Insets(5, 25, 5, 25));
         btnIniciarSubida.setStyle(
-                "-fx-background-color:" + Settings.BTN_PRIMARY + ";" +
-                        "-fx-font-family:" + Settings.FONTE + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-font-size: 12px;" +
-                        "-fx-background-radius: 8;" +
-                        "-fx-padding: 8 12 8 12;" +
-                        "-fx-cursor: hand;"
+            "-fx-background-color:" + Settings.BTN_PRIMARY + ";" +
+            "-fx-font-family:" + Settings.FONTE + ";" +
+            "-fx-text-fill: white;" +
+            "-fx-font-weight: bold;" +
+            "-fx-font-size: 12px;" +
+            "-fx-background-radius: 8;" +
+            "-fx-padding: 8 12 8 12;" +
+            "-fx-cursor: hand;"
         );
         btnIniciarSubida.setMinWidth(140);
         btnIniciarSubida.setMinHeight(16);
@@ -101,12 +114,14 @@ public class BarraLateralFundo extends BarraLateralNavegacao{
 
         // Adiciona ao final da VBox
         areaMeio.getChildren().addAll(
-                btnIniciarSubida,
-                btnApanharMinerio,
-                btnApanharArtefacto
+            btnIniciarSubida,
+            btnApanharMinerio,
+            btnApanharArtefacto
         );
 
     }
+
+    /** Atualiza a visibilidade dos botões conforme o conteúdo da célula atual. */
     @Override
     void update() {
         super.update(); // atualiza combustivel e minérios chamando o atualizar da Base

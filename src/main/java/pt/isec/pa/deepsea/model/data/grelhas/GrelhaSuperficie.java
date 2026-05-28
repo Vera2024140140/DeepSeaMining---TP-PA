@@ -10,6 +10,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Grelha principal do jogo que representa a superfície do mar.
+ * Cada célula contém um {@link FossoMarinho} e um {@link FundoMarinho}
+ * associados, formando a estrutura vertical do mundo.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class GrelhaSuperficie implements Serializable {
     private static final long serialVersionUID = 16L;
     private final CelulaSuperficie[][] grelha;
@@ -51,6 +60,7 @@ public class GrelhaSuperficie implements Serializable {
         return getFosso(lSup, cSup).getTipoComponente(lFosso, cFosso);
     }
 
+    /** Gera artefactos nas posições fixas do modo defesa. */
     private void gerarMundoModoDefesa() {
         int centroL = linhas / 2;
         int centroC = colunas / 2;
@@ -81,6 +91,7 @@ public class GrelhaSuperficie implements Serializable {
 
     }
 
+    /** Distribui artefactos aleatoriamente pelos fundos marinhos. */
     private void gerarArtefactos() {
         //pos0, pos1, pos2, pos3
         //lSup, cSup, lFundo, cFundo
@@ -173,6 +184,7 @@ public class GrelhaSuperficie implements Serializable {
         return grelha[lSup][cSup].getFundo().getTipoComponente(lF, cF);
     }
 
+    /** Recolhe e devolve o artefacto na posição indicada do fundo. */
     public Artefacto fundoRecolherArtefacto(int lSup, int cSup, int lF, int cF) {
         FundoMarinho fundo = grelha[lSup][cSup].getFundo();
         Artefacto art = fundo.getArtefacto(lF, cF);
@@ -182,6 +194,7 @@ public class GrelhaSuperficie implements Serializable {
         return art;
     }
 
+    /** Recolhe e devolve a quantidade do minério na posição indicada. */
     public int fundoRecolherMinerio(int lSup, int cSup, int lF, int cF) {
         FundoMarinho fundo = grelha[lSup][cSup].getFundo();
         Minerio min = fundo.getMinerio(lF, cF);
@@ -206,6 +219,7 @@ public class GrelhaSuperficie implements Serializable {
         return grelha[lSup][cSup].getFundo().contarArtefactos();
     }
 
+    /** Devolve mapa com a contagem de artefactos por célula de superfície. */
     public int[][] getMapaPistasArtefactos() {
         int[][] pistas = new int[linhas][colunas];
         for (int l = 0; l < linhas; l++) {

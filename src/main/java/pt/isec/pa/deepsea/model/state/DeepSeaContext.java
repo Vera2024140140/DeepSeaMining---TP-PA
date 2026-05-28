@@ -11,6 +11,16 @@ import java.util.Set;
 
 import static pt.isec.pa.deepsea.model.state.DeepSeaState.SUPERFICIE_STATE;
 
+/**
+ * Contexto da máquina de estados (State Pattern).
+ * Mantém o estado atual e delega todas as ações
+ * para o {@link IDeepSeaState} corrente. É serializável
+ * para suportar gravar/carregar jogo.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class DeepSeaContext implements Serializable {
     private static final long serialVersionUID = 40L;
     private Jogo jogo;
@@ -27,6 +37,9 @@ public class DeepSeaContext implements Serializable {
         atual = SUPERFICIE_STATE.getInstance(this, jogo);
     }
 
+    /**
+     * Altera o estado atual da máquina de estados.
+     */
     void changeState(IDeepSeaState novoEstado) {
         DeepSeaLog.getInstance().log(
                 String.format("Change State: %s => %s", atual.getState() ,novoEstado.getState())
@@ -34,61 +47,73 @@ public class DeepSeaContext implements Serializable {
         this.atual = novoEstado;
     }
 
+    /** Delega iniciarDescida ao estado atual. */
     public boolean iniciarDescida() {
         DeepSeaLog.getInstance().log("iniciarDescida");
         return atual.iniciarDescida();
     }
 
+    /** Delega recolherMinerio ao estado atual. */
     public boolean recolherMinerio(){
         DeepSeaLog.getInstance().log("recolherMinerio");
         return atual.recolherMinerio();
     }
 
+    /** Delega recolherArtefacto ao estado atual. */
     public boolean recolherArtefacto() {
         DeepSeaLog.getInstance().log("recolherArtefacto");
         return atual.recolherArtefacto();
     }
 
+    /** Delega iniciarSubida ao estado atual. */
     public boolean iniciarSubida() {
         DeepSeaLog.getInstance().log("iniciarSubida");
         return atual.iniciarSubida();
     }
 
+    /** Delega abrirOficina ao estado atual. */
     public boolean abrirOficina() {
         DeepSeaLog.getInstance().log("abrirOficina");
         return atual.abrirOficina();
     }
 
+    /** Delega fecharOficina ao estado atual. */
     public boolean fecharOficina() {
         DeepSeaLog.getInstance().log("fecharOficina");
         return atual.fecharOficina();
     }
 
+    /** Delega o movimento ao estado atual. */
     public boolean mover(Direcao dir) {
         DeepSeaLog.getInstance().log("mover (" + dir + ")");
         return atual.mover(dir);
     }
 
+    /** Delega a seleção do drone ao estado atual. */
     public boolean selecionarDrone(int idDrone) {
         DeepSeaLog.getInstance().log("selecionarDrone (" + idDrone + ")");
         return atual.selecionarDrone(idDrone);
     }
 
+    /** Delega o abastecimento do drone ao estado atual. */
     public boolean abastecerDrone(double litros) {
         DeepSeaLog.getInstance().log("abastecerDrone (" + litros + ")");
         return atual.abastecerDrone(litros);
     }
 
+    /** Delega a reparação do drone ao estado atual. */
     public boolean repararDrone(int pontos) {
         DeepSeaLog.getInstance().log("repararDrone (" + pontos + ")");
         return atual.repararDrone(pontos);
     }
 
+    /** Delega a melhoria do tanque ao estado atual. */
     public boolean melhorarTanqueDrone(){
         DeepSeaLog.getInstance().log("melhorarTanqueDrone ()");
         return atual.melhorarTanqueDrone();
     }
 
+    /** Delega a melhoria da integridade ao estado atual. */
     public boolean melhorarIntegridadeDrone(){
         DeepSeaLog.getInstance().log("melhorarIntegridadeDrone ()");
         return atual.melhorarIntegridadeDrone();

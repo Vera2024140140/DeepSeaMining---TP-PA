@@ -13,6 +13,15 @@ import java.util.Set;
 import static pt.isec.pa.deepsea.model.state.DeepSeaState.*;
 import static pt.isec.pa.deepsea.model.state.DeepSeaState.ACABOU_STATE;
 
+/**
+ * Facade entre a UI e o modelo de dados.
+ * Delega as ações para o {@link DeepSeaContext} e notifica
+ * a UI através de {@link PropertyChangeSupport} (Observer).
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class DeepSeaManager {
 
     public static final String PROP_STATE = "state";
@@ -85,6 +94,9 @@ public class DeepSeaManager {
     // ações
     // ===========================================================
 
+    /**
+     * Inicia a descida do drone ativo para o fosso.
+     */
     public boolean iniciarDescida() {
         DeepSeaState antes = context.getState();
         boolean desceu = context.iniciarDescida();
@@ -92,6 +104,9 @@ public class DeepSeaManager {
         return desceu;
     }
 
+    /**
+     * Inicia a subida do drone de volta à superfície.
+     */
     public boolean iniciarSubida() {
         DeepSeaState antes = context.getState();
         boolean subiu = context.iniciarSubida();
@@ -99,6 +114,10 @@ public class DeepSeaManager {
         return subiu;
     }
 
+    /**
+     * Move o navio ou drone na direção indicada.
+     * Verifica colisões e notifica a UI.
+     */
     public boolean mover(Direcao dir) {
         DeepSeaState antes = context.getState();
         TipoComponente colisao = verificarColisoesDrone(dir, antes);
@@ -161,6 +180,9 @@ public class DeepSeaManager {
         return mapa[l][c];
     }
 
+    /**
+     * Recolhe o minério na posição atual do drone.
+     */
     public boolean recolherMinerio(){
         boolean recolheu = context.recolherMinerio();
         if(recolheu) {
@@ -169,6 +191,9 @@ public class DeepSeaManager {
         return recolheu;
     }
 
+    /**
+     * Recolhe o artefacto na posição atual, iniciando o puzzle.
+     */
     public boolean recolherArtefacto() {
         DeepSeaState antes = context.getState();
         boolean ok = context.recolherArtefacto();
@@ -179,6 +204,9 @@ public class DeepSeaManager {
         return ok;
     }
 
+    /**
+     * Abre a oficina para gestão dos drones.
+     */
     public boolean abrirOficina() {
         DeepSeaState antes = context.getState();
         boolean abriu = context.abrirOficina();
@@ -189,6 +217,9 @@ public class DeepSeaManager {
         return abriu;
     }
 
+    /**
+     * Fecha a oficina, regressando à superfície.
+     */
     public boolean fecharOficina() {
         DeepSeaState antes = context.getState();
         boolean fechou = context.fecharOficina();
@@ -199,6 +230,9 @@ public class DeepSeaManager {
         return fechou;
     }
 
+    /**
+     * Seleciona o drone com o id indicado na oficina.
+     */
     public boolean selecionarDrone(int idDrone) {
         boolean selecionou = context.selecionarDrone(idDrone);
         if (selecionou){
@@ -206,6 +240,10 @@ public class DeepSeaManager {
         }
         return selecionou;
     }
+
+    /**
+     * Abastece o drone ativo com combustível do navio.
+     */
     public boolean abastecerDrone(double litros) {
         DeepSeaState antes = context.getState();
         boolean abasteceu = context.abastecerDrone(litros);
@@ -215,6 +253,10 @@ public class DeepSeaManager {
         }
         return abasteceu;
     }
+
+    /**
+     * Repara a integridade do casco do drone ativo.
+     */
     public boolean repararDrone(int pontos) {
         DeepSeaState antes = context.getState();
         boolean reparou = context.repararDrone(pontos);
@@ -225,6 +267,9 @@ public class DeepSeaManager {
         return reparou;
     }
 
+    /**
+     * Melhora a capacidade do tanque do drone ativo, gastando minérios.
+     */
     public boolean melhorarTanqueDrone(){
         boolean melhorou = context.melhorarTanqueDrone();
         if (melhorou){
@@ -233,6 +278,9 @@ public class DeepSeaManager {
         return melhorou;
     }
 
+    /**
+     * Melhora a integridade máxima do drone ativo, gastando minérios.
+     */
     public boolean melhorarIntegridadeDrone(){
         boolean melhorou = context.melhorarIntegridadeDrone();
         if (melhorou){
@@ -320,6 +368,9 @@ public class DeepSeaManager {
     // --- Serialização & Save 6 Load ---
     //===========================================================
 
+    /**
+     * Inicia um novo jogo, reiniciando o contexto.
+     */
     public void novoJogo(){
         resetContadores();
         this.context = new DeepSeaContext();
@@ -331,6 +382,9 @@ public class DeepSeaManager {
         context.resetContadores();
     }
 
+    /**
+     * Grava o jogo atual num ficheiro por serialização.
+     */
     public boolean gravarJogo(File file){
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(context);
@@ -341,6 +395,9 @@ public class DeepSeaManager {
         return true;
     }
 
+    /**
+     * Carrega um jogo gravado a partir de um ficheiro.
+     */
     public boolean carregarJogo(File file){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             context = (DeepSeaContext) ois.readObject();
