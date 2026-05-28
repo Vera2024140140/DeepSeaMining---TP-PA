@@ -8,6 +8,7 @@ import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import javafx.scene.input.KeyEvent;
+import pt.isec.pa.deepsea.ui.res.SoundManager;
 
 public class MainJFX extends Application {
     DeepSeaManager manager;
@@ -30,7 +31,7 @@ public class MainJFX extends Application {
 
     private void createOneStage(Stage stage) {
         RootPane root = new RootPane(manager);
-
+        SoundManager.setSounds(manager);
         Scene scene = new Scene(root, Settings.WIDTH_JANELA, Settings.HEIGHT_JANELA);
 
         //movimentações

@@ -3,7 +3,7 @@ package pt.isec.pa.deepsea.model.data;
 import javafx.scene.text.Font;
 
 public interface Settings {
-     boolean MODO_DEFESA = false;
+     boolean MODO_DEFESA = true;
 
     //Dimensao das grelhas
     int LINHAS_SUPERFICIE = 14;
@@ -43,7 +43,7 @@ public interface Settings {
     //mini jogo
     int PUZZLE_MAX_MOVIMENTOS = 50;
     int PUZZLE_GRELHA = 4;
-    int PUZZLE_BARALHAR_GRELHA = 5;
+    int PUZZLE_BARALHAR_GRELHA = 10;
 
     //percentagens
     double ROCHAS_PERCENTAGEM_MAX = 0.50;

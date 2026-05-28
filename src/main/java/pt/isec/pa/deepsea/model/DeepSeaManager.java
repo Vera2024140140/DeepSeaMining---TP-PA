@@ -1,5 +1,6 @@
 package pt.isec.pa.deepsea.model;
 
+import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaContext;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.model.utils.DeepSeaLog;
@@ -8,6 +9,10 @@ import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.List;
 import java.util.Set;
+
+import static pt.isec.pa.deepsea.model.state.DeepSeaState.*;
+import static pt.isec.pa.deepsea.model.state.DeepSeaState.ACABOU_STATE;
+
 public class DeepSeaManager {
 
     public static final String PROP_STATE = "state";
@@ -19,6 +24,19 @@ public class DeepSeaManager {
     public static final String PROP_OFICINA = "oficina";
     public static final String PROP_LOG = "log";
     public static final String PROP_GAME = "game";
+    public static final String PROP_ROCHA = "rocha";
+    public static final String PROP_MONSTRO = "monstro";
+    public static final String PROP_CORRENTE = "corrente";
+    public static final String PROP_MINERIO = "minerio";
+    public static final String PROP_ANIMAL_MARINHO = "animalMarinho";
+    public static final String PROP_ABRIR_OFICINA = "abrirOficina";
+    public static final String PROP_FECHAR_OFICINA = "fecharOficina";
+    public static final String PROP_MOVER_DRONE = "moverDrone";
+    public static final String PROP_MOVER_NAVIO = "moverNavio";
+    public static final String PROP_GANHAR_JOGO = "ganhouJogo";
+    public static final String PROP_PERDER_JOGO = "perdeuJogo";
+    public static final String PROP_ARTEFACTO = "artefactoRecolhido";
+    public static final String PROP_PERDER_PUZZLE = "perdeuPuzzle";
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private DeepSeaContext context;
@@ -46,6 +64,20 @@ public class DeepSeaManager {
         if (depois == DeepSeaState.PUZZLE_STATE) {
             fire(PROP_PUZZLE);
         }
+        //ganhar/perder puzzle
+        if (antes == PUZZLE_STATE && depois == FUNDO_STATE){
+            fire(PROP_ARTEFACTO);
+        }else if (antes == PUZZLE_STATE && depois == SUBIDA_STATE){
+            fire(PROP_PERDER_PUZZLE);
+        }
+        //fim do jogo
+        if(depois == ACABOU_STATE){
+            if(context.getArtefactosNavio() == Settings.NUM_ARTEFACTOS){
+                fire(PROP_GANHAR_JOGO);
+            }else{
+                fire(PROP_PERDER_JOGO);
+            }
+        }
     }
 
     // ===========================================================
@@ -68,7 +100,26 @@ public class DeepSeaManager {
 
     public boolean mover(Direcao dir) {
         DeepSeaState antes = context.getState();
+        TipoComponente colisao = verificarColisoesDrone(dir, antes);
         boolean ok = context.mover(dir);
+        DeepSeaState depois = context.getState();
+        if(ok) {
+            if (antes == depois) {
+                if (antes == SUPERFICIE_STATE) {
+                    fire(PROP_MOVER_NAVIO);
+                } else if (antes != PUZZLE_STATE) {
+                    fire(PROP_MOVER_DRONE);
+                }
+            }
+            if (colisao != null) {
+                switch (colisao) {
+                    case ROCHA -> fire(PROP_ROCHA);
+                    case MONSTRO -> fire(PROP_MONSTRO);
+                    case ANIMALMARINHO -> fire(PROP_ANIMAL_MARINHO);
+                    case CORRENTE -> fire(PROP_CORRENTE);
+                }
+            }
+        }
         if (!ok) return false;
         switch (antes) {
             case SUPERFICIE_STATE -> fire(PROP_NAVIO);
@@ -82,10 +133,33 @@ public class DeepSeaManager {
         return true;
     }
 
+    private TipoComponente verificarColisoesDrone(Direcao dir, DeepSeaState antes) {
+        int l = getLinhaDroneAtivo();
+        int c = getColunaDroneAtivo();
+        switch (dir) {
+            case CIMA -> l--;
+            case BAIXO -> l++;
+            case ESQUERDA -> c--;
+            case DIREITA -> c++;
+        }
+        int lSup = getLinhaNavioSuperficie();
+        int cSup = getColunaNavioSuperficie();
+
+        TipoComponente[][] mapa = null;
+        if(antes == FUNDO_STATE){
+            mapa = getMapaFundo(lSup,cSup);
+        }else if(antes == DESCIDA_STATE || antes == SUBIDA_STATE){
+            mapa = getMapaFosso(lSup,cSup);
+        }
+        if (mapa == null) return null;
+        if (l < 0 || l >= mapa.length || c < 0 || c >= mapa[0].length) return null;
+        return mapa[l][c];
+    }
+
     public boolean recolherMinerio(){
         boolean recolheu = context.recolherMinerio();
         if(recolheu) {
-            fire(PROP_FUNDO, PROP_DRONE, PROP_LOG);
+            fire(PROP_FUNDO, PROP_DRONE, PROP_LOG,PROP_MINERIO);
         }
         return recolheu;
     }
@@ -105,7 +179,7 @@ public class DeepSeaManager {
         boolean abriu = context.abrirOficina();
         if (abriu){
             fireStateIfChanged(antes);
-            fire(PROP_LOG);
+            fire(PROP_LOG,PROP_ABRIR_OFICINA);
         }
         return abriu;
     }
@@ -115,7 +189,7 @@ public class DeepSeaManager {
         boolean fechou = context.fecharOficina();
         if (fechou){
             fireStateIfChanged(antes);
-            fire(PROP_LOG);
+            fire(PROP_LOG,PROP_FECHAR_OFICINA);
         }
         return fechou;
     }
