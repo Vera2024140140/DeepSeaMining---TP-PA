@@ -88,9 +88,7 @@ public class DeepSeaLog {
     }
 
     /**
-     * Grava todos os registos mantidos em memória num ficheiro de texto,
-     * definido pela configuração {@link Settings#FICHEIRO_LOG}.
-     *
+     * Grava todos os registos mantidos em memória num ficheiro de texto.
      * @return {@code true} se o ficheiro for gravado com sucesso;
      * {@code false} se ocorrer algum erro durante a escrita do ficheiro (ex: permissões, I/O).
      */
