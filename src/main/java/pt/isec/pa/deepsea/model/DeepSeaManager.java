@@ -37,6 +37,7 @@ public class DeepSeaManager {
     public static final String PROP_PERDER_JOGO = "perdeuJogo";
     public static final String PROP_ARTEFACTO = "artefactoRecolhido";
     public static final String PROP_PERDER_PUZZLE = "perdeuPuzzle";
+    public static final String PROP_PERDER_DRONE = "perderDrone";
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private DeepSeaContext context;
@@ -101,8 +102,12 @@ public class DeepSeaManager {
     public boolean mover(Direcao dir) {
         DeepSeaState antes = context.getState();
         TipoComponente colisao = verificarColisoesDrone(dir, antes);
+        int dronesAntes = context.getIdsDronesNavio().size();
         boolean ok = context.mover(dir);
         DeepSeaState depois = context.getState();
+        if (ok && context.getIdsDronesNavio().size() < dronesAntes) {
+            fire(PROP_PERDER_DRONE);
+        }
         if(ok) {
             if (antes == depois) {
                 if (antes == SUPERFICIE_STATE) {

@@ -143,5 +143,8 @@ public class SoundManager {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_PERDER_PUZZLE, evt -> {
             playSomSobreposto("somPerder.mp3");
         });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_PERDER_DRONE, evt -> {
+            playSomSobreposto("perderDrone.mp3");
+        });
     }
 }

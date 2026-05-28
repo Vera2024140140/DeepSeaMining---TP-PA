@@ -1,4 +1,4 @@
-package pt.isec.pa.deepsea.ui.canvas;
+package pt.isec.pa.deepsea.ui;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -15,7 +15,7 @@ import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 
-public class AcabouCanvas extends BorderPane {
+public class AcabouPane extends BorderPane {
 
     private final DeepSeaManager manager;
 
@@ -24,7 +24,7 @@ public class AcabouCanvas extends BorderPane {
     private Button btnJogarNovo;
     private Button btnSair;
 
-    public AcabouCanvas(DeepSeaManager manager) {
+    public AcabouPane(DeepSeaManager manager) {
         this.manager = manager;
         createViews();
         registerHandlers();

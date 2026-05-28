@@ -86,7 +86,6 @@ public interface Settings {
     String TEXT_DARK     = "#2C3E50";
     String BAR_CRIT      = "#C0392B";
     String BTN_PRIMARY   = "#3498DB";
-    String BTN_ACTION    = "#F39C12";
 
     Font FONTE = Font.font("Arial");
 }
