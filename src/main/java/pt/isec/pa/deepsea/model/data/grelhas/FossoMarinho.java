@@ -12,6 +12,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Grelha do fosso marinho associada a uma célula de superfície.
+ * Contém rochas fixas nas laterais e obstáculos dinâmicos
+ * (correntes e animais marinhos) regenerados a cada expedição.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class FossoMarinho implements Serializable {
     private static final long serialVersionUID = 14L;
 
@@ -32,6 +41,7 @@ public class FossoMarinho implements Serializable {
         gerarRochas();
     }
 
+    /** Gera rochas nas laterais do fosso. */
     private void gerarRochas() {
         if(Settings.MODO_DEFESA){
             for (int l = 0; l < linhas; l++) {
@@ -72,6 +82,7 @@ public class FossoMarinho implements Serializable {
         }
     }
 
+    /** Regenera obstáculos (animais e correntes) em posições aleatórias. */
     void gerarObstaculos() {
         // limpar animais e correntes existentes
         for (int l = 0; l < linhas; l++) {
@@ -144,6 +155,7 @@ public class FossoMarinho implements Serializable {
         return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
     }
 
+    /** Devolve o tipo de componente na posição, ou null se vazia. */
     TipoComponente getTipoComponente(int lFosso, int cFosso) {
         if (dentroLimites(lFosso, cFosso)) {
             Componente comp = grelha[lFosso][cFosso].getComponente();

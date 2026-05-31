@@ -20,6 +20,7 @@ public class GrelhaPuzzleTest {
     }
     @Test
     void testaNumerosPuzzle(){
+        puzzle.inicializarGrelha();
         int numero = 1;
         for (int i = 0; i < Settings.PUZZLE_GRELHA; i++){
             for (int j = 0; j < Settings.PUZZLE_GRELHA; j++){

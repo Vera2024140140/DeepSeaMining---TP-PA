@@ -6,22 +6,24 @@ import javafx.scene.paint.Color;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.TipoComponente;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 import pt.isec.pa.deepsea.ui.res.ImageLoader;
 
-public class FundoCanvas extends Canvas {
-    private final DeepSeaManager manager;
-    private static final int CELL_SIZE = 50;
+public class FundoCanvas extends DeepSeaCanvas {
 
     public FundoCanvas(DeepSeaManager manager) {
         super(
-                Settings.LINHAS_FUNDO * CELL_SIZE,
-                Settings.COLUNAS_FUNDO * CELL_SIZE);
-        this.manager = manager;
-        registerHandlers();
-        update();
+                manager,
+                Settings.LINHAS_FUNDO ,
+                Settings.COLUNAS_FUNDO
+        );
+        boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
-    private void registerHandlers() {
+    @Override
+    protected void registerHandlers() {
         // Sempre que o drone se move ou o fosso muda (correntes, obstáculos) redesenha o canvas
         manager.addPropertyChangeListener(DeepSeaManager.PROP_FUNDO,
                 evt -> update());
@@ -31,9 +33,15 @@ public class FundoCanvas extends Canvas {
                 evt -> update());
         manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE,
                 evt -> update());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.FUNDO_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         GraphicsContext gc = getGraphicsContext2D();
         draw(gc);
     }
@@ -91,7 +99,5 @@ public class FundoCanvas extends Canvas {
             var droneImg = ImageLoader.getImage("drone.png");
             gc.drawImage(droneImg, droneC * CELL_SIZE, droneL * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
-
-
     }
 }

@@ -1,6 +1,13 @@
 package pt.isec.pa.deepsea.model.data.elementos;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.TipoComponente;
+
+/**
+ * Monstro marinho que causa dano ao ‘drone’ no fundo.
+ * Gerado aleatoriamente a cada expedição.
+ *
+ * @author Vera2024140140
+ */
 public class Monstro extends Componente{
     private static final long serialVersionUID = 5L;
     private static int contadorID = Settings.ID_MONSTRO_INICIAL;

@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import pt.isec.pa.deepsea.model.DeepSeaManager;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 public class OficinaPane extends BorderPane {
     DeepSeaManager manager;
@@ -23,7 +24,9 @@ public class OficinaPane extends BorderPane {
         this.manager = manager;
         createViews();
         registerHandlers();
-        update();
+        boolean ativo = manager.getState() == DeepSeaState.OFICINA_STATE;
+        setVisible(ativo);
+        if (ativo) update();
     }
 
     private void createViews() {
@@ -64,6 +67,11 @@ public class OficinaPane extends BorderPane {
 
     private void registerHandlers() {
         btnFechar.setOnAction(e -> manager.fecharOficina());
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.OFICINA_STATE;
+            setVisible(ativo);
+            if (ativo) update();
+        });
     }
 
     private void update() { }

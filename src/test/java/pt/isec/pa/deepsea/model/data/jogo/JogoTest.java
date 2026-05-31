@@ -33,10 +33,13 @@ class JogoTest {
     // ===================================================================
 
     /**
-     * Verifica o combustível e frota inicializados.
+     * Verifica se o estado inicial do Jogo cumpre os requisitos de arranque:
+     * navio criado, grelha instanciada, combustível e frota inicializados.
      */
     @Test
     void testeInicializacao() {
+        assertNotNull(jogo.getNavio(), "O navio deve ser instanciado no construtor do jogo");
+        assertNotNull(jogo.getGrelhaSuperficie(), "A grelha deve ser instanciada no construtor do jogo");
         assertEquals(Settings.NAVIO_COMBUSTIVEL_INICIAL, jogo.getCombustivelNavio());
         assertEquals(0, jogo.getMineriosNavio());
         assertEquals(Settings.NUM_DRONES_INICIAIS, jogo.getIdsDronesNavio().size());
@@ -94,7 +97,7 @@ class JogoTest {
     }
 
     /**
-     * Valida o débito do consumo de combustível inerente
+     * Valida o cálculo e débito do consumo de combustível inerente
      * à movimentação física do drone no fundo marinho.
      */
     @Test
@@ -123,7 +126,7 @@ class JogoTest {
     // ===================================================================
 
     /**
-     * Garante que invocar o método de limpeza do puzzle zera todas as
+     * Garante que invocar o método de limpeza do Puzzle zera todas as
      * informações de estado de resolução.
      */
     @Test
@@ -137,7 +140,7 @@ class JogoTest {
 
     /**
      * Confirma que, com o puzzle inicializado, comandos de
-     * movimentação não fazem o crasham o programa.
+     * movimentação não fazem o sistema estoirar.
      */
     @Test
     void moverPecaPuzzleComPuzzleAtivo() {

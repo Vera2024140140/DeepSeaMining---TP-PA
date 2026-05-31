@@ -8,6 +8,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa um drone de exploração submarina.
+ * Possui combustível, integridade de casco, e pode
+ * transportar minérios e artefactos.
+ *
+ * @author Rafael2024143044
+ * @author Vera2024140140
+ * @author Diogo2024152576
+ */
 public class Drone implements Serializable {
     private static final long serialVersionUID = 20L;
     //combustivel
@@ -59,6 +68,7 @@ public class Drone implements Serializable {
         }
     }
 
+    /** Adiciona combustível ao drone, devolvendo o extra. */
     double addCombustivel(double combustivel) {
         if (combustivel <= 0)
             return combustivel;
@@ -99,6 +109,7 @@ public class Drone implements Serializable {
         }
     }
 
+    /** Adiciona integridade ao casco, se houver espaço. */
     boolean addIntegridade(int integridade){
         if(integridade <= 0)
             return false;
@@ -145,6 +156,7 @@ public class Drone implements Serializable {
             artefactos.add(a);
     }
 
+    /** Consome combustível do drone. Retorna false se insuficiente. */
     boolean consumirCombustivelDrone(double qtd) {
         if (qtd <= 0) return false; // não gasta nada
 
@@ -156,6 +168,7 @@ public class Drone implements Serializable {
 
     }
 
+    /** Descarrega os minérios e devolve a quantidade. */
     //limpa a qtd de minerios da 'mochila' e retorna-os
     int descarregarMinerios() {
         int mineriosRecolhidos = this.minerios;
@@ -186,6 +199,7 @@ public class Drone implements Serializable {
         this.impactosExpedicao = 0;
     }
 
+    /** Aplica dano ao casco com base na sequência de números primos. */
     void sofrerImpacto() {
         int dano = calcularDanoAtual(impactosExpedicao);
 
@@ -198,6 +212,7 @@ public class Drone implements Serializable {
     }
 
     //calculo do valor da sequencia
+    /** Calcula o dano do  impacto. */
     int calcularDanoAtual(int impactoAtual) {
         int primosEncontrados = 0;
         int numeroTestePrimo = 1; //numero que vamos verificar se é primo

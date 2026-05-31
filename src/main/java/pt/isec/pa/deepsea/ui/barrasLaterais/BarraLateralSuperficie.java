@@ -8,12 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import pt.isec.pa.deepsea.model.data.Settings;
+import pt.isec.pa.deepsea.model.state.DeepSeaState;
 
 public class BarraLateralSuperficie extends BarraLateralNavegacao {
 
 
     public BarraLateralSuperficie(DeepSeaManager manager) {
         super(manager);
+        boolean ativo = manager.getState() == DeepSeaState.SUPERFICIE_STATE;
+        setVisible(ativo);
+        setManaged(ativo);
+        if (ativo) update();
     }
 
     @Override
@@ -60,5 +65,15 @@ public class BarraLateralSuperficie extends BarraLateralNavegacao {
         VBox.setMargin(rowBotoes, new Insets(0, 0, 20, 0));
         // adicionar spacer e btn's a vbox
         areaMeio.getChildren().addAll(spacer, rowBotoes);
+    }
+    @Override
+    void registerHandlers(){
+        super.registerHandlers();
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_STATE, evt -> {
+            boolean ativo = manager.getState() == DeepSeaState.SUPERFICIE_STATE;
+            setVisible(ativo);
+            setManaged(ativo);
+            if (ativo) update();
+        });
     }
 }
