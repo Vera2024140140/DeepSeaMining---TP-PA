@@ -119,6 +119,9 @@ public class SoundManager {
         manager.addPropertyChangeListener(DeepSeaManager.PROP_MOVER_NAVIO, evt -> {
             playMovimento("moverNavio.mp3");
         });
+        manager.addPropertyChangeListener(DeepSeaManager.PROP_MOVER_PUZZLE,evt->{
+            playMovimento("puzzleSound.mp3");
+        });
         manager.addPropertyChangeListener(DeepSeaManager.PROP_ROCHA, evt -> {
             playSomSobreposto("dronerocha.mp3");
         });

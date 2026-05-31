@@ -42,6 +42,7 @@ public class DeepSeaManager {
     public static final String PROP_FECHAR_OFICINA = "fecharOficina";
     public static final String PROP_MOVER_DRONE = "moverDrone";
     public static final String PROP_MOVER_NAVIO = "moverNavio";
+    public static final String PROP_MOVER_PUZZLE = "moverPuzzle";
     public static final String PROP_GANHAR_JOGO = "ganhouJogo";
     public static final String PROP_PERDER_JOGO = "perdeuJogo";
     public static final String PROP_ARTEFACTO = "artefactoRecolhido";
@@ -133,6 +134,8 @@ public class DeepSeaManager {
                     fire(PROP_MOVER_NAVIO);
                 } else if (antes != PUZZLE_STATE) {
                     fire(PROP_MOVER_DRONE);
+                }else {
+                    fire(PROP_MOVER_PUZZLE);
                 }
             }
             if (colisao != null) {
