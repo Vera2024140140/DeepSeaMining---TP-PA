@@ -134,7 +134,7 @@ public class Puzzle implements Serializable {
         // vai ao enum buscar as pos (CIMA/BAIXO/DIR/ESQ) -> (0/1/2/3)
         Direcao[] direcoes = Direcao.values();
 
-        //100 mov rand
+        //10 mov rand
         for(int i = 0; i < Settings.PUZZLE_BARALHAR_GRELHA; i++) {
             //sortear num 0/3 -> ex2 -> esq
             Direcao dRandom = direcoes[Utilidades.aleatorio(0, direcoes.length - 1)];
