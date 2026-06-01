@@ -138,17 +138,8 @@ public class Puzzle implements Serializable {
         for(int i = 0; i < Settings.PUZZLE_BARALHAR_GRELHA; i++) {
             //sortear num 0/3 -> ex2 -> esq
             Direcao dRandom = direcoes[Utilidades.aleatorio(0, direcoes.length - 1)];
-
-            //se a direção sorteada for oposta à anterior, gera outra (evita desfazer o movimento)
-            if (anterior != null && saoOpostas(anterior, dRandom)) {
-                continue;
-            }
-
-            //move a peça; se o movimento for inválido, não conta
-            if (mover(dRandom)) {
-                anterior = dRandom;
-                movimentosFeitos++;
-            }
+            //move a peca para a dir sorteada se possivel
+            mover(dRandom);
         }
         resetMovimentos();
     }
