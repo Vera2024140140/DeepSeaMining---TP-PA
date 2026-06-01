@@ -1,5 +1,4 @@
 package pt.isec.pa.deepsea.model.data.puzzle;
-
 import pt.isec.pa.deepsea.model.Direcao;
 import pt.isec.pa.deepsea.model.data.Settings;
 import pt.isec.pa.deepsea.model.data.Utilidades;
@@ -16,7 +15,7 @@ import java.io.Serializable;
  */
 public class Puzzle implements Serializable {
     private static final long serialVersionUID = 30L;
-    private int [][] grelha ;
+    private int [][] grelha;
     private int movimentosRestantes;
 
     public Puzzle() {
@@ -25,13 +24,13 @@ public class Puzzle implements Serializable {
         inicializarGrelha();
         baralhar();
     }
-
+    int[][] getGrelha(){return grelha;}
     /** Preenche a grelha com os números 1..15 e 0 (vazio). */
     void inicializarGrelha() {
         int numeros = 1;
         for(int i = 0; i < Settings.PUZZLE_GRELHA; i++){
             for (int j = 0; j < Settings.PUZZLE_GRELHA; j++){
-                //célula do canto inferior direito
+                //celula do canto inferior direito
                 if (i == Settings.PUZZLE_GRELHA - 1 && j == Settings.PUZZLE_GRELHA - 1){
                     this.grelha[i][j] = 0;
                 }else{
@@ -40,11 +39,6 @@ public class Puzzle implements Serializable {
             }
         }
     }
-
-    int [][] getGrelha() {
-        return grelha;
-    }
-
     public int getMovimentosRestantes() {
         return movimentosRestantes;
     }
@@ -54,7 +48,6 @@ public class Puzzle implements Serializable {
             movimentosRestantes--;
         }
     }
-
     void resetMovimentos() {
         this.movimentosRestantes = Settings.PUZZLE_MAX_MOVIMENTOS;
     }
@@ -68,9 +61,11 @@ public class Puzzle implements Serializable {
         grelha[l1][c1] = grelha[l2][c2];
         grelha[l2][c2] = temp;
     }
+
     // ===================================================================
     // --- logica de movimentos & estado ---
     // ===================================================================
+
     //retornar coordenadas l/c da peça vazia
     private int[] encontrarCelulaVazia() {
         for(int l = 0; l < Settings.PUZZLE_GRELHA; l++){
@@ -109,9 +104,8 @@ public class Puzzle implements Serializable {
         return false;
     }
 
-
+    //verificar se o puzzle já está por ordem
     /** Verifica se as peças estão ordenadas (‘puzzle’ resolvido). */
-    //verificar se o ‘puzzle’ já está por ordem
     public  boolean estaResolvido() {
         int esperado = 1;
         for(int l = 0; l < Settings.PUZZLE_GRELHA; l++){
@@ -128,20 +122,38 @@ public class Puzzle implements Serializable {
         return true;
     }
 
-    /** Baralha o ‘puzzle’ com movimentos aleatórios. */
-    //baralhar o puzzle
+    // Baralha o puzzle com movimentos aleatórios.
     public void baralhar() {
         // vai ao enum buscar as pos (CIMA/BAIXO/DIR/ESQ) -> (0/1/2/3)
         Direcao[] direcoes = Direcao.values();
 
-        //10 mov rand
-        for(int i = 0; i < Settings.PUZZLE_BARALHAR_GRELHA; i++) {
+        Direcao anterior = null;
+        int movimentosFeitos = 0;
+
+        while (movimentosFeitos < Settings.PUZZLE_BARALHAR_GRELHA) {
             //sortear num 0/3 -> ex2 -> esq
             Direcao dRandom = direcoes[Utilidades.aleatorio(0, direcoes.length - 1)];
-            //move a peca para a dir sorteada se possivel
-            mover(dRandom);
+
+            //se a direção sorteada for oposta à anterior, gera outra (evita desfazer o movimento)
+            if (anterior != null && saoOpostas(anterior, dRandom)) {
+                continue;
+            }
+
+            //move a peça; se o movimento for inválido, não conta
+            if (mover(dRandom)) {
+                anterior = dRandom;
+                movimentosFeitos++;
+            }
         }
         resetMovimentos();
+    }
+
+    // Verifica se duas direções são opostas
+    private boolean saoOpostas(Direcao d1, Direcao d2) {
+        return (d1 == Direcao.CIMA && d2 == Direcao.BAIXO)
+                || (d1 == Direcao.BAIXO && d2 == Direcao.CIMA)
+                || (d1 == Direcao.ESQUERDA && d2 == Direcao.DIREITA)
+                || (d1 == Direcao.DIREITA && d2 == Direcao.ESQUERDA);
     }
 
     public void simularDerrota() {
