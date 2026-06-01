@@ -134,15 +134,35 @@ public class Puzzle implements Serializable {
         // vai ao enum buscar as pos (CIMA/BAIXO/DIR/ESQ) -> (0/1/2/3)
         Direcao[] direcoes = Direcao.values();
 
-        //10 mov rand
-        for(int i = 0; i < Settings.PUZZLE_BARALHAR_GRELHA; i++) {
+        Direcao anterior = null;
+        int movimentosFeitos = 0;
+
+        while (movimentosFeitos < Settings.PUZZLE_BARALHAR_GRELHA) {
             //sortear num 0/3 -> ex2 -> esq
             Direcao dRandom = direcoes[Utilidades.aleatorio(0, direcoes.length - 1)];
-            //move a peca para a dir sorteada se possivel
-            mover(dRandom);
+
+            //se a direção sorteada for oposta à anterior, gera outra (evita desfazer o movimento)
+            if (anterior != null && saoOpostas(anterior, dRandom)) {
+                continue;
+            }
+
+            //move a peça; se o movimento for inválido, não conta
+            if (mover(dRandom)) {
+                anterior = dRandom;
+                movimentosFeitos++;
+            }
         }
         resetMovimentos();
     }
+
+    // Verifica se as direções são opostas
+    private boolean saoOpostas(Direcao d1, Direcao d2) {
+        return (d1 == Direcao.CIMA && d2 == Direcao.BAIXO)
+                || (d1 == Direcao.BAIXO && d2 == Direcao.CIMA)
+                || (d1 == Direcao.ESQUERDA && d2 == Direcao.DIREITA)
+                || (d1 == Direcao.DIREITA && d2 == Direcao.ESQUERDA);
+    }
+
 
     public void simularDerrota() {
         int valor = 0;
