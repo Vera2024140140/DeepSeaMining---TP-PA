@@ -156,7 +156,7 @@ O projeto foi desenvolvido seguindo o paradigma da **Programação Orientada a O
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/Rafael2024143044/PA-Project.git
+git clone https://github.com/Vera2024140140/DeepSeaMining---TP-PA.git
 cd PA-Project/PA-Project
 
 # Compilar
